@@ -1,0 +1,99 @@
+
+In most measuring systems used in the sea, pressure is a vital parameter. For moored instruments the pressure can be used for determining the actual depth of the instrument. For instrumentation on the seabed the pressure can be used for deriving water level. The pressure is also vital when deriving other parameters as density and speed of sound. 
+The Pressure Sensor is a compact yet intelligent sensor designed to be used on the Aanderaa SeaGuard as well as in other measuring systems. The sensor is based on a silicon piezo-resistive bridge sampled and temperature compensated by an advanced Digital Signal Processor. The sensor is housed in a rugged titanium cylinder. 
+Since all calibration and temperature compensation data are stored inside the sensor, the pressure is by default presented directly in engineering units without any external calculation. Raw data can be selected as additional output. Two parameters are available; Pressure and Temperature. 
+The The SeaGuard/SmartGuard and the Smart Sensors are interfaced by means of a reliable CANbus interface using an XML based protocol (AiCaP). 
+Pressure Sensor 4117/4117R 
+The Pressure Sensor 4117/4117R is a compact fully integrated sensor for measuring the pressure level and the water temperature. The 4117 sensor is designed to be mounted on the Aanderaa SeaGuard platform or connected to SmartGuard using AiCaP CANbus or as stand alone sensor using RS-232. The sensor is easily integrated in other measurement systems with dataloggers. The 4117R sensor is designed for use with long cables by means of RS-422 full duplex interface. 
+Advantages: 
+• 
+Smart Sensor technology - plug and play 
+
+• 
+Calibration coefficients are stored in the sensor 
+
+• 
+Low maintenance needs 
+
+• 
+Low current drain 
+
+• 
+Depth rating of 6000 meters 
+
+• 
+Direct readout of engineering data 
+
+• 
+Output parameters: Pressure, Temperature 
+
+• 
+Selectable interval from 1 second to 255 minutes 
+
+• 
+Use with Aanderaa loggers 
+
+• 
+Use as stand-alone sensor 
+
+• 
+Output formats 4117: AiCaP CANbus, RS-232 
+
+• 
+Output format 4117R:RS-422 
+
+• 
+Up to 60MPa range 
+
+
+The Smart Sensors can be mounted directly on the top-end plate of the SeaGuard and are automatically detected and recognized. 
+The output format of Pressure sensor 4117 are AiCaP and RS-232, while the output format of the 4117R is RS-422. The sersor version must be specified when ordered as the two versions are not interchangeable. The R-versiom cannot be used in SeaGuard applications. 
+The 10-pin receptacle in the sensor foot mates with Aanderaa SP (Sealing plug), giving access to RS-232 output. For connection to a PC the Sensor Cable 4865 can be used. It is furnished with RS-232 plug and a watertight 10-pin plug. An additional USB plug is used for providing power. 
+The pressure sensor can be used as stand-alone sensor with AADI Real-Time Collector for real-time data. 
+
+Specifications 
+PIN CONFIGURATION FOR 4117 
+Receptacle, exterior view; pin = bushing = CAN_H 4 5 NCE NCG 3 6 BOOT_EN NCR 9 10 CAN_L Gnd 2 7 RS-232 RXD Positive supply 1 8 RS-232 TXD 
+
+
+PIN CONFIGURATION FOR 4117R 
+Receptacle, exterior view; pin = bushing = RS-422 TXD+ 4 5 DNC DNC 3 6 BOOT_EN DNC 9 10 RS-422 RXD-Gnd 2 7 RS-422 RXD+ Positive supply 1 8 RS-422 TXD-
+Note! If deployed at higher pressure than the range of the pressure sensor, the pressure port must be closed by use of the Swagelok plug SS-200-P (stock no. 840017). 
+
+Pressure: 
+(1),(2)
+4117A/4117AR Range: 0 – 1000kPa (0 – 145 psia) 4117B/4117BR Range: 0 – 4000kPa (0 – 580 psia) (2) 4117C/4117CR Range: 0 – 10000kPa (0 – 1450 psia) (1),(2) 4117D/4117DR Range: 0 – 20000kPa (0 – 2900 psia) (2) 4117E/4117ER Range: 0 – 40000kPa (0 – 5800 psia) (1),(2) 4117F/4117FR Range: 0 – 60000kPa (0 – 8700 psia) (2) 
+
+Resolution: <0.0001% FSO 
+Accuracy: ±0.02% FSO standard (±0.01% FSO on request for sensors 0-10MPa. Requires enhanced calibration, additional fee apply) 
+Temperature: 
+Range: 0 – 36°C (32 – 96.8°F) Resolution: <0.001°C (0.0018°F) Accuracy: ±0.05°C (0.09°F)/(±0.1°C (0.18°F) 
+
+for interval <30s.) Response Time (63%): <10 seconds Output format  4117: AiCaP CANbus, ASCII RS-232(3) 4117R: RS-422(3) Sampling interval: RS-232: 1s – 255 minutes 
+AiCaP: Controlled by Seaguard Supply voltage: 5 to 14VDC Current drain (@ 9V): 
+Average(RS-232/-422): 14mA/S +0.25mA where S is sampling 
+interval in seconds Max(RS-232/-422): 50 mA Quiescent: 0.25 mA 
+
+Operating temperature: -5 – +40°C (23 – 104°F) Electrical connection: 10-pin receptacle mating plug CSP Pressure connection: Swagelok™ 1/8 inch Dimensions: OD: 36 x 86mm (OD:1.4”x3.4”) Weight: 160g (5.47oz) Materials: Titanium and Epoxy coating 
+Accessories:
+ Included: 840017 Swagelok plug SS-200-P Not included: RS-232 Cable 47624)/48655) RS-422 Cable 47634)/47995) 
+(1) 
+Available on request 
+
+(2)
+ Pressure conversion: 1000kPa = 100m depth 
+
+(3)
+ 9600 baud, 8 data bits, 1 stop bit, no parity, Xon/Xoff  Handshake 
+
+(4)
+ SP Cable with free end for real-time data 
+
+(5)
+ SP Cable to PC with 9pin D-sub for real-time data 
+
+
+The above specifications are for the stand-alone sensor only, not the installation it is utilized with. 
+Specifications subject to change without prior notice. 
+
+

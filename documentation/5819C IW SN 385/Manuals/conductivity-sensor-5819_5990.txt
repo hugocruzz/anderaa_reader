@@ -1,0 +1,11228 @@
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+CONDUCTIVITY 
+SENSOR 
+
+5819/5819R/5990 
+
+P25TB3bA#y1 
+
+
+ 
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+1st Edition February 2022 
+
+2nd Edition July 2022 Minor upgrades 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+© Copyright: Aanderaa Data Instruments AS 
+
+ 
+
+ 
+
+Contact information: 
+
+Aanderaa Data Instrument AS 
+
+PO BOX 103, Midttun 
+
+5843 Bergen, NORWAY 
+
+Visiting address: 
+
+Sandalsringen 5b 
+
+5843 Bergen, Norway 
+
+TEL: +47 55 604800 
+
+FAX: +47 55 604801 
+
+
+
+ 
+
+EMAIL: aanderaa.support@xylem.com 
+
+WEB: http://www.aanderaa.com 
+
+
+ Table of Contents 
+INTRODUCTION ............................................................................................................................................................... 7 
+Purpose and Scope .................................................................................................................................. 7 
+Document Overview ................................................................................................................................. 7 
+Applicable Documents .............................................................................................................................. 8 
+References ............................................................................................................................................... 8 
+Abbreviations ............................................................................................................................................ 8 
+Short Description and Specifications ........................................................................................................... 9
+1.1 Description .......................................................................................................................................... 9 
+1.2 Conductivity Sensor 5819 ................................................................................................................. 10 
+1.2.1 Pin Configuration 5819 ............................................................................................................... 11 
+1.2.2 Lemo plug connection 5819 ....................................................................................................... 11 
+1.3 Conductivity Sensor 5819R ............................................................................................................... 12 
+1.3.1 Pin Configuration 5819R ............................................................................................................ 13 
+1.3.2 Lemo plug connection 5819R ..................................................................................................... 13 
+1.4 Conductivity Sensor 5990 ................................................................................................................. 14 
+1.4.1 Pin Configuration 5990 ............................................................................................................... 15 
+1.5 Sensor Connection ........................................................................................................................... 15 
+1.5.1 Configure sensor using RS-232 configuration cable ................................................................... 15 
+1.5.2 Configuration Cable 3855 .......................................................................................................... 16 
+1.5.3 Configure sensor using RS-422 configuration cable 5618 .......................................................... 16 
+1.5.4 Configuration Cable 5618 .......................................................................................................... 17 
+1.6 Using PC without COM-port .............................................................................................................. 17 
+1.7 User accessible sensor properties .................................................................................................... 18 
+1.8 Passkey for write protection .............................................................................................................. 18 
+1.9 Sensor Properties ............................................................................................................................. 19 
+1.9.1 Factory Configuration ................................................................................................................. 19 
+1.9.2 Deployment Settings .................................................................................................................. 20 
+1.9.3 System Configuration ................................................................................................................. 21 
+1.9.4 User Maintenance ...................................................................................................................... 22 
+1.10 Sensor parameters ......................................................................................................................... 26 
+1.10.1 Calculated parameters ............................................................................................................. 26 
+1.11 Specifications .................................................................................................................................. 27 
+1.12 Manufacturing and Quality Control .................................................................................................. 27 
+Configuration on SeaGuard with display ................................................................................................... 28
+2.1 Installation on SEAGUARD® Platform ............................................................................................... 28 
+2.2 Sensor Cable for remote sensor ....................................................................................................... 29 
+2.3 Sensor Configuration ........................................................................................................................ 30 
+2.3.1 Administrative Tools ................................................................................................................... 31 
+2.3.2 Sensor Identification .................................................................................................................. 31 
+2.3.3 System Configuration ................................................................................................................. 32 
+2.3.4 Deployment Settings .................................................................................................................. 34 
+2.3.5 User Maintenance ...................................................................................................................... 36 
+Stand-alone Sensor configuration using Real-Time Collector ................................................................... 41
+ 3.1 Establishing a new connection .......................................................................................................... 41 
+3.1.1 Add new connection to the list .................................................................................................... 41 
+3.1.2 Establish contact with the sensor ............................................................................................... 42 
+3.2 Control Panel .................................................................................................................................... 43 
+3.2.1 Recorder Panel .......................................................................................................................... 44 
+3.2.2 Device Configuration .................................................................................................................. 44 
+3.3 Changing Values .............................................................................................................................. 46 
+3.4 Deployment Settings ......................................................................................................................... 49 
+3.4.1 Common Settings ...................................................................................................................... 49 
+3.4.2 Site Info ..................................................................................................................................... 50 
+3.4.3 Calculation Input ........................................................................................................................ 50 
+3.5 System Configuration ........................................................................................................................ 51 
+3.5.1 Common Settings ...................................................................................................................... 52 
+3.5.2 Terminal Protocol ....................................................................................................................... 53 
+3.5.3 Output Settings .......................................................................................................................... 54 
+3.6 User Maintenance ............................................................................................................................. 55 
+........................................................................................................................................................... 57 
+3.6.1 Mandatory .................................................................................................................................. 58 
+3.6.2 Site Info ..................................................................................................................................... 58 
+3.6.3 Serial Port .................................................................................................................................. 59 
+3.6.4 Calibration .................................................................................................................................. 60 
+3.6.5 Sample Settings ......................................................................................................................... 61 
+Configuration via SmartGuard or SeaGuardII Datalogger ......................................................................... 62
+4.1 Introduction ....................................................................................................................................... 62 
+4.2 Installation of the Conductivity Sensor 5819 on SeaGuardII .............................................................. 62 
+4.3 Configuration with AADI Real-Time collector..................................................................................... 63 
+4.3.1 Connected via SeaGuardII ......................................................................................................... 63 
+4.3.2 Connected via SmartGuard ........................................................................................................ 63 
+4.4 Establish connection ......................................................................................................................... 63 
+4.4.1 Control Panel ............................................................................................................................. 66 
+4.5 Changing Values .............................................................................................................................. 68 
+4.6 Deployment settings ......................................................................................................................... 71 
+4.6.1 Site Info ..................................................................................................................................... 71 
+4.6.2 Calculation Input ........................................................................................................................ 72 
+4.7 System Configuration ........................................................................................................................ 73 
+4.7.1 Output Settings .......................................................................................................................... 74 
+4.8 User Maintenance ............................................................................................................................. 75 
+4.8.1 Mandatory .................................................................................................................................. 76 
+4.8.2 Site Info ..................................................................................................................................... 76 
+4.8.3 Calibration .................................................................................................................................. 77 
+4.8.4 Sample Settings ......................................................................................................................... 78 
+Stand-alone Sensor configuration using Terminal Software ..................................................................... 79
+5.1 Sensor versions and interface ........................................................................................................... 79 
+5.2 Communication setup ....................................................................................................................... 79 
+ 5.3 Sensor startup .................................................................................................................................. 80 
+5.3.1 Smart Sensor Terminal mode .................................................................................................... 80 
+5.3.2 AiCaP mode ............................................................................................................................... 80 
+5.3.3 AADI Real-Time mode ............................................................................................................... 81 
+5.4 Controlling communication ................................................................................................................ 81 
+5.5 Description of protocol ...................................................................................................................... 82 
+5.6 Passkey for write protection .............................................................................................................. 83 
+5.7 Save and Reset ................................................................................................................................ 83 
+5.8 Available Commands for the Conductivity Sensor ............................................................................. 84 
+5.8.1 The Get command ..................................................................................................................... 85 
+5.8.2 The Set commands .................................................................................................................... 86 
+5.8.3 XML commands ......................................................................................................................... 86 
+5.8.4 Formating the Output String ....................................................................................................... 86 
+5.8.5 Examples – How to configure sensor with Terminal Software .................................................... 87 
+5.9 Help command output ....................................................................................................................... 89 
+5.10 Scripting -sending a string of commands ........................................................................................ 90 
+5.11 Sensor Configuration ...................................................................................................................... 91 
+Logging data via AADI Real-Time Collector .............................................................................................. 93
+6.1 Logging data on PC .......................................................................................................................... 93 
+6.1.1 Enabling file output .................................................................................................................... 93 
+6.1.2 Starting the sensor and logging to file ........................................................................................ 94 
+6.2 Viewing incoming data in real-time .................................................................................................... 96 
+Maintenance .............................................................................................................................................. 98
+7.1 Function Test .................................................................................................................................... 99 
+7.2 Test of Conductivity Sensor with resistor loop ................................................................................... 99 
+7.2.1 SeaGuard with display applications .......................................................................................... 100 
+7.2.2 Function test with AADI- Real-Time collector ........................................................................... 102 
+7.2.3 Function test with Terminal software ........................................................................................ 104 
+7.3 Calibration ...................................................................................................................................... 105 
+7.3.1 SeaGuard application: setting the CellCoef .............................................................................. 106 
+7.3.2 AADI Real-Time Collector application: setting the CellCoef...................................................... 107 
+7.3.3 Smart Sensor Terminal application: setting the CellCoef .......................................................... 108 
+Theory of Operation ................................................................................................................................. 109 
+Electro Magnetic Compatibility ................................................................................................................ 111
+9.1 EMC Testing ................................................................................................................................... 111 
+9.2 Cables ............................................................................................................................................ 111 
+9.3 Power – Voltage range ................................................................................................................... 111 
+Accessories and documents .................................................................................................................. 112
+10.1 Example of Test & Specifications sheet and Certificates ............................................................... 112 
+10.2 Connecting Cables........................................................................................................................ 119 
+10.2.1 Set-up and configuration cable 3855. ..................................................................................... 119 
+10.2.2 Set-up and configuration cable 4865. ..................................................................................... 120 
+10.2.3 Free end cable 4762 .............................................................................................................. 121 
+10.2.4 Remote cable 4793 for connecting sensor to SeaGuard/SeaGuardII ..................................... 122 
+10.2.5 Patch cable 4999 ................................................................................................................... 122 
+10.2.6 Cable 5236 for connection to SmartGuard using AiCaP ......................................................... 123 
+
+
+
+INTRODUCTION 
+
+Purpose and Scope 
+
+With this document, we will give the reader knowledge on how to operate, calibrate and maintain 
+the Aanderaa Conductivity Sensor 5819, 5919R and 5990. It also aims to give insight on how the 
+Conductivity sensor works and how we can use the conductivity measurement of water to 
+determine other important seawater properties. We cover all sensor versions in one single manual 
+since the operation and configuration is identical. The main difference is depth rating and serial 
+output. 
+
+Each sensor version is available in three different versions, A-, B- and C- version, with different 
+accuracy specification, see datasheet for more information. 
+
+ 
+
+The sensor is used either as part of a system or stand-alone. Chapter 2 to 5 covers different ways 
+to connect and operate the sensor. Since each chapter describes the full operation you only need 
+to read one of these chapters. 
+
+ 
+
+5819 is replacing the 4319 and 4419R sensor. 5990 replacing the old 5860 sensor, the main 
+principle behind the sensors are equal but there are also some new features and a faster 
+temperature sensor that is more exposed to the water. 
+
+With the release of Framework 3 in 2011, Aanderaa introduced a new firmware version to 
+accommodate higher security and future expansion. Both the Smart Sensor Terminal protocol 
+and the AADI Real Time protocol was updated with this version of the Smart Sensor firmware 
+
+Aanderaa Smart Sensors utilize communication protocols at the RS232 interface where the 
+Smart Sensor Terminal protocol is a simple ASCII command string-based protocol and the AADI 
+Real Time is an XML based protocol. 
+
+Conductivity Sensor 5819 fits directly on the top-end plate of SeaGuard or in a string system 
+connected to SmartGuard or SeaGuard String logger using AiCaP. In addition to AiCaP, the 
+sensor has also RS-232 connection both for configuration of sensor and communication with 
+logger or PC. The 5819R-version has only RS-422 used for stand-alone use with longer cables. 
+
+Conductivity Sensor 5990 are fitted with an Subconn for easier connection to 3rd party equipment 
+
+ 
+
+The sensor is available in three different depth ratings, 300-meter, 3000-meter and 6000-meter. 
+
+Document Overview 
+
+Chapter 1 is a description of each sensor covered with pin configuration and properties. 
+
+Chapter 2 covers how to configure the sensor when connected to a SeaGuard with display 
+
+Chapter 3 covers how to configure a stand-alone sensor using AADI Real-Time Collector 
+
+Chapter 4 covers how to configure the sensor using SeaGuard without display, SeaGuardII or 
+SmartGuard. 
+
+Chapter 5 describes how to configure and operate a stand-alone sensor using Terminal software. 
+
+Chapter 6 describes how to log data using AADI Real-Time Collector. 
+
+Chapter 7 describes maintenance need and recommendations 
+
+Chapter 8 describes the principle behind the Conductivity Sensor. 
+
+Chapter 9 describes Electromagnetic Combability. 
+
+Chapter 10 contains examples of all documents and available cables. 
+
+
+Applicable Documents 
+
+DID-060350 
+
+Assembly Drawing 5819 
+
+V-8700 
+
+Sensor Cable 3855, Sensor to PC, RS-232 for laboratory use 
+
+V-10501 
+
+Sensor Cable 4865, Sensor to PC, RS-232 for field use 
+
+V-10331 
+
+Sensor Cable 4762, Sensor to free end 
+
+V-10388 
+
+Sensor Cable 4793 for 5 remote sensor used on SeaGuard 
+
+Form 860 
+
+Test & Specification Sheet for Conductivity Sensor 
+
+Form 994 
+
+Calibration Certificate for Conductivity Sensor 
+
+D 425 
+
+Data sheet for Conductivity Sensor 5819 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+References 
+
+[1] 
+
+Fofonoff, Journal of Physical Oceanography JGR, Vol 90 No. C2, pp 3332-
+3342, March 20, 1985 
+
+
+
+ 
+
+ 
+
+Abbreviations 
+
+ADC 
+
+Analogue to Digital Converter 
+
+AiCaP 
+
+ 
+
+Automated idle line CAN bus Protocol: A modified communication 
+protocol developed by Aanderaa for a distributed network of smart 
+sensors when connected to SeaGuard, SeaGuardII or SmartGuard 
+loggers. 
+
+ASCII 
+
+American Standard Code for Information Interchange 
+
+DSP 
+
+Digital Signal Processor 
+
+MSB 
+
+Most significant bit 
+
+PSU 
+
+Practical Salinity Unit 
+
+RTC 
+
+Real Time Clock 
+
+UART 
+
+Universal Asynchronous Receiver/Transmitter 
+
+UNESCO 
+
+The United Nations Educational, Scientific and Cultural Organization 
+
+ 
+
+ 
+
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+ Short Description and Specifications 
+
+ 
+
+1.1 Description 
+
+ 
+
+Specific conductivity is a property that describes how well a material can conduct an electrical 
+current. For seawater, this property is mostly dependent on the inorganic dissolved solids and the 
+temperature of the water. 
+
+ 
+
+Salinity is defined as the concentration of these dissolved solids, and by measuring both the 
+Conductivity and Temperature (the Conductivity sensor 5819 has a built-in Temperature sensor) 
+the salinity of the water can be determined. 
+
+ 
+
+Other important properties of seawater can be calculated based on the salinity measurements 
+e.g., the density and the speed of sound. 
+
+ 
+
+For freshwater the conductivity can be used as a quality indicator. Increased conductivity of a 
+stream will often indicate increased pollution, and increased conductivity of groundwater might 
+indicate seawater intrusion. 
+
+ 
+
+The Conductivity Sensor 5819 is based on an inductive principle. This provides for stable 
+measurement without electrodes that are easily fouled in the field. 
+
+Conductivity Sensor 5819 is available in two versions 5819A and 5819B where 5819B versions 
+have enhanced accuracy compared to 5819A. See Data Sheet D425 for more information. 
+
+Each of these versions is also available in three different depth ratings SW (Shallow Water) is 
+rated to 300meter, IW (Intermediate Water) is rated to 3000meter and DW (Deep Water) is rated 
+to 6000meter. 
+
+ 
+
+The Conductivity Sensor 5819 interconnects with both RS-232 and CANbus (AiCaP). 
+
+The Conductivity Sensor 5819 fits directly on to the Top-end Plate of the Aanderaa SEAGUARD® 
+datalogger. The sensor can also be used as a Stand-Alone RS-232 sensor for use with third party 
+data loggers. 
+
+ 
+
+The Conductivity Sensor 5819R interconnects with RS-422 and are used as stand-alone sensor 
+on longer cables. Most cables designed for use with this sensor except the free end cables also 
+contains an RS-422 to RS-232 adapter. Maximum recommended cable length for RS-422 with 
+9600 baud-rate is 1200 meter compared to 30 meter for RS-232. 
+
+ 
+
+The Conductivity Sensor 5990 are supplied with an 8-pin Subconn connector and interconnects 
+with RS-232 only. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+1.2 Conductivity Sensor 5819 
+
+ 
+
+Conductivity Sensor is encapsulated in a Titanium housing and are available in three depth ratings 
+300-, 3000- and 6000-meter. The sensor is made for use on SeaGuard platforms but may also be 
+used on cable. Standard version has AiCaP and RS-232 output. R-version has RS-422 output. 
+Please note that the lemo plug used for this sensor are not a 1 to 1 plug. This means that e.g. pin 
+1 on sensor are connected to pin 8 on cable. 
+
+ 
+
+ 
+
+ 
+
+Thermistor 
+
+P365TB26#y1 
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+Ceramic Tube 
+
+P370TB53#y1 
+
+
+ 
+
+ 
+
+ 
+
+Sensor Housing 
+
+P374TB4#y1 
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+O-rings 
+
+P379TB6#y1 
+
+
+Sensor foot 
+
+P380TB5#y1 
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Figure 1-1 Illustration of the Conductivity Sensor 5819. 
+
+ 
+
+Figure 1-2: Conductivity Sensor 5819 Pin Configuration 
+
+
+
+
+Receptacle 4330
+
+1.2.1 Pin Configuration 5819 
+
+ 
+
+The Conductivity Sensor 5819 pin configuration is given in Figure 1-2 above. A description of the 
+receptacle notation is given in Table 1-1. 
+
+Signal 
+
+Description 
+
+Input (I) 
+
+Output (O) 
+
+CAN_H 
+
+CAN bus line (dominant high) 
+
+ 
+
+NCG 
+
+Node Communication Ground 
+
+ 
+
+NCR 
+
+Node Communication Request 
+
+ 
+
+Gnd 
+
+Ground 
+
+ 
+
+Positive supply / V+ 
+
+5-14V positive supply 
+
+ 
+
+NCE 
+
+Node Communication Enable 
+
+ 
+
+BOOT_EN / Boot Enable 
+
+Boot Load Enable (do not connect) 
+
+I 
+
+CAN_L 
+
+CAN bus line (dominant low) 
+
+ 
+
+RS232 RXD / RXD 
+
+RS232 Receive line 
+
+I 
+
+RS232 TXD / TXD 
+
+RS232 Transmit line 
+
+O 
+
+
+
+ 
+
+1.2.2 Lemo plug connection 5819 
+
+ 
+
+The 5819 sensor are using a lemo plug. This plug is not a 1 to 1 plug like eg. Subconn. See Table 
+1-2 for a complete list of connections between sensor and cable plug or hub card plug. 
+
+ 
+
+ 
+
+Signal 
+
+Sensor pin 
+
+Cable pin 
+
+Positive supply / V+ 
+
+1 
+
+8 
+
+Gnd 
+
+2 
+
+7 
+
+NCG 
+
+3 
+
+6 
+
+CAN_H 
+
+4 
+
+5 
+
+NCE 
+
+5 
+
+4 
+
+BOOT_EN / Boot Enable 
+
+6 
+
+3 
+
+RS232 RXD / RXD 
+
+7 
+
+2 
+
+RS232 TXD / TXD 
+
+8 
+
+1 
+
+NCR 
+
+9 
+
+10 
+
+CAN_L 
+
+10 
+
+9 
+
+
+
+ 
+
+ 
+Table 1-1 Description of the Pin Configuration 
+
+Table 1-2: Lemo plug Pin Configuration 5819 
+
+
+
+
+1.3 Conductivity Sensor 5819R 
+
+Conductivity Sensor 5819R is similar to 5819 except from the output signal. 5819R only output 
+RS-422 and in most applications you need a RS-422 to RS-232 unless you have an RS-422 port 
+available. 5819R is mainly used on longer cables. 
+
+ 
+
+ 
+
+Thermistor 
+
+P512TB96#y1 
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+Ceramic Tube 
+
+P517TB94#y1 
+
+
+ 
+
+ 
+
+Sensor Housing 
+
+P521TB86#y1 
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+O-rings 
+
+P526TB88#y1 
+
+
+ 
+
+Sensor foot 
+
+P527TB87#y1 
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Figure 1-3: Conductivity Sensor 5819R 
+
+Figure 1-4: Conductivity Sensor 5819R Pin Configuration 
+
+
+
+
+Receptacle 422
+
+1.3.1 Pin Configuration 5819R 
+
+ 
+
+The Conductivity Sensor 5819R pin configuration is given in Figure 1-4 above. A description of the 
+receptacle notation is given in Table 1-3. 
+
+Signal 
+
+Description 
+
+Input (I) 
+
+Output (O) 
+
+Positive supply / V+ 
+
+5-14V positive supply 
+
+ 
+
+Gnd 
+
+Ground 
+
+ 
+
+DNC 
+
+Do Not Connect 
+
+ 
+
+RS422 TXD+ / TX+ 
+
+RS422 Transmit line+ 
+
+O 
+
+RS422 RXD+ / RX+ 
+
+RS422 Receive line+ 
+
+I 
+
+RS422 TXD- / TX- 
+
+RS422 Transmit line- 
+
+O 
+
+RS422 RXD- / RX- 
+
+RS422 Receive line - 
+
+I 
+
+
+
+ 
+
+1.3.2 Lemo plug connection 5819R 
+
+ 
+
+The 5819R sensor are using a lemo plug. This plug is not a 1 to 1 plug like eg. Subconn. See 
+Table 1-4 for a complete list of connections between sensor and cable plug. 
+
+Signal 
+
+Sensor pin 
+
+Cable pin 
+
+Positive supply / V+ 
+
+1 
+
+8 
+
+Gnd 
+
+2 
+
+7 
+
+RS422 TXD+ / TX+ 
+
+4 
+
+5 
+
+RS422 RXD+ / RX+ 
+
+7 
+
+2 
+
+RS422 TXD- / TX- 
+
+8 
+
+1 
+
+RS422 RXD- / RX- 
+
+10 
+
+9 
+
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Table 1-3 Description of the Pin Configuration 5819R 
+
+Table 1-4: Lemo plug Pin Configuration 5819R 
+
+
+
+
+1.4 Conductivity Sensor 5990 
+
+ 
+
+Conductivity Sensor 5990 is a special version with Subconn connection. This sensor is made to 
+easily connect to any third-party equipment or installation where underwater meetable plugs are 
+required. Output from this sensor is only RS-232. Except from the plug and the missing AiCaP this 
+sensor is identical to 5819. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Figure 1-5: Conductivity Sensor 5990 
+
+Figure 1-6: Pin Configuration Conductivity Sensor 5990 
+
+
+
+A picture containing text
+Description automatically generated
+Diagram, schematic
+Description automatically generated
+
+1.4.1 Pin Configuration 5990 
+
+ 
+
+The Conductivity Sensor 5990 pin configuration is given in Figure 1-6 above. A description of the 
+receptacle notation is given in Table 1-5. 
+
+ 
+
+Signal 
+
+Description 
+
+Pin 
+
+Positive supply / V+ 
+
+5-14V positive supply 
+
+8 
+
+Gnd 
+
+Ground 
+
+7 
+
+NC 
+
+Not Connected 
+
+6 
+
+NC 
+
+Not Connected 
+
+5 
+
+NC 
+
+Not Connected 
+
+4 
+
+TXD 
+
+RS232 Transmit line 
+
+3 
+
+RXD 
+
+RS232 Receive line 
+
+2 
+
+NC 
+
+Not Connected 
+
+1 
+
+
+
+ 
+
+ 
+
+1.5 Sensor Connection 
+
+ 
+
+Aanderaa offers a wide range of cables for different use of the sensors, both standard cables for 
+use with loggers using AiCaP, RS-232 and RS-422 but also special customer specified cables for 
+use in project. See chapter 10.2 for an overview of standard cables or contact 
+aanderaa.sales@xylem.com for more info. To configure the sensor it need to be connected to an 
+Aanderaa logger using AiCaP, a real-time RS-232/RS-422 cable or you need a RS-232/RS-422 
+configuration cable. 
+
+ 
+
+ 
+
+1.5.1 Configure sensor using RS-232 configuration cable 
+
+ 
+
+Connect your sensor to one of the COM ports on your PC. If your PC comes without serial ports 
+(COM ports) you may also use an USB to Serial Adapter. We then recommend the Tripp-lite 
+Keyspan Model USA -19HS 
+
+ 
+
+The 3855 cable is a non-watertight 1.5-meter cable for laboratory use only used for connection 
+between sensor and PC in the office/lab. This is a standard cable that can also be used to 
+configure most other Aanderaa Smart Sensors as well. 
+
+The cable is supplied with a USB port providing power to the sensor from the PC USB port. A USB 
+extension cable is supplied with the cable so alternatively you may connect the free end to an 
+external power (5-14V). An alternative solution is to use a 9V alkaline battery (6LF22) to set the 
+sensor up or log it in the laboratory. Sensor Cable 3855 is also available in other lengths. 
+
+ 
+Table 1-5 Description of the Pin Configuration 5990 
+
+
+
+
+1.5.2 Configuration Cable 3855 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+Connection to the 
+USB port for 
+power supply 
+
+P739C1T10TB33bA#y1
+Connection 
+to the 
+sensor 
+
+P742C1T10TB32bA#y1
+Connection to an 
+external power 
+supply 
+(alternative2) 
+
+P742C1T10TB34bA#y1 
+
+
+Connection to 
+the PC serial 
+Port 
+
+P746TB35bA#y1 
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Figure 1-7: Set-up and configuration cable 3855 
+
+Table 1-6: Cable 3855 pin configuration 
+
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Signal name 
+
+Sensor plug 
+
+9-p D-Sub 
+
+USB 
+
+TXD 
+
+1 
+
+2 
+
+ 
+
+RXD 
+
+2 
+
+3 
+
+ 
+
+Boot Enable 
+
+3 
+
+ 
+
+ 
+
+BV 
+
+4 
+
+ 
+
+ 
+
+GND 
+
+7 
+
+5 
+
+4 (black) 
+
+Positive Supply 
+
+8 
+
+ 
+
+1 (red) 
+
+RTS short to CTS 
+
+ 
+
+7-8 
+
+ 
+
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+1.5.3 Configure sensor using RS-422 configuration cable 5618 
+
+ 
+
+Connect your sensor to one of the COM ports on your PC using the RS-422 to RS-232 adapter or 
+use an RS-422 port if available. If your PC comes without serial ports (COM ports) you may also 
+use an USB to Serial Adapter. We then recommend the Tripp-lite Keyspan Model USA -19HS 
+
+ 
+
+The 5618F is a 3 meter cable for laboratory use only used for connection between sensor and PC 
+in the office/lab. This cable can also be used to configure most of the other RS-422 Aanderaa 
+Smart Sensors as well. 
+
+The cable is supplied with a USB port providing power to the sensor from the PC USB port. A USB 
+extension is supplied with the cable if you want to use an external power source. An alternative 
+solution is to use a 9V alkaline battery (6LF22) to set the sensor up or log it in the laboratory. A 
+RS-422 to RS-232 converter is also Included with the cable. Sensor Cable 5618 is also available 
+in other lengths. 
+
+ 
+
+Cable 3855 10p_9Dsub_Bus_open
+
+1.5.4 Configuration Cable 5618 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+Connection 
+to the 
+sensor 
+
+P830C1T12TB61bA#y1
+Connection to an 
+external power 
+supply 
+(alternative2) 
+
+P830C1T12TB63bA#y1 
+
+
+Connection to the 
+USB port for 
+power supply 
+
+P834TB62bA#y1
+Connection to 
+the PC serial 
+Port 
+
+P834TB64bA#y1 
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Figure 1-8: Set-up and configuration cable 5618 
+
+Table 1-7: Cable 5618 pin configuration 
+
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+Signal name 
+
+Sensor plug 
+
+9-p D-Sub 
+
+USB 
+
+RS-422 Tx- 
+
+1 
+
+2 
+
+ 
+
+RS-422 RX+ 
+
+2 
+
+3 
+
+ 
+
+NC(Not Connected) 
+
+3 
+
+ 
+
+ 
+
+NC(Not Connected) 
+
+4 
+
+ 
+
+ 
+
+RS-422 Tx+ 
+
+5 
+
+7 
+
+ 
+
+NC(Not Connected) 
+
+6 
+
+ 
+
+ 
+
+Gnd 
+
+7 
+
+5 
+
+Black 
+
+Positive Supply / V+ 
+
+8 
+
+ 
+
+Red 
+
+RS-422 RX- 
+
+9 
+
+8 
+
+ 
+
+NC(Not Connected) 
+
+10 
+
+ 
+
+ 
+
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+1.6 Using PC without COM-port 
+
+ 
+
+If your PC comes without a COM-port we recommend to use a 
+USB to serial converter. 
+
+ 
+
+Figure 1-9 shows one alternative, Keyspan USA-19HS. 
+
+ 
+
+Connect the USB plug to your PC USB-port and then your 
+sensor to the 9pin DSub. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Figure 1-9: Serial to USB converter 
+
+
+
+ 
+
+Cable 3855 10p_9Dsub_Bus_open
+A picture containing electronics, cable, connector, adapter
+Description automatically generated
+
+1.7 User accessible sensor properties 
+
+ 
+
+All configuration settings that determine the behavior of the sensor are called properties and are 
+stored in a persistent memory block (flash). One property can contain several data elements of 
+equal type (Boolean, character, integer etc.). The different properties also have different access 
+levels. 
+
+ 
+
+To read the value of a certain properties you need to send ASCII string starting with the command 
+get and then followed by the property name to the sensor, see example below. 
+
+ 
+
+To change the content of a property an ASCII string starting with set and then followed by the 
+property name and new value in brackets need to be sent to the sensor. 
+
+ 
+
+Get Interval //When sending this string to the sensor, it will then return the 
+value stored in this property. 
+
+Interval 5819 17 60.000 //Returned from sensor, where 5819 is the product number, 17 
+is the serial number of the sensor and 60 is the value stored as 
+interval. To change the value you might send the following 
+command: 
+
+Set Interval(30) //This will change the value for this property to 30 seconds 
+
+Save //Always end with save to store setting in flash 
+
+ 
+
+The interval will now be changed to 30 seconds. For more details see CHAPTER 5 
+
+ 
+
+ 
+
+1.8 Passkey for write protection 
+
+ 
+
+ 
+
+ 
+
+Output 
+
+Passkey 
+
+Description 
+
+No 
+
+ 
+
+No Passkey needed for changing property 
+
+Low 
+
+1 
+
+The Passkey must be set to 1 prior to changing property 
+
+High 
+
+1000 
+
+The Passkey must be set to 1000 prior to changing property 
+
+This Passkey value also gives read access to factory properties 
+that usually are hidden 
+
+Read 
+Only 
+
+Factory 
+
+The user has only read access 
+
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+To avoid accidental change, most of the properties are write-protected. There are four levels of 
+access protection, refer Table 1-8 . 
+
+ 
+
+A special property called Passkey must be set according to the protection level before changing 
+the value of properties that are write-protected, refer Table 1-8. After a period of inactivity at the 
+serial input, the access level will revert to default. This period corresponds to the Comm TimeOut 
+setting, or 1 minutes if the Comm TimeOut is set to Always On. 
+
+ 
+Table 1-8: Passkey protection 
+
+
+
+
+1.9 Sensor Properties 
+
+ 
+
+When using AADI Real-Time Collector you don’t need to think about the command string sent to 
+the sensor since this is fully controlled by the software, see CHAPTER 3 and CHAPTER 4. 
+
+Some properties of the ‘AiCaP’ sensor will not be applicable / visible when the sensor is connected 
+to a SeaGuard, SeaGuardII or SmartGuard Datalogger, as the instrument will control these 
+properties. All sensor properties are listed in chapters 1.9.1 through 1.9.4 . 
+
+ 
+
+1.9.1 Factory Configuration 
+
+ 
+
+All properties in this section are Read Only, not possible to overwrite for the user. Only certified 
+Aanderaa service personal can alter these settings. The access level for reading the status of this 
+properties is however different for each property, see Table 1-8 for more details. In this group we 
+find information about Software and hardware settings, Production, Service and Calibration dates. 
+
+Table 1-9: Factory Configuration; Sensor Properties for Conductivity Sensor 5819, 5819R and 5990. 
+ENUM=Enumeration, INT =Integer, BOOL=Boolean (‘yes’/’no’) 
+
+
+
+Property 
+
+Type 
+
+No of elements 
+
+Use 
+
+Category 
+
+Access 
+Protection 
+
+Read/Write 
+
+Product Name 
+
+String 
+
+31 
+
+Aanderaa Product name 
+
+FC 
+
+No/ 
+Read 
+Only 
+
+ 
+
+Product Number 
+
+String 
+
+6 
+
+Aanderaa Product number 
+
+Serial Number 
+
+INT 
+
+1 
+
+Serial Number 
+
+SW ID 
+
+String 
+
+11 
+
+Software Identifier 
+
+SW Version 
+
+INT 
+
+3 
+
+Software version (Major, Minor, Built) 
+
+HW ID X 
+
+String 
+
+19 
+
+Hardware Identifier, X=1..3 
+
+High/ 
+
+Read 
+Only 
+
+HW Version X 
+
+String 
+
+9 
+
+Hardware Identifier, X=1..3 
+
+System Control 
+
+INT 
+
+3 
+
+For internal use 
+
+Production Date 
+
+String 
+
+31 
+
+AADI Production Date, format YYYY-MM-DD 
+
+Last Service 
+
+String 
+
+31 
+
+Last service date, format YYYY-MM-DD, 
+empty by default 
+
+Last Calibration 
+
+String 
+
+31 
+
+Last calibration date, format YYYY-MM-DD 
+
+Calibration Interval 
+
+INT 
+
+1 
+
+Recommended Calibration Interval in Days 
+
+Sample Control 
+
+Float 
+
+14 
+
+Factory use only 
+
+ARLim 
+
+Float 
+
+9 
+
+Factory use only. Automatic Range Limits 
+
+High/
+High 
+
+Enable 
+Conductivity 
+
+Bool 
+
+1 
+
+Controls inclusion of Conductivity in the 
+output. Default set to ‘Yes’ 
+
+No/ 
+Low 
+
+
+
+
+1.9.2 Deployment Settings 
+
+Deployment Settings contains settings for instruments metadata like position and owner, but also 
+site dependent properties storing data that might influence the measurement. 
+
+ 
+
+Property 
+
+Type 
+
+No of elements 
+
+Use 
+
+Category 
+
+Access 
+Protection 
+
+ Read/Write 
+
+Interval 
+
+Float 
+
+1 
+
+Sampling Interval in seconds 
+
+DS 
+
+ 
+
+No/No 
+
+ 
+
+Location 
+
+String 
+
+31 
+
+Set the location 
+
+Geographic Position 
+
+String 
+
+31 
+
+Set the geographic position 
+
+Vertical Position 
+
+Float 
+
+1 
+
+User value for describing sensor position 
+
+Reference 
+
+String 
+
+31 
+
+User setting for describing sensor reference, 
+user definable. 
+
+Pressure 
+
+Float 
+
+1 
+
+Water pressure in kPa 
+
+DS 
+
+No/ 
+Low 
+
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Table 1-10: Deployment Settings; Sensor Properties for Conductivity Sensor 5819, 5819R and 5990. 
+ENUM=Enumeration, INT =Integer, BOOL=Boolean (‘yes’/’no’) 
+
+
+
+
+1.9.3 System Configuration 
+
+This group is used to control the sensor via properties for configuring communication with logger, 
+sensor setup, parameter enabling, analog setting and controlling the output from sensor. Some of 
+the properties are only visible depending on the mode selected or if the function is enabled or not. 
+These properties will either be grey or not visible at all. 
+
+ 
+
+Property 
+
+Type 
+
+No of elements 
+
+Use 
+
+Category 
+
+Access 
+Protection 
+
+ Read/Write 
+
+Mode 
+
+ENUM 
+
+1 
+
+Operation Mode: ‘AiCaP’, ‘Smart Sensor Terminal’, 
+‘AADI Real-Time’, ‘Smart Sensor Terminal FW2’ 
+
+SC 
+
+ 
+
+No/ 
+Low 
+
+ 
+
+Enable Sleep 
+
+BOOL 
+
+1 
+
+Enable sleep mode 
+
+Enable Polled 
+Mode 
+
+BOOL 
+
+1 
+
+Enable Polled Mode (for RS232), when set to ‘No’ 
+the sensor will sample at the interval given by the 
+Interval property, when set to ‘Yes’ the sensor will 
+wait for the ‘Do Sample’ command. 
+
+Enable Text 
+
+BOOL 
+
+1 
+
+Enable text, when set to ‘No’ the startup info and the 
+parameter text is removed 
+
+Enable 
+Decimalformat 
+
+BOOL 
+
+1 
+
+Controls the use of decimal format in the output 
+string 
+
+Enable 
+Temperature 
+
+BOOL 
+
+1 
+
+Controls inclusion of Temperature in the output 
+
+Enable 
+Derived 
+Parameters 
+
+BOOL 
+
+1 
+
+Controls inclusion of Salinity, Density and Speed of 
+sound in the output string 
+
+Enable 
+Rawdata 
+
+BOOL 
+
+1 
+
+Controls inclusion of raw data in the output string 
+
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Table 1-11: System Configuration; Sensor Properties for Conductivity Sensor 5819, 5819R and 5990. 
+ENUM=Enumeration, INT =Integer, BOOL=Boolean (‘yes’/’no’) 
+
+
+
+
+1.9.4 User Maintenance 
+
+This group contains sensor settings that normally are not altered by the user. To access most of 
+these properties you need to send passkey(1000) or with Real-Time Collector use password: 
+1000. These properties are used to configure serial port settings, communication to and from 
+sensor, temperature and foil coefficients and properties used during calibration. 
+
+ 
+
+Table 1-12 Part 1 of 4: User Maintenance; ; Sensor Properties for Conductivity Sensor 5819, 5819R and 5990. 
+ENUM=Enumeration, INT =Integer, BOOL=Boolean (‘yes’/’no’) 
+
+
+
+Property 
+
+Type 
+
+No of elements 
+
+Use 
+
+Category 
+
+Access 
+Protection 
+
+ Read/Write 
+
+Node 
+Description 
+
+String 
+
+31 
+
+User text for describing node, placement etc. 
+
+UM 
+
+ 
+
+No/ 
+Low 
+
+Owner 
+
+String 
+
+31 
+
+User setting for owners name 
+
+No/ 
+High 
+
+Baudrate 
+
+ENUM 
+
+1 
+
+RS232 baudrate: 
+300,1200,2400,4800,9600,57600,115200 1) 
+
+High/ 
+
+High 
+
+ 
+
+Flow Control 
+
+ENUM 
+
+1 
+
+RS232 flow control: None or Xon/Xoff 
+
+Enable 
+Comm 
+Indicator 
+
+BOOL 
+
+1 
+
+Enable the Communication Sleep (‘%’) and 
+Communication Ready (‘!’) indicators 
+
+Comm 
+TimeOut 
+
+ENUM 
+
+1 
+
+RS232 communication activation timeout: 
+
+ Always On,10 s,20 s,30 s,1 min,2 min,5 min,10 
+min 
+
+CellCoef 
+
+Float 
+
+1 
+
+Cell constant for converting mS to mS/cm 
+
+TempCoef 
+
+Float 
+
+6 
+
+Curve fitting coefficients for the temp 
+measurements. 
+
+R0Coef0 
+
+Float 
+
+4 
+
+Temp Coefficients for Loop reading to 
+Conductance, Range 0 
+
+R0Coef1 
+
+Float 
+
+4 
+
+Temp Coefficients for Loop reading to 
+Conductance, Range 0 
+
+R0Coef2 
+
+Float 
+
+4 
+
+Temp Coefficients for Loop reading to 
+Conductance, Range 0 
+
+R0Coef3 
+
+Float 
+
+4 
+
+Temp Coefficients for Loop reading to 
+Conductance, Range 0 
+
+R0Coef4 
+
+Float 
+
+4 
+
+Temp Coefficients for Loop reading to 
+Conductance, Range 0 
+
+R1Coef0 
+
+Float 
+
+4 
+
+Temp Coefficients for Loop reading to 
+Conductance, Range 1 
+
+
+
+
+R1Coef1 
+
+Float 
+
+4 
+
+Temp Coefficients for Loop reading to 
+Conductance, Range 1 
+
+UM 
+
+High/ 
+High 
+
+R1Coef2 
+
+Float 
+
+4 
+
+Temp Coefficients for Loop reading to 
+Conductance, Range 1 
+
+R1Coef3 
+
+Float 
+
+4 
+
+Temp Coefficients for Loop reading to 
+Conductance, Range 1 
+
+R1Coef4 
+
+Float 
+
+4 
+
+Temp Coefficients for Loop reading to 
+Conductance, Range 1 
+
+R2Coef0 
+
+Float 
+
+4 
+
+Temp Coefficients for Loop reading to 
+Conductance, Range 2 
+
+R2Coef1 
+
+Float 
+
+4 
+
+Temp Coefficients for Loop reading to 
+Conductance, Range 2 
+
+R2Coef2 
+
+Float 
+
+4 
+
+Temp Coefficients for Loop reading to 
+Conductance, Range 2 
+
+R2Coef3 
+
+Float 
+
+4 
+
+Temp Coefficients for Loop reading to 
+Conductance, Range 2 
+
+R2Coef4 
+
+Float 
+
+4 
+
+Temp Coefficients for Loop reading to 
+Conductance, Range 2 
+
+R3Coef0 
+
+Float 
+
+4 
+
+Temp Coefficients for Loop reading to 
+Conductance, Range 3 
+
+R3Coef1 
+
+Float 
+
+4 
+
+Temp Coefficients for Loop reading to 
+Conductance, Range 3 
+
+R3Coef2 
+
+Float 
+
+4 
+
+Temp Coefficients for Loop reading to 
+Conductance, Range 3 
+
+R3Coef3 
+
+Float 
+
+4 
+
+Temp Coefficients for Loop reading to 
+Conductance, Range 3 
+
+R3Coef4 
+
+Float 
+
+4 
+
+Temp Coefficients for Loop reading to 
+Conductance, Range 3 
+
+R4Coef0 
+
+Float 
+
+4 
+
+Temp Coefficients for Loop reading to 
+Conductance, Range 4 
+
+R4Coef1 
+
+Float 
+
+4 
+
+Temp Coefficients for Loop reading to 
+Conductance, Range 4 
+
+R4Coef2 
+
+Float 
+
+4 
+
+Temp Coefficients for Loop reading to 
+Conductance, Range 4 
+
+R4Coef3 
+
+Float 
+
+4 
+
+Temp Coefficients for Loop reading to 
+Conductance, Range 4 
+
+R4Coef4 
+
+Float 
+
+4 
+
+Temp Coefficients for Loop reading to 
+Conductance, Range 4 
+
+R5Coef0 
+
+Float 
+
+4 
+
+Temp Coefficients for Loop reading to 
+Conductance, Range 5 
+
+
+
+
+R5Coef1 
+
+Float 
+
+4 
+
+Temp Coefficients for Loop reading to 
+Conductance, Range 5 
+
+UM 
+
+High/ 
+High 
+
+R5Coef2 
+
+Float 
+
+4 
+
+Temp Coefficients for Loop reading to 
+Conductance, Range 5 
+
+R5Coef3 
+
+Float 
+
+4 
+
+Temp Coefficients for Loop reading to 
+Conductance, Range 5 
+
+R5Coef4 
+
+Float 
+
+4 
+
+Temp Coefficients for Loop reading to 
+Conductance, Range 5 
+
+R6Coef0 
+
+Float 
+
+4 
+
+Temp Coefficients for Loop reading to 
+Conductance, Range 6 
+
+R6Coef1 
+
+Float 
+
+4 
+
+Temp Coefficients for Loop reading to 
+Conductance, Range 6 
+
+R6Coef2 
+
+Float 
+
+4 
+
+Temp Coefficients for Loop reading to 
+Conductance, Range 6 
+
+R6Coef3 
+
+Float 
+
+4 
+
+Temp Coefficients for Loop reading to 
+Conductance, Range 6 
+
+R6Coef4 
+
+Float 
+
+4 
+
+Temp Coefficients for Loop reading to 
+Conductance, Range 6 
+
+R7Coef0 
+
+Float 
+
+4 
+
+Temp Coefficients for Loop reading to 
+Conductance, Range 7 
+
+R7Coef1 
+
+Float 
+
+4 
+
+Temp Coefficients for Loop reading to 
+Conductance, Range 7 
+
+R7Coef2 
+
+Float 
+
+4 
+
+Temp Coefficients for Loop reading to 
+Conductance, Range 7 
+
+R7Coef3 
+
+Float 
+
+4 
+
+Temp Coefficients for Loop reading to 
+Conductance, Range 7 
+
+R7Coef4 
+
+Float 
+
+4 
+
+Temp Coefficients for Loop reading to 
+Conductance, Range 7 
+
+R8Coef0 
+
+Float 
+
+4 
+
+Temp Coefficients for Loop reading to 
+Conductance, Range 8 
+
+R8Coef1 
+
+Float 
+
+4 
+
+Temp Coefficients for Loop reading to 
+Conductance, Range 8 
+
+R8Coef2 
+
+Float 
+
+4 
+
+Temp Coefficients for Loop reading to 
+Conductance, Range 8 
+
+R8Coef3 
+
+Float 
+
+4 
+
+Temp Coefficients for Loop reading to 
+Conductance, Range 8 
+
+R8Coef4 
+
+Float 
+
+4 
+
+Temp Coefficients for Loop reading to 
+Conductance, Range 8 
+
+R9Coef0 
+
+Float 
+
+4 
+
+Temp Coefficients for Loop reading to 
+Conductance, Range 9 
+
+
+
+
+R9Coef1 
+
+Float 
+
+4 
+
+Temp Coefficients for Loop reading to 
+Conductance, Range 9 
+
+UM 
+
+High/ 
+High 
+
+R9Coef2 
+
+Float 
+
+4 
+
+Temp Coefficients for Loop reading to 
+Conductance, Range 9 
+
+R9Coef3 
+
+Float 
+
+4 
+
+Temp Coefficients for Loop reading to 
+Conductance, Range 9 
+
+R9Coef4 
+
+Float 
+
+4 
+
+Temp Coefficients for Loop reading to 
+Conductance, Range 9 
+
+DACARangeValues 
+
+Float 
+
+9 
+
+Factory use only. Setting ranges in raw data 
+values. 
+
+Range 
+
+INT 
+
+1 
+
+Range setting: -2=Factory use only, -1=Auto 
+range, 0-9=range 0 to range 9. Default is -1. 
+
+AiCaP 
+Presample 
+Time (sec.) 
+
+Float 
+
+1 
+
+Used to separate sampling if many sensors are 
+connected to same bus 
+
+
+
+1) Baud rates lower than 9600 may limit the sampling frequency. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+1.10 Sensor parameters 
+
+ 
+
+The firmware’s main task is to sample raw data, compute calibrated temperature compensated 
+and linearized conductivity, and present the result at the different interfaces. 
+
+All calibration coefficients and settings are stored in the DSP flash-memory. These properties can 
+be displayed and changed using the RS-232/RS-422 port. 
+
+ 
+
+• The Conductivity measurements are presented in mS/cm 
+• The ambient Temperature is presented in ºC. 
+
+
+ 
+
+1.10.1 Calculated parameters 
+
+ 
+
+Based on the measured parameters described above and a user selectable pressure setting (in 
+kPa), the senor software also calculates other parameters: 
+
+• The Salinity in PSU 
+
+• The water Density in kg/m3 
+
+• The Speed of Sound in m/s 
+
+ 
+
+To enable these parameters select Enable Derived Parameters(Yes) and set Pressure() equal 
+to deployment depth. 
+
+ 
+
+These calculations are made according to the UNESCO International Equation of State, IES 80, 
+Unesco 27 [1]. 
+
+ 
+
+ 
+
+The Conductivity raw data are 
+
+ 
+
+Conductance Measurement in mS 
+
+RawCond0 Raw measurement in LSB 
+
+RawCond1 Raw measurement in LSB 
+
+ZAmp Amplitude measurement in mV 
+
+RawTemp Voltage from thermistor bridge in mV 
+
+ 
+
+To enable these parameters select Enable Rawdata(Yes) 
+
+ 
+
+Calibration coefficients are stored in the sensors flash and are updated when recalibrated. If raw 
+data are not needed the user can select to turn off the delivery and logging of these. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+1.11 Specifications 
+
+For product specifications refer Datasheet D425 on our web site http://www.aaderaa.com or 
+contact aanderaa.info@xylem.com 
+
+You will always find the latest versions of our documentation on the web. 
+
+On our website you will also find the latest version of product manuals, technical notes and 
+software. Please contact aanderaa.info@xylem.com for guidance. 
+
+1.12 Manufacturing and Quality Control 
+
+Aanderaa Data Instruments products have a record for proven reliability. With over 50 years 
+experience producing instruments for user in demanding environments around the globe, you can 
+count on our reputation of delivering the most reliable products available. 
+
+ 
+
+We are an ISO 9001, ISO 14001, ISO 45001 and OHSAS 18001 Certified Manufacturer. As a 
+company we are guided by three underlying principles: quality, service, and commitment. We take 
+these principles seriously, as they form the foundation upon which we provide lasting value to our 
+customers. 
+
+ 
+
+ 
+
+ 
+
+
+ Configuration on SeaGuard with display 
+
+ 
+
+The 5819 Conductivity Sensor is equipped with a CAN bus interface supporting AADI AiCaP 
+(Automated idle line CAN bus Protocol). This standard ensures easy plug and play connection to 
+all Aanderaa SeaGuard, SeaGuardII and SmartGuard data logger. Make sure the sensor is set to 
+AiCaP mode before you connect the sensor to the AiCaP bus. Default setting from factory is 
+AiCaP. 
+
+ 
+
+When connected to an AiCaP bus network the sensor will report its capabilities and specifications 
+to the data logger at power up. The data logger assembles the information and provides the user 
+with the possibility to configure the instrument based on the presented nodes. This solution 
+provides for greater flexibility on both use and design of the different elements within the system. 
+
+ 
+
+Note! This chapter describes the configuration of the Conductivity Sensor 5819 when connected to 
+a SeaGuard with display. Refer TD262a for a thorough description of how to configure the 
+SeaGuard Instrument, and to perform Node Identification and Recorder settings. 
+
+ 
+
+For configuration on SeaGuardII or SmartGuard, see CHAPTER 4. 
+
+ 
+
+This is only valid for 5819 and not 5819R since this sensor has no AiCaP output. 
+
+ 
+
+ 
+
+2.1 Installation on SEAGUARD® Platform 
+
+ 
+
+The Conductivity Sensor 5819 are easily installed on AADI SeaGuard data loggers. Turn off power 
+before connecting the sensor. We recommend that you install the Conductivity Sensor in sensor 
+position 4 to secure free flow through the sensor bore and maximum distance from the zinc anode, 
+refer Figure 2-1. If mounted in position 6, use patch cable to connect the sensor to the HUB card. 
+
+ 
+
+Refer SeaGuard Platform Operating Manual, 
+
+TD262a, for an illustrated sensor installation guide. 
+
+TN309 holds an extract of sensor connection / 
+disconnection given in the SeaGuard Operating 
+Manual. 
+
+Note! 
+
+Always replace O-rings when removing, 
+exchanging, or installing a new sensor or a sealing 
+plug. 
+
+ 
+
+If placed next to another sensor, the CellCoef 
+
+calibration performed on the Conductivity sensor 
+
+might be influenced. It is important that the 
+
+Conductivity Cell is placed in the same position and 
+with the same sensors surroundings as it was 
+calibrated. For best accuracy, the CellCoef should 
+be recalibrated after any changes in the 
+surroundings. 
+Figure 2-1: SeaGuard Top-end plate 
+
+
+
+top end plate drawing
+
+All sensor and sealing plugs except for the center position are secured by means of a setscrew in 
+the side of the top end plate. Start by unscrewing the setscrew for the wanted position (the 
+setscrew will stop when sufficiently extracted). Pull out the sealing plug (or sensor) by inserting a 
+screwdriver in the slot between the plug and the top end plate, see Figure 2-2. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Use a small piece of paper/cardboard to protect the lacquer of the top-end plate 
+
+Make sure that the surface in the hole is clean and smooth and check also that the O-rings at the 
+sensor foot are free from dust and particles and greased with silicon grease. Align the orientation 
+pin in the sensor foot with the orientation hole in the top end plate, and carefully insert the sensor. 
+
+When fully seated at the top end plate, tighten the set screw with only moderate force. 
+
+ 
+
+Note! Always replace O-rings when moving a sensor or a sealing plug. 
+
+ 
+
+ 
+
+2.2 Sensor Cable for remote sensor 
+
+ 
+
+Sensor Cable 4793 is used for remote sensor connection on SeaGuard for example if you want to 
+measure gradients. Instrument side fits directly on the top-end plate using the same connection as 
+a standard AiCaP sensor. 
+
+ 
+
+ 
+
+ 
+Figure 2-2: Removal of sealing plug. 
+
+Figure 2-3: Remote sensor cable 4973 
+
+
+
+sealing_plug
+
+2.3 Sensor Configuration 
+
+ 
+
+In this section we will show you how to configure the sensor connected to a SeaGuard with 
+display. If you have a SeaGuard without display or a SeaGuardII please proceed to CHAPTER 4. 
+We will only cover the sections that are special for the conductivity sensor. Some of the 
+screenshots might be different on your logger due to different setup and accessories connected. 
+Some of the screenshots used are from other sensors but are then identical except from the 
+sensor name. 
+
+ 
+
+After installing the sensor in one of the sensor positions 
+turn power on and open menu by pressing the Menu 
+button in the lower left corner. Four submenus contain 
+properties for the Conductivity sensor. 
+
+• Administrative Tools 
+
+• Sensor Identification 
+
+
+ 
+
+• System Configuration 
+
+• Deployment Settings 
+
+These menus are covered in this chapter. For 
+information about the other menus see SeaGuard 
+Platform Operating Manual, TD262a. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+To enable/disable a parameter, change a value or change a text: 
+
+Select the output parameter from the list, press View/Edit or Edit Description in the lower part of 
+the window, and change the setting by ticking the box or use the keyboard sign in lower left corner 
+to type a new value or text, press Ok and Save/Finish to save and then close the window to finish 
+the update. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Figure 2-4: Select Menu to start 
+
+
+
+
+
+
+
+2.3.1 Administrative Tools 
+
+ 
+
+Open Administrative Tools from the Menu. 
+
+ 
+
+This section contains more submenus. In chapter 2.3.5 
+we will cover User Maintenance and in chapter 7.1.1 
+we will cover the Sensor Monitor menu. 
+
+ 
+
+For all other submenus, please refer to SeaGuard 
+Platform Operating Manual, TD262a. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+2.3.2 Sensor Identification 
+
+ 
+
+Open Sensor Identification from the main Menu. 
+Sensor Identification is a list of all sensor connected to 
+the logger. You may also change the description, using 
+the Edit Description button, but the default will be 
+‘Sensor Name’ # ’Serial Number’ 
+
+ 
+
+When you select one of the sensors you will find 
+Product Name, Product Number and Serial Number 
+in the Product Identifiers section. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Figure 2-5: Administrative Tools 
+
+Figure 2-6: Sensor Identification 
+
+
+
+
+
+2.3.3 System Configuration 
+
+ 
+
+Open System Configuration from the main Menu. 
+Under System Configuration you will find two tabs. 
+
+ 
+
+• Instrument 
+
+
+ 
+
+• Sensors 
+
+
+ 
+
+ 
+
+For more information about the Instrument tab and its 
+submenus, see SeaGuard Platform Operating 
+Manual, TD262a. 
+
+ 
+
+Select the Sensors tab to continue. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+The System Configuration sensors tab holds a list of 
+all Analog and AiCaP sensors connected to the logger. 
+Select the newly installed Conductivity Sensor that 
+should appear in the list of sensors, and tap Configure 
+in the lower part of the window. 
+
+ 
+
+Alternatively, if you want to configure all sensors in the 
+list you may select the Run Wizard button that will 
+guide you through all the individual sensor 
+configurations. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Figure 2-7: System Configuration menu 
+
+Figure 2-8: System Configuration Sensors selection 
+
+
+
+Side15
+
+The System Configuration for the Conductivity 
+Sensor holds a list of output parameters that can be 
+enabled/disabled by the user. Enabled properties (Yes) 
+are calculated and sent to the data logger: 
+
+ 
+
+• Enable Temperature in Deg. C. 
+• Enable Raw data, refer chapter 1.10.1 
+• Enable Derived Parameters, refer chapter 1.10.1 
+
+
+ 
+
+We recommend that you enable all parameters in case 
+of later use. Storage capacity for the memory card is 
+normally not a limitation for the SeaGuard. Raw data 
+can be used to control calibration coefficients and 
+perform quality control on the data. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Figure 2-9: System Configuration parameter enabling 
+
+
+
+
+
+2.3.4 Deployment Settings 
+
+ 
+
+Open Deployment Settings from the main Menu. 
+
+In Deployment Settings you will find two tabs. 
+
+ 
+
+• Instrument 
+
+
+ 
+
+• Sensors 
+
+
+ 
+
+For more information about the Instrument tab and its 
+submenus, see SeaGuard Platform Operating 
+Manual, TD262a. 
+
+ 
+
+Select the Sensors tab to continue. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+The Sensors tab holds a list of all Analog and AiCaP 
+sensors connected to the logger. Select the newly 
+installed Conductivity Sensor that should appear in 
+the list of sensors, and tap Configure in the lower part 
+of the window. 
+
+ 
+
+Alternatively, if you want to configure all sensors in the 
+list you may select the Run Wizard button that will 
+guide you through all the individual sensor 
+configurations. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Figure 2-10: Deployment Settings menu 
+
+Figure 2-11: Deployment Settings Sensor selection 
+
+
+
+
+
+The Deployment Settings for the Conductivity 
+Sensor hold a list of user defined inputs: 
+
+ 
+
+• Location 
+
+
+ 
+
+• Geographic Position 
+
+
+ 
+
+• Vertical Position 
+
+
+ 
+
+• Reference. 
+
+
+ 
+
+The values of these settings are not used in any 
+calculations. To add information to one of these 
+properties, select the property, press View/Edit and 
+with the keyboard panel enter the text or numbers. 
+Press OK and Finish storing the information. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Figure 2-12: Deployment Settings properties 
+
+
+
+
+
+2.3.5 User Maintenance 
+
+ 
+
+Special property settings and calibration coefficients 
+are found in User Maintenance. 
+
+ 
+
+User Maintenance is a submenu under the 
+Administrative Tools menu. 
+
+ 
+
+Open Administrative Tools from the Menu button and 
+select User Maintenance. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+In User Maintenance you will find two tabs. 
+
+ 
+
+• Instrument 
+
+
+ 
+
+• Sensors 
+
+
+ 
+
+For more information about the Instrument tab and its 
+submenus, see SeaGuard Platform Operating 
+Manual, TD262a. 
+
+ 
+
+Select the Sensors tab to continue. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Figure 2-13: User Maintenance menu 
+
+Figure 2-14: User Maintenance menu 
+
+
+
+
+
+
+
+
+The User Maintenance sensors tab holds a list of all 
+Analog and AiCaP sensors connected to the logger. 
+Select the newly installed Conductivity sensor that 
+should appear in the list of sensors, and tap Configure 
+in the lower part of the window. 
+
+ 
+
+Alternatively, if you want to configure all sensors in the 
+list you may select the Run Wizard button that will 
+guide you through all the individual sensor 
+configurations. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+In User Maintenance you find properties that are 
+password protected and are set/altered by the 
+‘advanced user’, note! The password is 1000. Enter 
+the password using the keyboard activated in the lower 
+left corner and the press OK to access. The properties 
+in User Maintenance are normally not changed during 
+normal operation 
+
+ 
+
+The user maintenance holds four submenus: 
+
+• Mandatory 
+• Site Info 
+• Calibration 
+• Sample Settings 
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Figure 2-15: User Maintenance Sensors tab 
+
+Figure 2-16: User Maintenance password menu 
+
+
+
+
+
+First submenu is the Mandatory. Select the Node 
+Description property, press View/Edit in the lower part 
+of the window, if you want to change the value. Press 
+Save to store the setting when completed. 
+
+Node Description is a user entered text describing the 
+sensor, placement etc. If using for example a 
+SeaGuard sensor string with multiple sensors 
+connected; renaming the sensor can facilitate analyzing 
+data. The text is by default set to the product name 
+followed by product number and serial number, e.g. 
+Conductivity Sensor 5819#12. 
+
+ 
+
+Press Next> to continue with the next submenu. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+The second submenu in the Conductivity Sensor 
+User Maintenance is Site Info and holds one setting 
+for Owner. 
+
+ 
+
+This property is not used by the sensor and therefor 
+optional. Typical value her is Name and contact info for 
+Owner. 
+
+ 
+
+Select the Owner property, tap View/Edit and type 
+your value. Press Save to store the setting. 
+
+ 
+
+Press Next> to continue with the next submenu. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Figure 2-17: Mandatory 
+
+Figure 2-18: Site Info 
+
+
+
+
+
+The third submenu are Calibration. For each calibration 
+property to be set first select the property then press 
+View/Edit and type the correct value. Press Save to 
+store the settings. 
+
+ 
+
+Except from the CellCoef all coefficients in this group 
+should not be changed unless you are instructed by a 
+certified Aanderaa representative. 
+
+ 
+
+Please refer to chapter 7.2 for how to calibrate the 
+CellCoef and to enter the new value. 
+
+ 
+
+TempCoef are Temperature calibration coefficients. 
+
+ 
+
+R0Coef0 to R9Coef4 are Range calibration coefficients 
+
+ 
+
+Press Next> to continue with the next submenu. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+DACARangeValues are factory settings used to set 
+the limits for each of the 10 ranges. 
+
+ 
+
+Do not alter these values unless you are instructed by a 
+certified Aanderaa representative. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Figure 2-19: Calibration part 1 of 2. 
+
+Figure 2-20: Calibration part 2 of 2. 
+
+
+
+
+
+The last submenu in the Conductivity Sensor User 
+Maintenance is Sample Settings and holds settings for: 
+
+ 
+
+• Range 
+
+
+ 
+
+• AiCaP Presample Time 
+
+
+ 
+
+Range is used to either set one of the 10 ranges or 
+automatic range. In most application we recommend 
+using the default setting: -1 = auto range. 
+
+ 
+
+AiCaP Presample Time is used to separate in time if 
+there is more than one Conductivity sensors connected 
+to the same logger. This is used to avoid noise between 
+the sensors especially if they are close. We recommend 
+separating each sensor with 1 second. This means that 
+the first sensor is set to 0 sec., Second sensor is set to 1 
+sec. and third sensor is set to 2 sec. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Figure 2-21: Sample Settings 
+
+
+
+
+
+
+
+ Stand-alone Sensor configuration using Real-Time Collector 
+
+ 
+
+This chapter describes the stand-alone sensor configuration using AADI Real-Time Collector when 
+the sensor is used as stand-alone sensor with serial communication RS-232. The menus shown 
+here are slightly different from the menus shown when the sensor is working in AiCaP mode and 
+configured through an Aanderaa Datalogger (described in CHAPTER 4 ). 
+
+It’s also possible to use terminal software to configure a stand-alone sensor, refer CHAPTER 6, 
+but then you need to enter all the commands and send them to the sensor. With Real-Time 
+Collector it’s much easier since the software will then let you configure the sensor using the 
+available choices in each category. 
+
+Before connecting the sensor to your computer, you need to install and start the AADI Real-Time 
+Collector software on your PC. 
+
+ 
+
+For more information about the AADI Real-Time Collector, refer TD 268 AADI Real-Time Collector 
+Operating Manual. See chapter 1.5 for more information about sensor connection. 
+
+ 
+
+3.1 Establishing a new connection 
+
+ 
+
+If this is the first time you start the software the connection list will be empty. You can then either 
+generate a new general connection that can be used for different sensor with the same output 
+protocol as a general Aanderaa Smart Sensor connection. However, you can also generate a 
+special connection for one specific sensor like Conductivity Sensor 5819 #12. 
+
+ 
+
+3.1.1 Add new connection to the list 
+
+ 
+
+The first time you open the AADI 
+Real-Time Collector program, the 
+connection list will be empty. 
+
+Click on the New button in the lower 
+left corner to create a new connection. 
+
+ 
+
+NOTE: You only need to do this once. 
+AADI Real-Time Collector will keep 
+the information for later use and next 
+time you might select it from the 
+connection list. 
+
+ 
+
+ 
+
+ 
+
+ Figure 3-1: AADI Real-Time Collector start up menu 
+
+
+
+
+
+First enter a new Connection 
+Name, we recommend using name 
+and serial number or just the type of 
+sensor if you want to use the same 
+connection for multiple sensors. 
+
+ 
+
+Select Serial Port in the dropdown 
+menu under Port Setting and 
+choose the correct COM-port on 
+your computer under Port Name. 
+COM-port number may vary 
+depending your connections. 
+
+ 
+
+Select 9600 as Baud Rate. This is 
+the default baud rate on all 
+Conductivity Sensors. 
+
+ 
+
+The Baud Rate needs to match the 
+baud rate set in User 
+Maintenance. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+3.1.2 Establish contact with the sensor 
+
+ 
+
+The new connection will then be 
+available in the AADI Real-Time 
+Collector connection list. 
+
+ 
+
+Click on the line with the new 
+connection to highlight this 
+connection and then click on the 
+Open Port button. 
+
+ 
+
+If you have multiple connections in 
+your list, then highlight the 
+connection you want and then 
+press Open Port. 
+
+ 
+
+ 
+
+Figure 3-3: New connection 
+
+P2349TB11#y1 
+
+
+ 
+
+ 
+
+It is possible to have multiple connections using the same port but only one of them can be open. 
+This means that if you have another sensor connected to COM6 you need to close this port before 
+you can open the new connection. Multiple connections can be open at the same time if they are 
+connected to different ports. 
+Figure 3-2: AADI Real Time Collector connection settings 
+
+
+
+
+
+When the connection is 
+established, a small window will 
+show up with a green check mark 
+confirming this. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Figure 3-4: Connection established 
+
+P2358TB12#y1 
+
+
+ 
+
+ 
+
+The status changes to green 
+when the port is open. 
+
+ 
+
+Then click on the Control Panel 
+button on the lower right corner 
+to continue. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Figure 3-5: Green Status 
+
+P2375TB13#y1 
+
+
+ 
+
+ 
+
+If the wheel continues to turn and you do not get the green status, please press Close Port and 
+then Open Port again. If you still face a connection problem, then check the port setting with 
+Baud Rate and Port Name. If you still cannot connect, check the cable connection and make sure 
+that you have power to the sensor. If the sensor is running on a fast interval this connection can 
+be a bit slower. 
+
+ 
+
+3.2 Control Panel 
+
+ 
+
+In the Control Panel window, you will find two tabs, Recorder Panel and Device Configuration. 
+Under Recorder Panel you can start and stop recordings. If the recorder is running first click on 
+the Stop Recorder as you are not allowed to configure the sensor when recording. The Recorder 
+Panel is dependent on the Sensor Mode. In AADI Real-Time mode you may start and stop the 
+recorder. For AiCaP and Smart Sensor Terminal you can only refresh the status but not start the 
+recording. 
+
+ 
+
+ 
+
+
+
+3.2.1 Recorder Panel 
+
+ 
+
+Under Start Options you can 
+start the sensor immediately by 
+Start Now. The Start Delayed 
+option is possible for stand-alone 
+sensors. 
+
+In the Timing session you may 
+select the recording interval 
+using Fixed Interval. The 
+available interval will be 
+dependent on the sensor 
+configuration. 
+
+If you change the configuration it 
+might cause a change in the 
+Fixed Interval, so we 
+recommend always checking the 
+interval after configuration is 
+finished. 
+
+The Script is not used for this 
+sensor. 
+
+Figure 3-6: Recorder Panel 
+
+P2391TB14#y1 
+
+
+ 
+
+3.2.2 Device Configuration 
+
+ 
+
+Click on the Device 
+Configuration tab to continue 
+and access the sensor property 
+menus. 
+
+Under the Device Configuration 
+tab click on the Get Current 
+Configuration... button to read 
+the current configuration from the 
+sensor. 
+
+To include the User 
+Maintenance settings tick off the 
+Include User Maintenance box 
+before clicking the Get Current 
+Configuration… 
+
+ 
+
+ 
+
+ Figure 3-7: Device Configuration 
+
+
+
+
+
+The settings in User Maintenance are protected with a higher access level. To access this menu 
+you will need to enter a password. 
+
+This password is 1000 for all sensors. 
+
+The device configuration is separated into Deployment settings, System Configuration, User 
+Maintenance, System overview and Save configuration to file. 
+
+ 
+
+You can save current settings to a backup file by pressing Save… under the heading Save 
+configuration to file. Edit the name for your file and press Save to save the configuration to file in 
+.xml format. Use XML Config Documentation Generator to convert from .xml to Word. This 
+generator is available from our website. Converting from .xml shown below. 
+
+ 
+
+ 
+
+ 
+
+to a more readable .doc format as shown below. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+System overview shows a short list of sensor properties like product name, serial number and 
+Software version. 
+
+ 
+
+User accessible sensor properties are found in Deployment settings, System Configuration 
+and User Maintenance. Refer chapter 1.7.1 trough 1.7.4 for an overview of the properties. 
+
+ 
+
+Note! The screen shots might show minor discrepancies compared to screen shots taken 
+from your sensor due to sensor updates. 
+
+ 
+
+Note! We recommend that you verify the system settings prior to starting a recording 
+session. 
+<PropertyCategory ID="0" Descr="Mandatory"> 
+
+ <Property ID="0" Descr="Product Name" Type="VT_BSTR" Access="R1W4">Conductivity Sensor</Property> 
+
+ <Property ID="1" Descr="Product Number" Type="VT_BSTR" Access="R1W4">5819</Property> 
+
+ <Property ID="2" Descr="Serial Number" Type="VT_I2" Access="R1W4">12</Property> 
+
+ <Property ID="6" Descr="SW ID" Type="VT_BSTR" Access="R1">1940023</Property> 
+
+ <Property ID="3" Descr="SW Version" Type="VT_ARRAY|VT_I2" Access="R1">5;4;1</Property> 
+
+ </PropertyCategory><PropertyCategory ID=”11” Descr=”Output Settings”> 
+
+<Property ID=”0” Descr=”Enable Conductivity” Type=”VT_BOOL” Access=”R1W2”>true</Property> 
+
+Figure 3-8: Configuration file saved as .xml 
+
+Figure 3-9: Configuration file converted to .doc 
+
+
+
+
+
+3.3 Changing Values 
+
+ 
+
+To change the content of a 
+property first tick in the value box 
+of the actual property and then 
+enter the text or number before 
+pressing Next. See example in 
+Figure 3-10, where the text for 
+Location has been changed. 
+
+The value is not changed before 
+you have finished the full 
+process. If you press Cancel or 
+turn of the power then the 
+changes will not be stored. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+In the next picture a list of all 
+properties that are changed will 
+show up. 
+
+If the list of configuration 
+changes is correct press Next to 
+start the update process. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Figure 3-10: Change value 
+
+Figure 3-11: Confirm Configuration Changes 
+
+
+
+
+
+ 
+
+An automatic process will start 
+with 6 steps transferring and 
+storing the new 
+information/setting in the sensor 
+Flash. 
+
+ 
+
+If necessary, a reset will be 
+executed. Do not switch off 
+before the entire process is 
+completed. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+When the updating process is 
+finished a confirmation will show 
+up. Press Finish to continue. 
+
+Before you can continue you 
+might need to go to the 
+Recorder Panel and press 
+Refresh Status. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Figure 3-12 Configuration Update 
+
+Figure 3-13 Configuration Update Completed 
+
+
+
+
+
+Some changes may 
+require a device reset 
+to take effect. Press 
+Yes to continue. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Some changes may 
+require that you stop 
+the recorder or refresh 
+the status in Record 
+panel. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Figure 3-14: Device Reset 
+
+Figure 3-15: Warning 
+
+
+
+
+
+3.4 Deployment Settings 
+
+ 
+
+In the Device Configuration window select Deployment Setting by ticking the Edit button following 
+the header 
+
+ 
+
+This menu holds three different 
+sections, Common Settings, 
+Site Info and Calculation Input. 
+
+ 
+
+See chapter 3.4.1 to 3.4.3 for a 
+explanation of each property, 
+
+ 
+
+All properties are also listed in 
+chapter 1.9.2 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+3.4.1 Common Settings 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Under Common Settings you will find only one property, Interval (s). This setting is used to 
+control the sensors recording interval, the number of seconds between each output. 
+
+This setting may also be set from Recorder Panel. The last entered value will be the valid one if 
+properly stored to flash. 
+
+ 
+
+ 
+Figure 3-16: Deployment Settings 
+
+Figure 3-17: Common Settings 
+
+
+
+
+
+3.4.2 Site Info 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Site Info is optional information to be entered to store information about the deployment. These 
+setting are not used in internal calculations only stored as a part of the sensor metadata. 
+Geographical Position is however used to give the map coordinates to display software or post 
+possessing software unless a GPS input is connected. The Properties under Site Info are: 
+
+ 
+
+• Location 
+
+
+ 
+
+• Geographical Position 
+
+
+ 
+
+• Vertical Position 
+
+
+ 
+
+• Reference 
+
+
+ 
+
+Location is typical the Site name or any name that can be used later to identify the location. 
+
+ 
+
+Geographical Position is normally the GPS Coordinates for the deployment. This might also be 
+to reproduce position in an electronic map. 
+
+ 
+
+Vertical Position is used to set the deployment depth or position in a chain of sensors. 
+
+ 
+
+Reference is a field where you might add information to be stored in the sensor metadata. 
+
+ 
+
+ 
+
+3.4.3 Calculation Input 
+
+If you want to calculate Salinity, Density and Sound Speed you also need the installation depth 
+for the sensor. Water depth or Pressure are given in kPa. To include Salinity in the sensor output 
+also Enable Derived Parameters need to be set. You will find this parameter under System 
+Configuration. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Figure 3-18: Site Info 
+
+Figure 3-19: Calculation Input 
+
+
+
+
+
+3.5 System Configuration 
+
+System Configurations 
+holds three different 
+sections that are controlling 
+the output from the sensor. 
+The sections are: 
+
+• Common Settings 
+• Terminal Protocol 
+• Output Settings 
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+See chapter 3.5.1 to 3.5.3 for a explanation of each property, Please note that some of the 
+properties are linked to specific modes and has no influence if the sensors is set to a different 
+mode. 
+
+All properties are also listed in chapter 1.9.3 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Figure 3-20: System Configuration 
+
+
+
+
+
+3.5.1 Common Settings 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+The Common Settings are available as shown in Figure 3-21. 
+
+. 
+
+Mode: The communication protocol must be defined under “Mode”. There are four different 
+choices: 
+
+• AiCaP mode: If the sensor is going to be used on a SeaGuard, SeaGuardII or SmartGuard 
+Datalogger, the mode must be changed to AiCaP mode first and saved before connecting 
+it to the Datalogger. 
+• AADI Real-Time is the correct mode (protocol) when used together with AADI Real-Time 
+Collector. This is an xml-based protocol which includes more metadata in the data 
+messages. If the sensor is connected via RS-232 (RS-422 for R-version) to the PC it is 
+possible to configure the sensor either it is set to AiCaP, AADI Real-Time or Smart Sensor 
+Terminal, but it is not possible to run and log data with AADI Real-Time Collector unless 
+the sensor is set to AADI Real-Time. 
+• The Smart Sensor Terminal protocol is a simplified ASCII protocol which is easier to use 
+together with a PC terminal program. This protocol is described more detailed in 
+CHAPTER 5. 
+• Smart Sensor Terminal FW2 is compatible with the older versions of Smart Sensor 
+Terminal. This is normally only used if you need an output string like an older version of the 
+sensor. 
+
+
+ 
+
+ 
+
+Notice that the sensor always must be reset when the protocol/mode has been changed. 
+
+ 
+
+Enable Sleep: This setting gives lower power consumption in AADI Real-Time and Smart Sensor 
+Terminal mode when the sensor is able to go to sleep between measurements. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Figure 3-21: Common Settings in System Configuration 
+
+
+
+
+
+3.5.2 Terminal Protocol 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+The properties in this menu are highly dependent on the mode setting. If sensor is set to AiCaP 
+these properties have no influence on the sensor. In AADI Real-Time mode only Enable Polled 
+mode will be active. In Smart Sensor Terminal and Smart Sensor Terminal FW2 mode all three 
+properties are used. 
+
+ 
+
+If the Enable Polled Mode is enabled, then the sensor only outputs data when the user/system 
+polls for data with a Do Sample command. 
+
+ 
+
+Enable Text and Enable Decimalformat control the output string in Smart Sensor Terminal. 
+
+ 
+
+With Enable Text enabled the sensor will output a string with parameter name together with each 
+parameter, refer chapter 5.8.4 for an example where this command is toggled. 
+
+ 
+
+Enable Decimalformat toggle between decimal format like 0.10 and Engineering format like 
+1.000E-01. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Figure 3-22: Terminal Protocol settings in System Configuration 
+
+
+
+
+
+3.5.3 Output Settings 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Enable Temperature. This setting is used to enable or disable the Temperature output. The 
+temperature reading is used to compensate for internal temperature drift when conductivity level is 
+calculated independently of this setting. 
+
+ 
+
+Enable Rawdata. This setting toggles on and off a set of raw data readings from the serial output 
+string. These rawdata readings are used internally in the calculation independently of this setting. 
+The parameters are: 
+
+ 
+
+• Conductance Measurement in mS 
+• RawCond0 Raw measurement in LSB 
+• RawCond1 Raw measurement in LSB 
+• ZAmp Amplitude measurement in mV 
+• RawTemp Voltage from thermistor bridge in mV 
+
+
+ 
+
+ 
+
+Enable Derived Parameters. This property is used to enable or disable some extra parameters 
+calculated based on both measured parameters like temperature and Conductivity but also fixed 
+values like Pressure and Gravity constant. If you want to postprocess these values, we 
+recommend using zero as Pressure to avoid any confusion. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Figure 3-23: Output settings in System Configuration 
+
+
+
+
+
+3.6 User Maintenance 
+
+To access the User Maintenance 
+menu, you first need to tap Include 
+User Maintenance. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+You then need to enter the 
+password that is 1000 for all units. 
+And press OK. 
+
+ 
+
+ 
+
+ 
+
+And then select Edit under the 
+User Maintenance. If you don’t tap 
+the Include User Maintenance 
+box and not enter the password the 
+User Maintenance will stay grey 
+and it will not be clickable. 
+
+ 
+
+ 
+
+ 
+
+ 
+Figure 3-24: Control Panel - Device Configuration 
+
+Figure 3-25: Password 
+
+Figure 3-26: Device Configuration - User Maintenance 
+
+
+
+
+
+Under User 
+Maintenance, you find 
+properties that are 
+password protected and 
+are set or altered by a 
+trained user. It is not 
+recommended to change 
+properties unless 
+instructed. To access 
+this menu, check the 
+“Include User 
+Maintenance” box in 
+the Device 
+Configuration before 
+clicking on the “Get 
+Current 
+Configuration…” 
+button. The password is: 
+1000. This menu 
+consists of five sessions: 
+
+• Mandatory 
+
+
+ 
+
+• Site Info 
+
+
+ 
+
+• Serial Port 
+
+
+ 
+
+• Calibration 
+
+
+ 
+
+• Sample Settings 
+
+
+ 
+
+For a full description of 
+each property please 
+refer to chapter 3.6.1 to 
+3.6.5 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Figure 3-27: User Maintenance part 1 of 2 
+
+
+
+Graphical user interface, table
+Description automatically generated
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Figure 3-28: User Maintenance part 2 of 2 
+
+
+
+Graphical user interface, application, table
+Description automatically generated
+
+3.6.1 Mandatory 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+In the Mandatory section you will find only one property, Node Description. All sensors are given 
+a Node Description text like Conductivity Sensor #xxx (xxx is the serial number of the sensor) by 
+default. The user can modify this Node Description text if required. Be aware that the Node 
+Description changes to *Corrupt Configuration if it has lost the configuration in flash. Contact 
+the factory if this happens. The configuration is saved in two sectors in flash memory. A flash 
+sector can be corrupted if the power is lost during the saving of new configuration. The double 
+flash sector saving ensures that it does not lose the configuration. If one of the sectors is 
+corrupted, the other sector is used and saved to the corrupt sector. 
+
+ 
+
+3.6.2 Site Info 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+In the Site Info section you will find only one property. Owner is optional information to be entered 
+to store information about the owner. This setting is not used in calculation. By default this setting 
+is empty. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Figure 3-29: Mandatory in User Maintenance 
+
+Figure 3-30; Site Info in User Maintenance 
+
+
+
+Graphical user interface, table
+Description automatically generated
+
+3.6.3 Serial Port 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+The Serial Port group contains setting that deals with the RS-232/RS-422 setup.RS-232 are used 
+with standard sensors and RS-422 are used with R-version sensors indicated with a R following 
+the product number. When using RS-232/RS-422 make sure that the sensor setting is the same 
+as terminal software set-up. The default settings from factory for Baudrate are 9600 and Flow 
+Control is set to Xon/Xoff. Enable Comm Indicator is enabling communication sleep (‘%’) and 
+communication ready (‘!’) indicators, when set to Smart Sensor Terminal. ‘!’ indicates that the 
+sensor is ready to communicate after sleep and ‘%’ indicates that the sensor is going to sleep due 
+to inactivity longer than the value/time set in Comm Timeout. The default settings are Enable 
+Comm Indicator enabled and Comm Timeout set to 1 min. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Figure 3-31: Serial Port settings in User Maintenance 
+
+
+
+
+
+3.6.4 Calibration 
+
+The Calibration section contains 
+calibration coefficients and settings. 
+These coefficients are calculated 
+during a calibration process at the 
+factory and except from the 
+CellCoef they are not 
+recommended to change by other 
+than trained personal at Aanderaa 
+certified calibration laboratories. 
+
+ 
+
+CellCoef is a user entered value 
+which describes the relationship 
+between the conductance (mS) in 
+the seawater loop measured by the 
+Sensor and the specific conductivity 
+(mS/cm). A corrected CellCoef can 
+be calculated using the procedure 
+in chapter 7.3.2 . 
+
+ 
+
+Note! 
+
+We recommend that you 
+recalculate the CellCoef when the 
+sensor is shifted between 
+instruments or between sensor 
+positions on the top-end plate. The 
+CellCoef is either calibrated 
+mounted on SeaGuard platform or 
+if delivered stand alone on a 
+standard cable. 
+
+ 
+
+TempCoef is a set of 6 coefficients 
+used as curve fitting coefficient for 
+temperature measurements. 
+Together with RawTemp it is used 
+to calculate the absolute 
+temperature. 
+
+ 
+
+R0Coef0 to R9Coef4 are 
+calibration coefficients for each of 
+the 10 Ranges the full range is 
+divided in. 
+
+ 
+
+DACA RangeValues are used to 
+set the Range for each of the 10 
+ranges. 
+
+These are the values that help the 
+sensor choice between the different 
+calibration sets depending on the 
+Rawdata reading. 
+Figure 3-32: Calibration coefficients in User Maintenance 
+
+
+
+Graphical user interface, table
+Description automatically generated
+
+3.6.5 Sample Settings 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Sample Setting contains two properties. 
+
+ 
+
+Range is used to select the range setting. You may either select one of the 10 ranges set by 
+DACARangeValues but then the sensor will only work properly within in this smaller range or you 
+can set range to -1. This is the default setting and makes the sensor to automatically select the 
+correct range dependent on the Rawdata reading. This setting is strongly recommended to use. 
+
+ 
+
+AiCaP Presample Time (sec.) is only valid when sensor is used in AiCaP mode. AiCaP 
+Presample Time is used to separate in time if there is more than one Conductivity sensors 
+connected to the same logger. This is used to avoid noise between the sensors especially if they 
+are close. We recommend separating each sensor with 1 second. This means that the first sensor 
+is set to 0sec., Second sensor is set to 1sec. and third sensor is set to 2sec. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Figure 3-33: Sample Settings in User Maintenance 
+
+
+
+Graphical user interface, application, table
+Description automatically generated
+
+ Configuration via SmartGuard or SeaGuardII Datalogger 
+
+ 
+
+4.1 Introduction 
+
+ 
+
+ 
+
+The Conductivity Sensor 5819 can easily be installed on the Aanderaa SeaGuard or SeaGuardII 
+platform or connected using a cable. 
+
+It can also be used with the SmartGuard Datalogger using a cable for surface buoy applications or 
+placed on land. 
+
+For installation on SeaGuard with display see CHAPTER 2 
+
+ 
+
+To be able to control the Conductivity Sensor via SeaGuard, SeaGuardII or SmartGuard the 
+sensor needs to be in AiCaP mode. 
+
+ 
+
+4.2 Installation of the Conductivity Sensor 5819 on SeaGuardII 
+
+ 
+
+Power should be turned off before connecting the sensor. We recommend that you install the 
+Conductivity Sensor in sensor position 3, 4 or 6, refer Figure 4-1. If mounted in position 6 use 
+patch cable to connect the sensor to the HUB card. 
+
+ 
+
+ 
+
+Important! 
+
+ 
+
+ 
+
+Refer SeaGuard Platform Operating Manual, 
+TD303, for an illustrated sensor installation guide. 
+
+TN309 holds an extract of sensor connection / 
+disconnection given in the SeaGuard Operating 
+Manual. 
+
+Note! 
+
+Always replace O-rings when removing, 
+exchanging, or installing a new sensor or a sealing 
+plug. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Figure 4-1: SeaGurdII Top End plate 
+
+
+
+top end plate drawing
+
+4.3 Configuration with AADI Real-Time collector 
+
+ 
+
+In this chapter we will show you how to configure the sensor when connected to a Aanderaa 
+Platform. This configuration can also be done via a real-time output but to do this the Platform first 
+need to be set up with a two-way real-time output. 
+
+ 
+
+4.3.1 Connected via SeaGuardII 
+
+• Connect the micro-USB configuration cable to the USB connector in front of the instrument 
+and to the PC 
+• Install and start the AADI Real-Time Collector software on your PC. For more information 
+about the AADI Real-Time Collector, refer TD 268 AADI Real-Time Collector Operating 
+Manual 
+• Switch on the instrument by pressing the power button in the front of the instrument. 
+• Wait approximately 30 seconds before the instruments starts up and connection is 
+established. 
+
+
+ 
+
+4.3.2 Connected via SmartGuard 
+
+• Connect the USB configuration cable to the USB connector on the left-hand side of the 
+SmartGuard and to the PC 
+• Install and start the AADI Real-Time Collector software on your PC. For more information 
+about the AADI Real-Time Collector, refer TD 268 AADI Real-Time Collector Operating 
+Manual 
+• Switch on the logger by turning the power to the “ON”- position. 
+• Wait approximately 30 seconds before the logger starts up and connection is established. 
+
+
+ 
+
+ 
+
+4.4 Establish connection 
+
+ 
+
+NOTE! 
+
+When using a USB connection, you also need to install Windows Mobile Device Center if 
+not already installed on your computer please contact aanderaa.support@xylem.com for 
+further assistance. 
+
+ 
+
+Windows Mobile Device Center acts as device management and data synchronization between a 
+Windows Mobile-based device and a computer. 
+
+Once the USB connection has been established, Windows Mobile Device Center will start 
+automatically: 
+
+ 
+
+
+You may close this window 
+after connection is 
+established. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+At first connection with AADI 
+Real-Time Collector the 
+connection list will be emty. 
+
+Click on the New button in the 
+lower left corner to create a 
+new connection 
+
+NOTE: This only need to be 
+done once. AADI Real-Time 
+Collector will keep the 
+information for later use and 
+next time you might select it 
+from the connection list. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Figure 4-2: Windows Mobile Device Center 
+
+Figure 4-3: AADI Real-Time Collector start up menu 
+
+
+
+
+
+Select USB from the Port Settings 
+drop down menu and write a name 
+in the Connection Name box (e.g. 
+SeaGuardII). We recommend using 
+product name and serial number if 
+you want to connect multiple 
+instruments to the same software. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+The new connection is now shown 
+in the AADI Real-Time Collector 
+connection list. Click on the line with 
+the new connection to highlight the 
+line and then click on the Open 
+Port button. The connection to the 
+SeaGuardII/SmartGuard should be 
+established within a few seconds 
+and the status turn to green. After 
+power up it will take approximately 
+30 seconds before the logger is 
+ready. 
+
+Open Control Panel in the lower 
+right corner. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Figure 4-4: AADI Real time Collector connection settings 
+
+Figure 4-5: AADI Real-Time Collector main menu 
+
+
+
+
+
+4.4.1 Control Panel 
+
+ 
+
+In the Control Panel window you will find four tabs, Recorder Panel, Device Configuration 
+Device Layout and System Status. Under Recorder Panel you can start and stop recordings. If 
+the recorder is running first click on the Stop Recorder as you are not allowed to configure the 
+sensor when recording. For information about Device Layout and System Status see Manual for 
+SeaGuardII Platform TD303 or SmartGuard TD293. 
+
+ 
+
+If the instrument is recording, 
+under Recorder Panel, press 
+Stop All Groups. 
+
+The Control Panel is controlling 
+the SeaGuardII/SmartGuard 
+recorder and not individual 
+sensors. However the Recorder 
+Panel consist of three recording 
+groups where you might put 
+individual sensors in each group to 
+run them on different recording 
+interval. See Operation Manual 
+SeaGuardII / SmartGuard for more 
+info. 
+
+Under each group you can start 
+the group immediately by Start 
+Now, or start later using the Start 
+Delayed option 
+
+ 
+
+ 
+
+ 
+
+ 
+
+The layout of this menu will vary depending on the Recorder status and selections done in the 
+Deployment Settings > Multi Group Recorder menu 
+
+ 
+
+The Fixed Interval is the recording interval for each group. The configuration of sensors in each 
+group will influence on the available recording interval. If you change the configuration of one 
+sensor and this cause a longer processing time the Fixed Interval might be changed. We 
+recommend that you always check the recording interval after any changes in configuration. 
+
+Fixed Interval is not applicable in the Recorder Panel menu unless Selectable in recorder 
+panel is selected in Deployment Settings > Multi Group Recorder menu. 
+
+ 
+
+Start Delayed is mainly used if you want to arm your instrument to start later. This can be useful if 
+you configure the instrument in your office and don’t want the instrument to record before the 
+instrument is installed in water. Start Delayed can also be used to synchronize the start time for 
+the three groups or between multiple instruments. 
+
+ 
+
+See Manual for SeaGuardII Platform TD303 or SmartGuard TD293 for more information about the 
+Multi Group Recorder menu. 
+Figure 4-6: Recorder Panel 
+
+
+
+
+
+Each Sensor will do a calculation 
+based on the configuration for each 
+recording interval. 
+
+The device configuration is 
+separated into Deployment 
+settings, System Configuration, 
+User Maintenance, System 
+overview and Save configuration 
+to file. 
+
+Settings related to the Conductivity 
+Sensor can be configured under 
+Deployment Settings, System 
+Configuration and User 
+Maintenance. 
+
+System overview shows a short 
+list of sensor properties like product 
+name, serial number and Software 
+version. 
+
+ 
+
+ 
+
+Under the heading Save configuration to file you can save current settings to a backup file by 
+pressing Save…. Edit the name and location for your file and press Save to store the new 
+configuration to file in .xml format. 
+
+User accessible sensor properties are found in Deployment settings, System Configuration 
+and User Maintenance. Refer Table 1-10 to Table 1-12 for an overview of the properties. 
+
+ 
+
+Note! The screen shots might show minor discrepancies compared to screen shots taken 
+
+from your sensor due to sensor updates. 
+
+ 
+
+Note! We recommend that you verify the system settings prior to starting a recording 
+session. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Figure 4-7: Device configuration 
+
+
+
+
+
+4.5 Changing Values 
+
+ 
+
+To change the content of a 
+property first tick in the value box 
+of the actual property and then 
+enter the text or number before 
+pressing Next. See example 
+where the text for Location has 
+been changed. 
+
+The value is not changed before 
+you have finished the full 
+process. If you press Cancel or 
+turn of the power then the 
+changes will not be stored. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+In the next picture a list of all 
+properties that are changed will 
+show up. 
+
+If the list of configuration 
+changes is correct press Next 
+to start the update process. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Figure 4-8: Change value 
+
+Figure 4-9: Confirm Configuration Changes 
+
+
+
+
+
+An automatic process will start 
+with 6 steps transferring and 
+storing the new 
+information/setting in the sensor 
+Flash. 
+
+ 
+
+
+If necessary, a reset will be 
+executed. Do not switch off 
+before the entire process is 
+completed. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+When the updating process is 
+finished a confirmation will show 
+up. Press Finish to continue. 
+
+
+Before you can continue you 
+might need to go to the Recorder 
+Panel and press Refresh Status 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Figure 4-10 Configuration Update 
+
+Figure 4-11 Configuration Update Completed 
+
+
+
+
+Some changes may 
+require a device reset 
+to take effect. Press 
+Yes to continue. 
+
+ 
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+Some changes may 
+require that you stop 
+the recorder or refresh 
+the status in Record 
+panel. 
+
+ 
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+Note! The screen shots might show minor discrepancies compared to screen shots taken 
+from your sensor due to sensor updates. 
+
+ 
+
+Note! We recommend that you verify the system settings prior to starting a recording 
+session. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Figure 4-12: Device Reset 
+
+Figure 4-13: Warning 
+
+
+
+
+4.6 Deployment settings 
+
+ 
+
+Under Control Panel select the 
+Device Configuration tab and 
+press The Get Current 
+Configuration… box. 
+
+
+Select Edit… underneath the 
+Deployment Settings header. 
+Under Sensors all connected 
+sensors will show up. All AiCaP 
+sensors connected to the bus will 
+automatically show up in the list 
+after power-up. 
+
+ 
+
+Double-click on the 
+Conductivity Sensor to select 
+the sensor. 
+
+ 
+
+The Deployment Settings 
+contains two groups: Site Info 
+and Calculation Input. 
+
+ 
+
+Figure 4-14: Deployment settings 
+
+Figure 4-15: Site Info 
+
+
+
+ 
+
+ 
+
+ 
+
+4.6.1 Site Info 
+
+ 
+
+ 
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Site Info is optional information to be entered to store information about the deployment. These 
+setting are not used in internal calculations only stored as a part of the sensor metadata. 
+Geographical Position is however used to give the map coordinates to display software or post 
+possessing software unless a GPS input is connected. The Properties under Site Info are: 
+
+ 
+
+• Location 
+
+
+ 
+
+• Geographical Position 
+
+
+ 
+
+• Vertical Position 
+
+
+ 
+
+• Reference 
+
+
+
+Location is typical the Site name or any name that can be used later to identify the location. 
+
+ 
+
+Geographical Position is normally the GPS Coordinates for the deployment. This might also be 
+to reproduce position in an electronic map. 
+
+ 
+
+Vertical Position is used to set the deployment depth or position in a chain of sensors. 
+
+ 
+
+Reference is a field where you might add information to be stored in the sensor metadata. 
+
+ 
+
+ 
+
+4.6.2 Calculation Input 
+
+ 
+
+ 
+
+ 
+
+
+. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+If you want to calculate Salinity, Density and Sound Speed you also need the installation depth 
+for the sensor. Water depth or Pressure are given in kPa. To include Salinity in the sensor output 
+also Enable Derived Parameters need to be set. You will find this parameter under System 
+Configuration. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Figure 4-16: Calculation Input 
+
+
+
+
+4.7 System Configuration 
+
+ 
+
+Select System Configuration 
+under Device Configuration 
+The different sensors connected 
+to the same Datalogger will 
+show up as selectable items, 
+
+ 
+
+
+Double-click on the 
+Conductivity Sensor to start 
+configuration. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+System Configuration holds 
+only one group: 
+
+
+Output Settings. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Figure 4-17: System configuration 
+
+Figure 4-18: System Configuration 
+
+
+
+
+4.7.1 Output Settings 
+
+ 
+
+ 
+
+ 
+
+
+ 
+
+ 
+
+ 
+
+Enable Temperature. This setting is used to enable or disable the Temperature output. The 
+temperature reading is used to compensate for internal temperature drift when conductivity level is 
+calculated independently of this setting. 
+
+ 
+
+Enable Rawdata. This setting toggles on and off a set of raw data readings from the serial output 
+string. These rawdata readings are used internally in the calculation independently of this setting. 
+The parameters are: 
+
+ 
+
+• Conductance Measurement in mS 
+• RawCond0 Raw measurement in LSB 
+• RawCond1 Raw measurement in LSB 
+• ZAmp Amplitude measurement in mV 
+• RawTemp Voltage from thermistor bridge in mV 
+
+
+ 
+
+ 
+
+Enable Derived Parameters. This property is used to enable or disable some extra parameters 
+calculated based on both measured parameters like temperature and Conductivity but also fixed 
+values like Pressure and Gravity constant. If you want to postprocess these values, we 
+recommend using zero as Pressure to avoid any confusion. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Figure 4-19: Output Settings 
+
+
+
+
+4.8 User Maintenance 
+
+ 
+
+Under User Maintenance, you find 
+properties that are password 
+protected and are set or altered by a 
+trained user. It is not recommended 
+to change properties unless 
+instructed. To access this menu, 
+check the “Include User 
+Maintenance” box in the Device 
+Configuration before clicking on the 
+“Get Current Configuration…” 
+button. The password is: 1000. This 
+menu consists of four sessions: 
+
+Graphical user interface
+Description automatically generated with medium confidence
+• Mandatory 
+
+
+ 
+
+• Site Info 
+
+
+ 
+
+• Calibration 
+
+
+ 
+
+• Sample Settings 
+
+
+ 
+
+The two first sessions contains only 
+information and do not influence on 
+the measurements when the two last 
+sessions highly influence the 
+measurements. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Figure 4-20: User Maintenance part 1 of 2 
+
+
+
+
+For a full description of each 
+property please refer to chapter 
+4.8.1 through 4.8.4 
+
+Graphical user interface
+Description automatically generated with medium confidence 
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+4.8.1 Mandatory 
+
+ 
+
+ 
+
+Graphical user interface, table
+Description automatically generated 
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+In the Mandatory section you will find only one property, Node Description. All sensors are given 
+a Node Description text like Conductivity Sensor #xxx (xxx is the serial number of the sensor) 
+by default. The user can modify this Node Description text if required. Be aware that the Node 
+Description changes to *Corrupt Configuration if it has lost the configuration in flash. Contact 
+the factory if this happens. The configuration is saved in two sectors in flash memory. A flash 
+sector can be corrupted if the power is lost during the saving of new configuration. The double 
+flash sector saving ensures that it does not lose the configuration. If one of the sectors is 
+corrupted, the other sector is used and saved to the corrupt sector. 
+
+ 
+
+4.8.2 Site Info 
+
+ 
+
+ 
+
+ 
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+In the Site Info section, you will find only one property. Owner is optional information to be 
+entered to store information about the owner. This setting is not used in calculation. By default, 
+this setting is empty. 
+Figure 4-21 User Maintenance part 2 of 2 
+
+Figure 4-22: Mandatory in User Maintenance 
+
+Figure 4-23; Site Info in User Maintenance 
+
+
+
+
+4.8.3 Calibration 
+
+ 
+
+The Calibration section contains 
+calibration coefficients and settings. 
+These coefficients are calculated 
+during a calibration process at the 
+factory and except from the CellCoef 
+they are not recommended to change 
+by other than trained personal at 
+Aanderaa certified calibration 
+laboratories. 
+
+Graphical user interface
+Description automatically generated with medium confidence 
+
+
+CellCoef is a user entered value which 
+describes the relationship between the 
+conductance (mS) in the seawater loop 
+measured by the Sensor and the 
+specific conductivity (mS/cm). A 
+corrected CellCoef can be calculated 
+using the procedure in chapter 7.2.2 . 
+
+ 
+
+Note! 
+
+We recommend that you recalculate 
+the CellCoef when the sensor is 
+shifted between instruments or 
+between sensor positions on the top-
+end plate. The CellCoef is either 
+calibrated mounted on SeaGuard 
+platform or if delivered stand alone on 
+a standard cable. 
+
+ 
+
+TempCoef is a set of 6 coefficients 
+used as curve fitting coefficient for 
+temperature measurements. Together 
+with RawTemp it is used to calculate 
+the absolute temperature. 
+
+ 
+
+R0Coef0 to R9Coef4 are calibration 
+coefficients for each of the 10 Ranges 
+the full range is divided in. 
+
+ 
+
+DACA RangeValues are used to set 
+the Range for each of the 10 ranges. 
+
+These are the values that help the 
+sensor choice between the different 
+calibration sets depending on the 
+Rawdata reading. 
+
+ 
+
+ 
+
+ 
+
+ 
+Figure 4-24: Calibration coefficients in User Maintenance 
+
+Figure 4-25: Calibration coefficients in User Maintenance 
+
+
+
+
+4.8.4 Sample Settings 
+
+ 
+
+ 
+
+Graphical user interface, application, table
+Description automatically generated 
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Sample Setting contains two properties. 
+
+ 
+
+Range is used to select the range setting. You may either select one of the 10 ranges set by 
+DACARangeValues but then the sensor will only work properly within in this smaller range or you 
+can set range to -1. This is the default setting and makes the sensor to automatically select the 
+correct range dependent on the Rawdata reading. This setting is strongly recommended to use. 
+
+ 
+
+AiCaP Presample Time (sec.) is only valid when sensor is used in AiCaP mode. AiCaP 
+Presample Time is used to separate in time if there is more than one Conductivity sensors 
+connected to the same logger. This is used to avoid noise between the sensors especially if they 
+are close. We recommend separating each sensor with 1 second. This means that the first sensor 
+is set to 0sec., Second sensor is set to 1sec. and third sensor is set to 2sec. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Figure 4-26: Sample Settings in User Maintenance 
+
+
+
+
+ Stand-alone Sensor configuration using Terminal Software 
+
+ 
+
+This chapter describes how to communicate with the Conductivity Sensor using the RS-232 or Rs-
+422 for R-version connection and Terminal Software. The sensor can be set to any mode but the 
+mode setting and setting of the different properties will influence on the output from the sensor. 
+
+5.1 Sensor versions and interface 
+
+ 
+
+The 5819 sensors can be used on a SeaGuardII and SmartGuard (AiCaP) Dataloggers or 
+connected to a RS-232 com-port (PC or other devices with RS232 com-port). 
+
+The 5819R sensors can be used connected to an RS-422 com-port or connected with an RS-422 
+to RS-232 converter to an RS-232 com-port. Or directly to a RS-422 com-port. 
+
+The 5990 sensors can be used connected to an RS-232 com-port (PC or other devices with 
+RS232 com-port). 
+
+ 
+
+5.2 Communication setup 
+
+ 
+
+Most terminal programs can be used for RS-232 communication with the sensor when connected 
+to a PC, e.g. TeraTerm. 
+
+The following setup should be used: 
+
+9600 Baud 
+
+8 Data bits 
+
+1 Stop bit 
+
+No Parity 
+
+Xon/Xoff Flow Control 
+
+ 
+
+IMPORTANT! The terminal program must send a Line Feed after each Carriage Return. 
+
+Note! If using Tera Terminal Pro, after setting up the com port according to settings above 
+please select “Terminal” in the “Set up” menu and click “Local echo” also select “CR+LF” 
+for both “Receive” and “Transmit” under “New line”. 
+
+ 
+
+Note! If using Hyper Terminal the options “Send line ends with line feeds” and “Echo line 
+ends with line feeds” in the HyperTerminal ASCII setup must be selected. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+5.3 Sensor startup 
+
+ 
+
+You will be able to communicate with the sensor via the Terminal software regardless of which 
+mode the sensor is set to. However, the output string from the sensor will depend on the mode 
+setting. The final structure of the output string will also depend on settings like Enable Text, 
+Enable Decimal Format, Enable Raw Data, and so on. The sensor will continue to output 
+measurements after the first startup info. The output frequency will be according to the interval 
+setting. Some properties will not have any effects in all modes but they will still be available. Some 
+properties may also have different effects depending on the mode. 
+
+ 
+
+5.3.1 Smart Sensor Terminal mode 
+
+ 
+
+In Smart Sensor Terminal mode the sensor will output StartupInfo with Product Number, Serial 
+Number, Mode, Protocol Version and Config Version. It will also output a first measurement 
+immediately after power- up and then a new measurement every x seconds, where x is the interval 
+in second set by Interval(x). 
+
+ 
+
+ 
+
+
+ 
+
+ 
+
+ 
+
+5.3.2 AiCaP mode 
+
+ 
+
+In AiCaP mode the sensor will output StartupInfo with Product Number, Serial Number, Mode, 
+AiCaP Version, Protocol Version and Config Version. In this mode the sensor will not output 
+any measurement since it needs an Aanderaa Datalogger as Master. The sensor can be 
+configured for AiCaP use via the Terminal software. 
+
+ 
+
+ 
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Figure 5-1: Typical power-up output for sensor set to Smart Sensor Terminal mode 
+
+Figure 5-2: Typical power-up output for sensor set to AiCaP mode 
+
+
+
+
+5.3.3 AADI Real-Time mode 
+
+ 
+
+AADI Real-Time mode is also a Serial output but with .xml instead of ASCII. This is the mode 
+used with AADI Real-Time Collector and also preferd by som integrators when sensor is 
+connected to 3rd party loggers or interface. 
+
+ 
+
+
+Figure 5-3: Typical power-up output for sensor set to AADI Real-Time mode 
+
+
+
+ 
+
+ 
+
+ 
+
+5.4 Controlling communication 
+
+ 
+
+In order to minimize the current drain the sensor normally enters a power down mode after each 
+sampling; the sensor can be awake by any characters and will stay awake for a time set by the 
+Comm TimeOut property after receiving the last character. 
+
+If the property Comm TimeOut is set to other than ‘Always On’ the serial interface will not be 
+activated after power-up (or the Reset command). Any character will activate the serial interface, but a 
+Carriage Return (CR or CR+LF), ‘/’ or ‘;’ are often preferred since these characters do not interfere 
+with the command syntax. The serial interface will then be active until a period of input inactivity 
+specified by the Comm TimeOut value. The Communication Sleep Indicator, ‘%’, will be 
+transmitted when the serial communication is deactivated, and the Communication Ready Indicator, 
+‘!’ is outputted subsequent to activation (electronics require up to 500ms start up time). When Comm 
+TimeOut is set to ‘Always On’ the communication (and microprocessor) will be kept active all time. 
+
+The Communication Sleep Indicator ‘%’ and the Communication Ready Indicator ‘!‘ are not 
+followed by Carriage Return and Line Feed. 
+
+Any character will cause the electronics to return to normal operation; when the sensor has 
+responded with the character ‘!’, new commands may be entered. 
+
+When communicating with the sensor, you must start by pressing Enter. The sensor will respond 
+in two ways (Comm TimeOut is 1 minute by default in the following description): 
+
+• If the sensor is ready for communication, it will not send any response indicator. The sensor 
+will stay awake and ready to receive commands for 1 minute 
+• If the sensor is in sleep mode and not ready for communication, the sensor will send a 
+‘communication ready’ indicator (!) when awakened (within 500ms). The sensor will then be 
+ready for communication. 
+
+
+
+The ‘Communication Sleep Indicator ‘%’ and the ‘Communication Ready’ Indicator ‘!‘ are not 
+followed by Carriage Return and Line Feed. 
+
+ 
+
+5.5 Description of protocol 
+
+ 
+
+All inputs to the sensor are given as commands with the following format: 
+
+• MainCmd SubCmd or MainCmd Property(Value, ..., Value) 
+
+
+Eg. Do Sample or Set Interval(10) 
+
+ 
+
+Description of ASCII coded communication rules: 
+
+• The main command, MainCmd, is followed by an optional subcommand (SubCmd) or sensor 
+property (Property). 
+• The MainCmd and the SubCmd/Property must be separated with the space ‘ ’ character. 
+• When entering new settings the Property is followed by a parenthesis containing comma-
+separated values. 
+• The command string must be terminated by Carriage Return and Line Feed (ASCII code 13 & 
+10). 
+• The command string is not case sensitive (UPPER/lower-case). 
+• A valid command string is acknowledged with the character ‘#’ while character ‘*’ indicates an 
+error. Both are followed by Carriage Return/ Line Feed (CRLF). 
+• For most errors a short error message is also given after the error indicator. 
+• There are also special commands with short names and dedicated tasks, as save, reset, and 
+help. 
+• All names and numbers are separated by tabulator spacing (ASCII code 9). 
+• The string is terminated by Carriage Return and Line Feed (ASCII code 13 & 10). 
+
+
+ 
+
+Note! Losing power during the flashing process can cause corruption of vital settings, such as 
+coefficients, serial number, model number etc. If losing settings, contact AADI Service department 
+for new setting file for the specific sensor with further instructions. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+5.6 Passkey for write protection 
+
+To avoid accidental change of the sensor configuration, most of the properties are write-protected. 
+There are five levels of access protection, refer Table 5-1. 
+
+A special property called Passkey must be set according to the protection level before changing 
+the value of properties that are write-protected, refer Table 5-1. E.g.: 
+
+ 
+
+ Set passkey(1000) 
+
+ 
+
+Output 
+
+Passkey 
+
+Description 
+
+No 
+
+ 
+
+No Passkey needed for changing property 
+
+Low 
+
+1 
+
+The Passkey must be set to 1 prior to changing property 
+
+High 
+
+1000 
+
+The Passkey must be set to 1000 prior to changing property 
+
+This Passkey value also give read access to factory properties 
+that usually are hidden 
+
+Read Only 
+
+ 
+
+The user has only read access, no passkey needed 
+
+Factory Write 
+
+XXXX 
+
+Sensor specific code for factory level access 
+
+
+
+ 
+
+After a period of inactivity at the serial input, the access level will revert to default. This period 
+corresponds to the Comm TimeOut setting, or 1 minute if the Comm TimeOut is set to Always 
+On. 
+
+ 
+
+ 
+
+5.7 Save and Reset 
+
+When the required properties are set, you must send a Save command to make sure that the new 
+configuration are saved internally in the flash memory. The Conductivity Sensor always reads the 
+configuration from the internal flash memory after reset and power up. 
+
+When changing the Mode and Baudrate property a reset is required for the change to take effect. 
+
+ 
+
+
+
+The Save command takes a few seconds to complete (indicated with the character ‘#’). 
+
+Always send a Reset command when a new configuration has been saved (or switch the power 
+OFF and then back ON), or else calculated parameters may be corrupted. This forces the sensor 
+to start up with the new configuration input. If the Enable Sleep property is set to Yes and the 
+Comm TimeOut property is not set to Always On the sensor enters sleep mode after reset. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Table 5-1 Access protection levels 
+
+
+
+
+5.8 Available Commands for the Conductivity Sensor 
+
+ 
+
+Available commands for the Conductivity Sensor are given in Table 5-2. 
+
+ 
+
+Table 5-2 Main RS232 commands available for the Conductivity Sensor. 
+
+
+
+Command 
+
+Description 
+
+Do Sample 
+
+Execute a conductivity measurement and presents the result 
+
+Start 
+
+Start a measurement sequence according to current configuration 
+
+Stop 
+
+Stop a measurement sequence 
+
+Do Test 
+
+Internal use 
+
+Get ConfigXML 
+
+Outputs info on available properties on XML format 
+
+Get DataXML 
+
+Outputs info on available(enabled) parameters on XML format 
+
+Get Property 
+
+Output Property value 
+
+Get All 
+
+Output all property values 
+
+Set Property(Value,.. 
+Value) 
+
+Set Property to Value,… Value 
+
+Set Passkey(Value) 
+
+Set passkey to change access level 
+
+Save1) 
+
+Store current settings 
+
+Load 
+
+Reloads previous stored settings 
+
+Reset 
+
+Resets the sensor with new configuration 
+
+Help 
+
+Print help information 
+
+; 
+
+Comment string, following characters are ignored 
+
+// 
+
+Comment string, following characters are ignored 
+
+
+
+. 1) Note that the Save procedure might require up to 20 seconds. Losing power during this period will cause loss of latest configuration 
+
+ change. Wait for acknowledge, ‘#’, before powering down the sensor 
+
+ 
+
+
+5.8.1 The Get command 
+
+ 
+
+The Get command is used to read the value/values of a property and to read the latest value of a 
+parameter. 
+
+The command name Get followed by a Property returns a string in the following format: 
+
+ 
+
+Property ProductNo SerialNo Value, ..., Value 
+
+ 
+
+ 
+
+The string starts with the name of the property, the product number and serial number of the 
+sensor, and finally the value of the property. 
+
+ 
+
+The command name Get followed by a parameter returns the name and unit of the parameter, the 
+product and serial number of the sensor, and finally the latest parameter reading. 
+
+ 
+
+ 
+
+ 
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+A special version, Get All, reads out all available properties in the sensor. Some properties are 
+passkey protected and will not be shown without first writing the passkey. To see all user 
+accessible properties, use passkey 1000. 
+
+ 
+
+ 
+
+ 
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Figure 5-4: The Get Command 
+
+Figure 5-5: Get all 
+
+
+
+
+5.8.2 The Set commands 
+
+ 
+
+The Set command is used for changing a property. The corresponding Get command can be used 
+to verify the new setting, as shown in Figure 5-6. 
+
+ 
+
+ 
+
+ 
+
+Use the Save commands to permanently store the new property value. Remember to always wait 
+for the acknowledge character ‘#’ after a save before switching off power to the sensor. If the 
+power is lost while saving, the previous configuration saved to flash is used by the sensor. 
+
+ 
+
+The Mode and Baudrate property will require a Reset before the change is executed. All other 
+property changes will be executed immediately. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+5.8.3 XML commands 
+
+The Get ConfigXML command outputs all available sensor properties in XML-format. 
+
+ 
+
+The Get DataXML command outputs all available sensor parameters in XML-format. 
+
+ 
+
+The XML-output is a general format shared by all Aanderaa smart sensors; the output from 
+different types of smart sensors can be read and presented as e.g. in a general smart sensor 
+setup program. 
+
+ 
+
+5.8.4 Formating the Output String 
+
+ 
+
+ 
+
+The property called Enable Text controls the presentation of measured data. When the property is 
+set to (Yes) the output string includes the descriptive parameter name. When the property is set to 
+(No), the output parameters are presented without descriptive parameter names; the parameter 
+order is the same. 
+
+ 
+
+The property called Enable DecimalFormat controls the format of the output values, either as 
+decimal numbers (Yes), or in exponential format (No). 
+
+ 
+
+ 
+Figure 5-6: The Set Command 
+
+
+
+
+5.8.5 Examples – How to configure sensor with Terminal Software 
+
+In the following examples, we will show you several configuration changes. We recommend using 
+Stop if using a short interval to avoid output strings while configuring the sensor. If the sensor has 
+started to transmit data when the user tries to communicate, it may take a few seconds before the 
+sensor respond. This depends on the number of enabled parameters. 
+
+ 
+
+Example 1: In this example we turn of all parameters that are selectable and end up with a clean 
+and simple ASCII output that is easy to use if you need to transmit the data using communication 
+with limited bandwidth. It’s then also easy to add other parameters like Raw Data by sending Set 
+Enable Rawdata(Yes) to the sensor. 
+
+The output is: Product Number Serial Number Conductivity 
+
+ 
+
+//Press Enter to start communicating with the sensor 
+
+↵ //press Enter 
+
+Stop ↵ //Wait for ack #. Repeat if necessary 
+
+Set Passkey(1) ↵ 
+
+Set Interval(30) ↵ //wait for ack # 
+
+Set Mode(Smart Sensor Terminal) ↵ //wait for ack # 
+
+Set Enable Sleep(Yes) ↵ //wait for ack # 
+
+Set Enable Text(No) ↵ //wait for ack # 
+
+Set Enable Decimalformat(Yes) ↵ //wait for ack # 
+
+Set Enable Derived Parameters(No) ↵ //wait for ack # 
+
+Set Enable Rawdata(No) ↵ //wait for ack # 
+
+Set Enable Temperature(No) ↵ //wait for ack # 
+
+Save ↵ // wait for ack # 
+
+Reset ↵ // the sensor will restart with new settings 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ Figure 5-7: Example 1 
+
+
+
+
+Example 2 is the oposite of Example 1. Here all selectable parameters and text is enabled. 
+
+Decimal format is deselected and we end up with a output string with 
+
+ 
+
+MEASSUREMENT Product Number Seial Number Conductivity Temperature… 
+
+ 
+
+//Press Enter to start communicating with the sensor 
+
+↵ //press Enter 
+
+stop ↵ //Wait for ack #. Repeat if necessary 
+
+set passkey(1) ↵ 
+
+set interval(10) ↵ //wait for ack # 
+
+set mode(smart sensor terminal) ↵ //wait for ack # 
+
+set enable sleep(yes) ↵ //wait for ack # 
+
+set enable text(yes) ↵ //wait for ack # 
+
+set enable decimalformat(no) ↵ //wait for ack # 
+
+set enable derived parameters(yes) ↵ //wait for ack # 
+
+set enable rawdata(yes) ↵ //wait for ack # 
+
+set enable temperature(yes) ↵ //wait for ack # 
+
+save ↵ // wait for ack # 
+
+reset ↵ // the sensor will restart with new settings 
+
+ 
+
+ 
+
+ 
+
+
+ 
+
+ 
+
+ 
+Figure 5-8: Example 2 
+
+
+
+
+5.9 Help command output 
+
+ 
+
+The available/selectable values for each enumerated property can be found by sending the 
+command Help. This gives a printout from the sensor showing a short help text from the sensor, 
+refer Figure 5-9. Setting a value which is not shown here for enumerated properties gives an error 
+message (*ERROR ARGUMENT ERROR). 
+
+ 
+
+ 
+
+
+Commands: 
+
+Do_SUBCMD<CRLF> = Execute SUBCMD 
+
+ Get_PROPERTY<CRLF> = Output PROPERTY value. 
+
+ Get_All<CRLF> = Output all property values. 
+
+ Get_All Parameters<CRLF> = Output all parameter values. 
+
+ Set_PROPERTY(V,..V)<CRLF> = Set PROPERTY to V,..V. 
+
+ Set_Passkey(V)<CRLF> = Set Passkey. 
+
+ Save<CRLF> = Store current settings. 
+
+ Load<CRLF> = Load stored settings. 
+
+ Reset<CRLF> = Reset node. 
+
+ Stop<CRLF> = Stop measurement 
+
+ Start<CRLF> = Start measurement 
+
+ Help<CRLF> = Print help information. 
+
+Sub commands: 
+
+Sample 
+
+ Output 
+
+ Argument list for enumerated properties: 
+
+ Baudrate: 4800,9600,57600,115200 
+
+ Flow Control: None, Xon/Xoff 
+
+ Comm Timeout: Always On,10 s,20 s,30 s,1 min,2 min,5 min,10 min 
+
+ Mode: AiCaP, Smart Sensor Terminal, AADI Real-Time, Smart Sensor 
+Terminal FW2, 
+
+ 
+
+ 
+Figure 5-9: Output example from the Help command 
+
+
+
+
+5.10 Scripting -sending a string of commands 
+
+Often it may be usefully to collect more than one command in a text file. For example, the 
+instructions below can be written in an ordinary text editor and saved as a text file, which can be 
+sent to the sensor. In HyperTerminal click send text file in the Transfer menu and select the 
+correct file. In Tera Terminal click “Send File” under “File” in main menu and select the file to be 
+transferred. 
+
+ 
+
+ 
+
+Example of text file: 
+
+// Set sampling interval to 30 seconds 
+
+ 
+
+Set Passkey(1) 
+
+Set Interval(30) 
+
+Save 
+
+Get All 
+
+ 
+
+NOTE! The last line, Get All, reads out available properties for the sensor. 
+
+The first line is a comment line that is disregarded by the sensor. Strings starting with either ‘//’ or 
+‘;’ are ignored by the software, and do not produce errors or acknowledgements. 
+
+When sending text file, the sensor can be awakened from sleep mode by sending a string of 
+comment leads characters: 
+
+ 
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+
+// Wake up test 
+
+Get All 
+
+ 
+
+This will provide time for the sensor to wake up and be ready before the next string appears. Note 
+that higher baud rates might require more lines of ‘/’ to provide sufficient delay. Communication 
+wake-up will normally require less than 100mS. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+5.11 Sensor Configuration 
+
+ 
+
+The sensor configuration consists of sensor settings and customized presentation of data. Below 
+follows a description of the properties that are typically set by the user prior to a deployment 
+(RS232 application). 
+
+ 
+
+The Mode property is used to set the operation mode. Available modes are AiCaP, Smart Sensor 
+Terminal, AADI Real-Time and Smart Sensor Terminal FW2. 
+
+ 
+
+• Set Mode to AiCaP when connected to AADI SeaGuard or to a SmartGuard logger that 
+automatically detects and recognizes the sensor on CANbus(AiCaP). 
+• Set Mode to AADI Real-Time for use with AADI Real-Time Data Collector or third party 
+software that can handle XML based protocol 
+• Set Mode to Smart Sensor Terminal for a simple ASCII command string based protocol 
+when connected to PC or third party serial interface 
+• Set Mode to Smart Sensor Terminal FW2 when sensor output need to be compatible with 
+older sensors. 
+
+
+ 
+
+Note! As default the 5819 sensors are set to AiCaP communication while 5819R and 5990 is 
+set to Smart Sensor Terminal (RS232). Please select the correct Output according to which 
+type of logger/interface you plan to use. 
+
+ 
+
+ 
+
+ 
+
+Set the, Enable Temperature, Enable Rawdata and Enable Derived Parameters to (Yes) to 
+include these parameters in the output string. 
+
+ 
+
+Enable Temperature. This setting is used to enable or disable the Temperature output. The 
+temperature reading is used to compensate for internal temperature drift when conductivity level is 
+calculated independently of this setting. 
+
+ 
+
+Enable Rawdata. This setting toggles on and off a set of raw data readings from the serial output 
+string. These raw data readings are used internally in the calculation independently of this setting. 
+The parameters are: 
+
+ 
+
+• Conductance Measurement in mS 
+• RawCond0 Raw measurement in LSB 
+• RawCond1 Raw measurement in LSB 
+• ZAmp Amplitude measurement in mV 
+• RawTemp Voltage from thermistor bridge in mV 
+
+
+ 
+
+ 
+
+Enable Derived Parameters. This property is used to enable or disable some extra parameters 
+calculated based on both measured parameters like temperature and Conductivity but also fixed 
+values like Pressure and Gravity constant. If you want to postprocess these values, we 
+recommend using zero as Pressure to avoid any confusion. 
+
+ 
+
+ 
+
+
+Set the Enable Text to (Yes) for the sensor to output a detailed text string with the measurements, 
+or (No) to output the measured values without the descriptive text, only valid I Smart Sensor 
+Terminal mode. 
+
+ 
+
+Set the Enable Decimalformat to (Yes) to output the measured values in decimal format. Set the 
+property to (No) to output the values in exponential format (higher resolution in the output 
+parameter value). 
+
+ 
+
+The Interval property describes the measurement interval in seconds; the Conductivity Sensor 
+provides a set of measured data for every measurement interval. 
+
+ 
+
+The Pressure property is set to 0 at the factory and the measurements must be post processed to 
+compensate for the pressure variations at the measurement site. If you want to calculate Salinity, 
+Density and Sound Speed you also need the installation depth for the sensor. Water depth or 
+Pressure are given in kPa. To include Salinity in the sensor output also Enable Derived 
+Parameters need to be set. 
+
+ 
+
+ 
+
+If the Enable Polled Mode is enabled, then the sensor only outputs data when the user/system 
+polls for data with a Do Sample command. 
+
+. 
+
+ 
+
+Set the Enable Sleep to (Yes) for the sensor to go to sleep between recordings, or (No) for the 
+sensor to stay continuously switched on between recordings (drains more power). 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+ Logging data via AADI Real-Time Collector 
+
+6.1 Logging data on PC 
+
+ 
+
+The Real-Time Collector can save the incoming data to file if the sensor is in AADI Real-Time 
+mode, either to a txt-file or to xml-files. 
+
+6.1.1 Enabling file output 
+
+ 
+
+If your connection is open, 
+status is green in the AADI 
+Real Time Collector main 
+menu please close the port 
+first to be able to change the 
+file output settings. 
+
+ 
+
+
+Click on the connection you 
+are using. Then click on the 
+“Settings…” button. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Then click on the “Advanced 
+Settings…” button in the lower right 
+corner of the Connection Settings 
+window. 
+
+ 
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Figure 6-1: AADI Real-Time Collector start up menu 
+
+Figure 6-2: Connection settings menu 
+
+
+
+
+Choose File Output from the list 
+on the left side. Check the Collect 
+data to file box to enable file 
+output. Select a file format either 
+XML or TXT and choose a base 
+directory where you want the file 
+to be saved. 
+
+ 
+
+
+Alternatively, you may select 
+Continuously store the last 
+message in a single file if you 
+want to continuously store the last 
+message in a single file 
+
+Click OK in the Advanced 
+Connection Settings window, 
+and OK in the Connection 
+Settings window to store settings. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+6.1.2 Starting the sensor and logging to file 
+
+ 
+
+Select your connection in the 
+connection list and then press 
+Open Port. The Status turns 
+green when the sensor is 
+connected. 
+
+ 
+
+
+Click on the Control Panel… 
+button in the lower right corner. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Figure 6-3: Advanced connection settings / File Output 
+
+Figure 6-4: AADI Real-Time Collector start up menu 
+
+
+
+
+Select the interval duration and 
+click the Start Recorder button. 
+The shortest interval available 
+depends on the sensor 
+configuration. 
+
+ 
+
+
+This alternative is only available if 
+the sensor is in AADI Real-Time 
+mode. 
+
+ 
+
+To change mode please go to the 
+System Configuration menu. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+ 
+
+Data will start logging in the defined directory. If it is a txt-file, the easiest way to view it is in Excel. 
+Figure 6-6 gives an example of obtained data file. The different parameters are organized in 
+columns. This picture might be different if your sensor has a different configuration. Refer to 
+CHAPTER 4 for how to configure the sensor. 
+
+ 
+
+ 
+Figure 6-5: Recorder panel 
+
+Figure 6-6: Example of a txt-file obtained from the sensor using RT Collector 
+
+
+
+
+6.2 Viewing incoming data in real-time 
+
+ 
+
+ 
+
+ 
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+When the sensor is running, the incoming data can be viewed under Connection Logs… in the 
+main AADI Real-Time Collector menu. 
+
+ 
+
+Double-click on one of the Record numbers to view the data. 
+
+ 
+
+ 
+
+ 
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Click on the + signs to open and see all the data message content. 
+
+Some of the group also has under groups with more data. Measured data are found under Point 
+Parameters. 
+
+ 
+Figure 6-7: Connection Logs 
+
+Figure 6-8: Message Log Entry 
+
+
+
+
+ 
+
+ 
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Previous records or newer records can be viewed by clicking on Previous Entry button or Next 
+Entry button. An automatic update to the last data message can be enabled by checking the 
+Always show last entry check box. 
+
+The original message content in .xml format can be seen if clicking on the Original Message tab. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Figure 6-9: Visualization of incoming data from the sensor in real time 
+
+
+
+
+ Maintenance 
+
+Aanderaa Data Instruments have Proven Reliability. With over 40 years of producing instruments 
+for the scientific community around the world, you can count on our reputation for designing the 
+most reliable products available. 
+
+We are guided by three underlying principles: quality, service, and commitment. We take these 
+principles seriously, as they form the foundation upon which we provide lasting value to our 
+customers. Our unmatched quality is based on a relentless program of continuous monitoring to 
+maintain the highest standards of reliability. 
+
+To assure the quality of this sensor, critical properties are tested during production. A special form, 
+named ‘Test and Specification Sheet’ (delivered with the sensor) lists the required tests and the 
+result of these tests and checkpoints. 
+
+For performance check please refer to chapter 7.1 
+
+ 
+
+The Conductivity Sensor requires very little maintenance. 
+
+ 
+
+Compared to conductivity measurements with electrodes, the inductive principle of the 
+Conductivity sensor is less sensitive to fouling. However, when used in the upper water region, 
+fouling in the bore of the sensor is usually what limits the long-term accuracy of the sensor. To 
+avoid this the sensor must be cleaned regularly depending on the local fouling conditions, and the 
+required accuracy. The sensor can also be painted with anti-fouling paint to extend the 
+deployment time. 
+
+ 
+
+Do not use painting with copper our other conductive material. 
+
+ 
+
+The ceramic hosing will tolerate most cleaning agents. Often 30% Hydrochloric acid (HCL) 
+(Muriatic acid) will be useful for removing barnacles and similar fouling. 
+
+Be sure to follow the safety precaution for such acids. 
+
+ 
+
+We also recommend using repair lack on any scratches since this can affect the accuracy by 
+making a shortcut for the seawater loop. 
+
+ 
+
+ 
+
+ 
+
+Fouling consisting of calcareous organisms (e.g. barnacles), 
+can be dissolved by dipping the sensor/instrument in a weak 
+acid solution (e.g. 7% Vinegar). 
+
+ 
+
+
+ 
+
+If severely damaged contact Aanderaa.support@xylem.com 
+for assistance. 
+
+ 
+
+Annual recalibration is optimal and recommended by the 
+factory (refer next section) although for many applications 
+this may not be possible. In case where longer calibration 
+intervals are expected use of a controlled reference can be 
+adequate to QC the data. 
+
+ 
+
+ 
+
+ 
+Figure 7-1: Example of fouling 
+
+ 
+
+
+
+
+7.1 Function Test 
+
+We recommend that you perform a function test of the sensor operating in air with resistor set to 
+verify the sensor readings. Refer chapter 7.1.1, 7.1.2 and 7.1.3, for a description of the function 
+test procedure respectively for SeaGuard with display, AADI Real-Time Collector and Terminal 
+software. The resistor loop test is just for function test and do not act as calibration. 
+
+The measured temperature should also agree with the ambient temperature. 
+
+ 
+
+7.2 Test of Conductivity Sensor with resistor loop 
+
+Connect the Resistor set 3719 to the Conductivity sensor, refer Figure 7-2, while the sensor is 
+connected to an Aanderaa logger or a PC via sensor cable. 
+
+Resistor set 3719 has four resistor settings, refer Table 7-1. Perform one measurement series for 
+each ohm setting. Perform the sensor readings and check that the conductance readings 
+correspond with the values given in Table 7-1. 
+
+ 
+
+Note! 
+
+The sensor and resistor loop should be stabilized in room temperature prior to the test. 
+
+ 
+
+ 
+
+ 
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Loop Resistance (Ohm) 
+
+Loop Conductance (mS) 
+
+70 
+
+14.29 ± 0.08 
+
+150 
+
+6.67 ± 0.08 
+
+680 
+
+1.47 ± 0.08 
+
+2000 
+
+0.50 ± 0.08 
+
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Figure 7-2: Conductivity Sensor with resistor set 
+
+Table 7-1: Resistor loop readings 
+
+
+
+
+7.2.1 SeaGuard with display applications 
+
+ 
+
+Leave the Conductivity Sensor 5819 mounted onto the 
+SeaGuard Platform. Power the instrument; refer TD262a 
+and TD262b for operating instructions. 
+
+ 
+
+
+Enable Rawdata for your sensor in System 
+Configuration, refer chapter 2.3.3. 
+
+ 
+
+Open Administrative Tools-> Sensor Monitor 
+
+ 
+
+Sensor Monitor can be used as a direct reading of the 
+sensor; the function is mainly used for test purposes. 
+
+ 
+
+. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Select the Conductivity Sensor from the list and press 
+Start, 
+
+ 
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Figure 7-3: Sensor Monitor 
+
+Figure 7-4: Available sensors 
+
+
+
+
+The next window shows sensor information like the 
+Node Description, Product Name, Product Number 
+and Serial Number. 
+
+ 
+
+
+Number Of Parameters and the Processing Time are 
+also viewed in the window. 
+
+ 
+
+Select an Update Interval for the sensor monitoring. 
+
+ 
+
+Press Start to start monitoring the sensor readings. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+The parameter reading in engineering units is shown in 
+next window. The reading updates according to the 
+update interval. 
+
+Table
+Description automatically generated 
+
+
+Press Freeze to temporarily stop the update; press 
+Start to restart monitoring (Start is the same button as 
+Freeze). 
+
+ 
+
+ 
+
+ 
+
+Press Cancel to stop monitoring. 
+
+The Conductance readings should be according to the 
+description in chapter 7.1 . 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Figure 7-5: Start Monitoring 
+
+Figure 7-6: Sensor readings 
+
+
+
+
+7.2.2 Function test with AADI- Real-Time collector 
+
+ 
+
+This chapter describes how to do a function test using AADI Real-Time Collector. The procedure 
+is similar if you either connect the sensor directly with RS-232/RS-422 to your computer or with 
+AiCaP connected to a Aanderaa logger. 
+
+ 
+
+ 
+
+Make sure that the sensor is 
+set to AADI Real-Time mode if 
+connected stand-alone. 
+
+ 
+
+
+Enable Rawdata in System 
+Configuration. 
+
+ 
+
+In the Control Panel > 
+Recorder Panel set a faster 
+recording interval and then 
+start the Recorder or the 
+Recorder Group including the 
+Conductivity Sensor. For 
+more information about how to 
+start recording please refer to 
+individual chapters for the 
+different options. 
+
+ 
+
+Close the Control Panel by 
+pressing the X in the top right 
+corner 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Select Text Viewer under 
+Data Visualization 
+
+ 
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Figure 7-7: Recorder Panel 
+
+Figure 7-8: Data Visualization 
+
+
+
+
+ 
+
+ 
+
+
+ 
+
+Check that Conductance reading is within specifications in Table 7-1. Conductance is only 
+available if Rawdata is enabled. The Conductance reading is not affected by fouling but anything 
+that can act as a parallel resistor to the Resistor set can interfere with the reading. If the 
+Conductance is outside specifications and you can’t find a reason for this, please contact 
+Aanderaa.support@xylem.com for assistance. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Figure 7-9: Text viewer 
+
+
+
+
+7.2.3 Function test with Terminal software 
+
+ 
+
+ 
+
+Connect the Conductivity Sensor to your PC via Sensor cable 3855/4865 or any real-time cable. 
+Refer CHAPTER 5 for connecting the sensor and how to configure the sensor in Smart Sensor 
+Terminal mode. 
+
+Send the following properties to the sensor: 
+
+ 
+
+Stop 
+
+Set Passkey(1) 
+
+Set Mode(Smart Sensor Terminal) 
+
+Set Enable Rawdata(Yes) 
+
+Set Enable Text(Yes) 
+
+Set Interval(2) 
+
+Start 
+
+ 
+
+Note! We recommend a 2 second interval. 
+
+ 
+
+The Sensor starts measuring and incoming data are shown on the screen. Let the sensor perform 
+several measurements. Ensure that the Conductance readings are according to Table 7-1 
+Perform a measurement series for each ohm setting. 
+
+ 
+
+
+ 
+
+ 
+
+ 
+
+Note! Type save if you want to store the settings. If you do not type save, these settings are not 
+stored. 
+
+ 
+
+ 
+
+ 
+Figure 6-4: Example of Conductance readings when performing a function test of the sensor. 
+
+
+
+
+7.3 Calibration 
+
+ 
+
+Each conductivity Sensor is linearized and temperature compensated by use of precision resistor 
+loops. The temperature measurement is also calibrated in the same process. Each Sensor is then 
+calibrated in a seawater bath with a reference sensor. 
+
+ 
+
+The reference sensor is calibrated against I.A.P.O. standard seawater using a National Ocean 
+Technology Center’s Model 5YA2-2 Laboratory Salinometer. 
+
+ 
+
+Even though most of the conductance of the seawater loop is determined by the water inside the 
+center bore of the Sensor, large objects closer than 0.25m to the Sensor will influence the 
+measurement. 
+
+ 
+
+Note! We recommend that you recalculate the CellCoeff when the sensor is shifted between 
+instruments or between sensor positions on the top-end plate. 
+
+To obtain optimum accuracy the Sensor should be calibrated in the geometrical configuration it is to 
+be used in. This can be achieved by placing the instrument in a stirred seawater-bath (minimum 
+0.5m diameter x 0.6m depth) with stable salinity and temperature. 
+
+ 
+
+The conductivity of the water must be measured by use of a reference such as a newly calibrated 
+sensor from Aanderaa with no object closer than 0.25meter. This calibration only involves a 
+correction of the sensitivity of the Sensor. A ‘one point’ calibration is therefore sufficient. 
+
+ 
+
+An internal setting in the Conductivity Sensor called CellCoef describes the relationship 
+between the conductance (mS) in the seawater loop measured by the Sensor and the specific 
+conductivity (mS/cm). A corrected CellCoef can be calculated using the following equation: 
+
+ 
+
+ 
+
+ 
+readrefCCCCellCoefCellCoef=
+
+ 
+
+where: 
+
+CellCoefc is the new corrected cell factor 
+
+CellCoef is uncorrected Sensor factor from sensor 
+
+Cref is reference reading (mS/cm) 
+
+Cread is uncorrected conductivity reading from sensor (mS/cm) 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Equation 1 
+
+
+
+
+7.3.1 SeaGuard application: setting the CellCoef 
+
+ 
+
+Refer TD 262 for operating the SeaGuard Instrument. 
+
+ 
+
+Procedure for setting the new calculated CellCoef: 
+
+ 
+
+1. Open Menu - Administrative Tools - User Maintenance. 
+2. Select the Conductivity sensor from the list. You need to type correct password to enter 
+this menu. Password is 1000 for all sensors. 
+3. Select the CellCoef property, and press View/Edit to change the value according to new 
+CellCoefc from Equation 1. 
+4. Press Next to view the other sensor calibration coefficients. 
+
+
+ 
+
+Note! Do not change the calibration settings. We recommend that a full recalibration of the sensor 
+is only performed at the factory. 
+
+ 
+
+5. Press Next and Finish to store the settings. 
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+7.3.2 AADI Real-Time Collector application: setting the CellCoef 
+
+ 
+
+Procedure for setting the new calculated CellCoef: 
+
+ 
+
+1. Open Control Panel – Device Configuration. 
+2. Select the Conductivity sensor from the list if used on a logger. 
+3. Select Include User Maintenance and press Get Current Configuration 
+4. You need to type correct password to enter this menu. Password is 1000 for all sensors. 
+6. Select the CellCoef property and press the value box to type the new CellCoef according to 
+new CellCoefc from Equation 1. 
+5. Press Next and accept the new value. 
+
+
+ 
+
+Note! Do not change the calibration settings. We recommend that a full recalibration of the sensor 
+is only performed at the factory. 
+
+ 
+
+6. Press Next and Finish to store the settings. 
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+7.3.3 Smart Sensor Terminal application: setting the CellCoef 
+
+ 
+
+Connect the conductivity sensor to your PC via Sensor cable 3855/4865. 
+
+ 
+
+Commands for setting the updated CellCoef: 
+
+ 
+
+To read the existing CellCoef 
+
+ 
+
+Set Passkey(1000) 
+
+Get CellCoef 
+
+ 
+
+ 
+
+To update with new CellCoef according to new CellCoefc from Equation 1. 
+
+ 
+
+ 
+
+Set Passkey(1000) 
+
+Set CellCoef(CellCoefc) 
+
+Save 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+ Theory of Operation 
+
+ 
+
+ 
+
+The Conductivity is a property that describes how 
+well a material can conduct an electrical current. 
+
+Drawing Conductivity Cell 3919 June04
+Drawing Conductivity Cell 3919 June04 
+
+
+For seawater, it is mostly dependent on the 
+inorganic dissolved solids and the temperature of 
+the water 
+
+ 
+
+Salinity is defined as the concentration of these 
+dissolved solids and by measuring conductivity 
+and temperature it is thus possible to determine 
+the salinity of the water. Density and speed of 
+sound are also parameters depending on the 
+salinity and can be calculated by the sensor. 
+
+ 
+
+The conductivity measurement is based on an 
+inductive principle. It is set up an alternating 
+magnetic field which produces an electrical 
+current in the water and the conductivity is then 
+measured. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Dismantled cell 
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Figure 8-1: Sensor cross over 
+
+Figure 8-2: Sensor before final assembly 
+
+
+
+
+Transmit 
+
+Transformer 
+
+
+Receive 
+
+Transformer 
+
+ 
+
+
+
+Seawater Loop 
+
+
+Transmit Coil 
+
+
+Receive Coil 
+
+
+Secondary 
+Compensating Coil 
+
+
+Multiplying DAC 
+
+ 
+ADC 
+
+
+Thermistor 
+
+
+Primary 
+Compensating Coil 
+
+ 
+
+
+ 
+
+DSP 
+
+ 
+
+
+Output Interface 
+
+ 
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+Seawater loop 
+
+
+V 
+
+ 
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Figure 8-3: Sensor shematic 
+
+Figure 8-4: Seawater loop 
+
+
+
+
+ Electro Magnetic Compatibility 
+
+ 
+
+For a manufacturer to legally produce and sell a product, it must apply for CE marking. This 
+means that the commercialized product is conform to the CE applicable standards and can freely 
+circulate within the EFTA (European Free Trade Association) & European Union countries. This 
+mainly focus on the electromagnetic disturbances the sensor can generate, which should not 
+exceed a level allowing radio and telecommunication equipment to operate as intended, and that 
+the sensor has an adequate level of intrinsic immunity to electromagnetic disturbance to be able to 
+operate as intended. This chapter describes the requirements for the Electromagnetic 
+Compatibility (EMC) of the sensor. 
+
+9.1 EMC Testing 
+
+ 
+
+The Conductivity Sensor has been tested at an accredited test laboratory to verify that the sensor 
+fulfils the requirements in the EU EMC directive (EN 2014/30/EU) 
+
+Applied standards 
+
+• EN 61326-1 (2013) 
+
+
+ 
+
+Applied tests 
+
+• Conducted Emissions 
+• Electrostatic Discharge Immunity 
+• Surge Immunity 
+• Conducted RF Disturbance Immunity 
+
+
+ 
+
+Other tests were found as not relevant to this sensor due to underwater use and DC power. 
+
+ 
+
+9.2 Cables 
+
+ 
+
+Different cables are available for stand-alone use with free end and connectors. The cables have 
+both power and signal lines (RS-232/RS-422). Contact factory for more information on cables that 
+is best suited for use in the actual application. When delivered, system drawings/cable drawings 
+give details on parts connection and installation overview with best EMC performance (best noise 
+and surge immunity). 
+
+9.3 Power – Voltage range 
+
+ 
+
+The input voltage range is from 5 to 14Vdc. When using longer cables the voltage should be as 
+close to 14V as possible. The peak current while the sensor is measuring (after power on) is 
+normally below 100mA, but it varies dependent on how high the input voltage is and how large the 
+voltage drop is in the cable (lower voltage on the sensor gives higher peak current). 
+
+ 
+
+
+ Accessories and documents 
+
+ 
+
+In this section we show examples of sensor specific documentations that normally follow the 
+sensor. You will also find description of cables that are normally used with the sensor. 
+
+ 
+
+10.1 Example of Test & Specifications sheet and Certificates 
+
+ 
+
+In this section we show samples of what documents included on the memory stick following the 
+sensor. All calibration data are stored in the sensor, so these certificates is only used to prove the 
+accuracy of the sensor and to document that testing and calibration are done following the 
+standard procedure. If your sensor has been back for calibration or maintenance, please make 
+sure that you also update your archive. 
+
+ 
+
+If you need a new certificate for one of your sensors, please contact 
+support.aanderaa@xylem.com 
+
+ 
+
+• Operation Manual 
+• Data Sheet 
+• Test & Spec. Sheet 
+• Calibration Certificate Temperature 
+• Calibration Certificate Turbidity 
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+Figure 10-1: Example of Test and Specification sheet 
+
+
+
+ 
+
+Table
+Description automatically generated 
+
+
+
+ 
+
+Graphical user interface, application, table
+Description automatically generated 
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ Figure 10-2: Example of Calibration Certificate part 1 of 3 
+
+
+
+
+ 
+
+Table
+Description automatically generated 
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ Figure 10-3: Example of Calibration Certificate part 2 of 3 
+
+
+
+
+ 
+
+Text, table
+Description automatically generated 
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Figure 10-4: Example of Calibration Certificate part 3 of 3 
+
+
+
+
+ 
+
+Graphical user interface, text, application
+Description automatically generated 
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ Figure 10-5: Cell Coefficient Calibration Certificate 
+
+
+
+
+ 
+
+Graphical user interface
+Description automatically generated with medium confidence 
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ Figure 10-6: Pressure Test Certificate 
+
+
+
+
+10.2 Connecting Cables 
+
+ 
+
+ 
+
+Aanderaa offers a wide range of standard cables. 
+
+ 
+
+10.2.1 Set-up and configuration cable 3855. 
+
+ 
+
+Set-up and configuration cable 3855 are designed for laboratory use only. The cable is used to 
+configure a sensor using either AADI Real-Time Collector or a Terminal software such as Terra 
+Term. If you don’t have any COM ports on your computer I can be used in combination with a RS-
+232 to USB converter such as Tripp-lite Keyspan Model USA -19HS. The sensor can either be 
+powered from a USB port or using a power supply connected to the USB extension cable. 
+
+ 
+
+v8700_cable3855 
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Figure 10-7: Set-up and configuration cable 3855 
+
+
+
+
+10.2.2 Set-up and configuration cable 4865. 
+
+ 
+
+Set-up and configuration cable 4865 are like the previous 3855 cable but with a watertight SP plug 
+for use in field. The cable is used to configure a sensor using either AADI Real-Time Collector or a 
+Terminal software such as Terra Term. If you don’t have any COM ports on your computer I can 
+be used in combination with a RS-232 to USB converter such as Tripp-lite Keyspan Model USA -
+19HS. The sensor can either be powered from a USB port or using a power supply connected to 
+the USB extension cable. The cable can also be used for deployments with real-time data to a 
+computer or a logger. 
+
+ 
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Figure 10-8: Set-up and cnfiguration cable 4865 
+
+
+
+
+10.2.3 Free end cable 4762 
+
+ 
+
+Free end cable 4762 is designed for use with RS-232 output. Please make sure that the cable is 
+terminated properly before power is switched on. Please also note that the lemo plugs are not 1 to 
+1 but 1 to 8. This means that pin 1 on the sensor is connected to pin 8 on the cable etc. 
+
+ 
+
+ 
+
+Diagram, schematic
+Description automatically generated 
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Figure 10-9: Free end cable 4762 
+
+
+
+
+10.2.4 Remote cable 4793 for connecting sensor to SeaGuard/SeaGuardII 
+
+ 
+
+Remote cable 4793 is used when you want do mount the sensor away from the instrument top-
+end plate. This is used if you want to measure gradients and one sensor is located on the top end 
+plate and the second sensor are mounted in the water column away from the instruments. 
+
+ 
+
+ 
+
+ 
+
+
+10.2.5 Patch cable 4999 
+
+ 
+
+Patch cable 4999 are used if sensor is mounted in position 6 on the top-end plate or if the 
+instrument is without a hub-card, then the patch cable is used to connect the sensor to the 
+instrument main board. 
+
+ 
+
+ 
+
+A picture containing light
+Description automatically generated 
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Figure 10-10: Remote sensor cable 4973 
+
+ 
+
+Figure 10-11: Patch cable 4999 
+
+
+
+
+10.2.6 Cable 5236 for connection to SmartGuard using AiCaP 
+
+ 
+
+Diagram
+Description automatically generated 
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+Figure 10-12: 5896 Sensor cable to SmartGuard 
+
+
+
+
+ 
+
+ 
+
+
+ 
+
+ 
+
+1) The tissue in plants that brings water upward from the roots. 
+
+2) a leading global water technology company. 
+
+ 
+
+We’re a global team unified in a common purpose: creating advanced technology 
+solutions to the world’s water challenges. Developing new technologies that will 
+improve the way water is used, conserved, and re-used in the future is central to 
+our work. Our products and services move, treat, analyze, monitor and return 
+water to the environment, in public utility, industrial, residential and commercial 
+building services settings. Xylem also provides a leading portfolio of smart 
+metering, network technologies and advanced analytics solutions for water, electric 
+and gas utilities. In more than 150 countries, we have strong, long-standing 
+relationships with customers who know us for our powerful combination of leading 
+product brands and applications expertise with a strong focus on developing 
+comprehensive, sustainable solutions. 
+
+ 
+
+For more information on how Xylem can help you, go to www.xylem.com 
+
+P5147TB48bA#y1 
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+Aanderaa Data Instruments AS 
+
+Sanddalsringen 5b, P.O. BOX 103 Midtun 
+
+N-5843 Bergen, Norway 
+
+Tel: +47 55 60 48 00 • Fax: +47 55 60 48 01 
+
+E-mail: aanderaa.info@xyleminc.com • Web: www.aanderaa.com 
+
+ 
+
+Aanderaa is a trademark of Xylem Inc. or one of its subsidiaries. 
+
+© 2022 Xylem, Inc. TD321 July 2022 
+
+P5186TB50bA#y1 
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+

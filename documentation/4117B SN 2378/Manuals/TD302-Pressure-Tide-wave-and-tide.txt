@@ -1,0 +1,4694 @@
+Aanderaa_Xylem_4c
+PRESSURE SENSOR 4117/4117R 
+
+TIDE SENSOR 5217/5217R 
+
+WAVE AND TIDE SENSOR 5218/5218R 
+
+ 
+
+
+ 
+
+
+ 
+
+
+
+1st Edition 30 June 2013 Preliminary 
+
+2nd Edition 05 September 2003 New version including general updates in text. Rebranded, Frame 
+
+ Work 3 update, please refer Product change notification AADI 
+
+ Document ID:DA-50009-01, Date: 09 December 2011 
+
+ (ref Appendix 6 ). 
+
+3rd Edition 14 January 2014 New property “Installation Depth” added for Tide sensors, 
+
+ effective version 8.1.1 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+© Copyright: Aanderaa Data Instruments AS 
+
+
+Table of Contents 
+
+Introduction .............................................................................................................................................................. 6 
+Purpose and scope ................................................................................................................................................ 6 
+Document overview.............................................................................................................................................. 6 
+Applicable documents .......................................................................................................................................... 7 
+Abbreviations ........................................................................................................................................................ 7 
+CHAPTER 1 Short description and specifications ...................................................................................................... 8 
+1.1 Pin Configuration .......................................................................................................................................... 10 
+1.2 Pressure measurements for sensors 4117/4117R, 5217/5217R, 5218/5218R ............................................ 11 
+1.3 Tide measurements for sensors 5217/5217R, 5218/5218R ........................................................................ 11 
+1.4 Wave measurements for sensor 5218/5218R ............................................................................................. 12 
+1.5 User accessible sensor properties ................................................................................................................ 14 
+1.5.1 Sensor properties for Pressure sensor 4117/4117R ............................................................................ 14 
+1.5.2 Additional sensor properties for Tide Sensor 5217/5217R .................................................................. 16 
+1.5.3 Additional sensor properties for Wave and Tide Sensor 5218/5218R ................................................. 17 
+1.6 Specifications ............................................................................................................................................... 17 
+1.7 Manufacturing and Quality Control ............................................................................................................. 18 
+CHAPTER 2 Measurement Principles and Parameters ........................................................................................... 19 
+2.1 Sensor Integrated Firmware......................................................................................................................... 19 
+2.2 Calculated parameters ................................................................................................................................. 20 
+2.3 Status codes ................................................................................................................................................. 21 
+2.4 Startup delay for calculated wave and tide parameters .............................................................................. 22 
+CHAPTER 3 Current drain........................................................................................................................................ 23 
+3.1 Pressure sensor 4117/4117R ....................................................................................................................... 23 
+3.2 Tide sensor 5217/5217R .............................................................................................................................. 24 
+3.3 Wave and Tide sensor 5218/5218R ............................................................................................................. 25 
+CHAPTER 4 Installation and deployment considerations ....................................................................................... 26 
+CHAPTER 5 Installation on SeaGuard ..................................................................................................................... 27 
+5.1 Installation on SeaGuard platform ............................................................................................................... 27 
+5.2 Sensor Cable ................................................................................................................................................. 29 
+5.3 Sensor Configuration Pressure sensor 4117 ................................................................................................ 29 
+5.3.1 System Configuration ........................................................................................................................... 29 
+5.3.2 Deployment Settings ............................................................................................................................ 30 
+5.3.3 User maintenance ................................................................................................................................ 30 
+5.4 Sensor Configuration Tide sensor 5217 ....................................................................................................... 32 
+5.4.1 System configuration ............................................................................................................................ 32 
+5.4.2 Deployment settings ............................................................................................................................ 33 
+5.4.3 User maintenance ................................................................................................................................ 33 
+5.5 Sensor Configuration Wave and Tide sensor 5218 ...................................................................................... 34 
+5.5.1 System configuration ............................................................................................................................ 34 
+5.5.2 Deployment settings ............................................................................................................................ 35 
+5.5.3 User Maintenance ................................................................................................................................ 35 
+CHAPTER 6 Sensor configuration using AADI Real-Time Collector ......................................................................... 38 
+CHAPTER 7 Connection to PC ................................................................................................................................. 42 
+7.1 Operation mode: AiCaP and Smart Sensor Terminal ................................................................................... 43 
+7.1.1 AiCaP sensors........................................................................................................................................ 43 
+7.1.2 R-version sensors .................................................................................................................................. 44 
+7.1.3 RS-422 transmission line ...................................................................................................................... 44 
+7.1.4 Polled mode .......................................................................................................................................... 45 
+7.1.5 Description of user configurable properties ........................................................................................ 46 
+7.1.6 Additional configuration of the Tide Sensor and Wave and Tide Sensor ............................................. 47 
+7.2 Smart Sensor Terminal communication setup ............................................................................................. 48 
+7.2.1 Polled Mode: ........................................................................................................................................ 48 
+7.2.2 Sensor startup ...................................................................................................................................... 48 
+7.2.3 Smart Sensor Terminal protocol ........................................................................................................... 49 
+7.2.4 Passkey for write protection ................................................................................................................ 50 
+7.2.5 Save and Reset...................................................................................................................................... 51 
+7.2.6 Available commands............................................................................................................................. 52 
+7.2.7 The Get command ................................................................................................................................ 53 
+7.2.8 The Set command ................................................................................................................................. 53 
+7.2.9 Formatting the output string ................................................................................................................ 54 
+7.2.10 XML commands .................................................................................................................................. 55 
+7.3 Examples of Smart Sensor Terminal communication .................................................................................. 55 
+7.4 Scripting -sending a string of commands ..................................................................................................... 56 
+CHAPTER 8 Quality assurance, maintenance, calibration ...................................................................................... 57 
+8.1 Maintenance ................................................................................................................................................ 57 
+8.1.1 Maintenance procedure prior to every deployment ........................................................................... 57 
+8.2 Calibration .................................................................................................................................................... 57 
+8.3 Example of Test & Specification sheet and Calibration certificate .............................................................. 58 
+Appendix 1 Mechanical design of the sensors ........................................................................................................ 60 
+Appendix 2 Sensor construction ............................................................................................................................. 61 
+Appendix 3 Calculating engineering values from raw data .................................................................................... 62 
+Appendix 4: Calculations of wave parameters (5218/5218R) ................................................................................ 64 
+Appendix 5 Illustations ............................................................................................................................................ 73 
+Appendix 6 Product change notification: Frame Work3 ........................................................................................ 78 
+
+
+ 
+
+ 
+
+ 
+
+
+Introduction 
+
+Purpose and scope 
+
+This document is intended to give the reader knowledge of how to operate and maintain the Aanderaa Pressure 
+Sensor 4117/4117R, Tide Sensor 5217/5217R and Wave and Tide Sensor 5218/5218R. These sensors are 
+described in a single manual since the measurement principle and the sensor housing is the same for all sensors. 
+Tide Sensor 5217 and Wave and Tide Sensor 5218 have extended capabilities compared to Pressure Sensor 
+4117. 
+
+It also aims to give insight into how the sensor works and how the pressure measurement can be converted to 
+depth. 
+
+With this revision Aanderaa is releasing a new firmware version to accommodate higher security and future 
+expansion. Both the Smart Sensor Terminal and the AADI Real Time protocols are updated in this version of the 
+Smart Sensor firmware. 
+
+AADI Smart Sensors utilize common communication protocols at the RS-232 and RS-422 interface where the 
+Smart Sensor Terminal protocol is a simple ASCII command string based protocol and the AADI Real Time is an 
+XML based protocol. The common updates of these protocols are called framework 3, and is released August 
+2012 for most of the AADI smart sensors. (See Appendix 6 ) 
+
+Pressure Sensor 4117, Tide Sensor 5217 and Wave & Tide Sensor 5218 is designed to fit directly on the top-end 
+plate of SeaGuard or in a string system connected to SmartGuard or SeaGuard String logger using AiCaP. The 
+sensor can also be used as stand-alone sensor using RS-232. Pressure Sensor 4117R, Tide Sensor 5217R and 
+Wave & Tide Sensor 5218R are only RS-422 output and are intended for stand-alone use with longer cables than 
+can be used with the RS-232 version. 
+
+Document overview 
+
+Chapter 1 Short description of the sensors and lists the sensor properties 
+
+Chapter 2 Describes the measurement principles and the sensor output parameters 
+
+Chapter 3 Equations for calculating the sensor power consumption 
+
+Chapter 4 Common sensor installation and usage considerations 
+
+Chapter 5 SeaGuard applications; how to install and perform sensor configuration 
+
+Chapter 6 Sensor configuration using AADI Real-time Collector 
+
+Chapter 7 Procedure for Smart Sensor Terminal communication setup 
+
+Chapter 8 Recommended maintenance procedures and sensor calibration 
+
+Appendix 1 Mechanical design of the sensor 
+
+Appendix 2 Construction of the sensor 
+
+Appendix 3 How to calculate engineering data from measured raw data 
+
+Appendix 4 Wave Theory Primer regarding how wave parameters are calculated in the sensor 
+
+Appendix 5 Sensor power and communication cables 
+
+Appendix 6 Product Change Notification: Framework 3 
+
+
+Applicable documents 
+
+DID 50388 
+
+Assembly Drawing 
+
+V-8700 
+
+Sensor Cable 3855, Sensor to PC, Rs-232, laboratory use 
+
+V10501 
+
+Sensor Cable 4865, Sensor to PC, RS-232, field use 
+
+V-10488 
+
+Sensor Cable 4799, Sensor to PC, RS-422, field use 
+
+V-10331 
+
+Sensor Cable 4762, Sensor to free end, RS-232 
+
+V-10328 
+
+Sensor Cable 4763, Sensor to free end, RS-422 
+
+V-10388 
+
+Sensor Cable 4793, for remote sensor used on SeaGuard 
+
+Form 764 
+
+Test & Specification Sheet for 4117/4117R, 5217/5217R, 5218/5218R 
+
+Form 765 
+
+Calibration Certificate for 4117/4117R, 5217/5217R, 5218/5218R 
+
+D362 
+
+Data Sheet for Pressure Sensor 4117/4117R 
+
+D405 
+
+Data Sheet for Tide Sensor 5217/5217R 
+
+D407 
+
+Data Sheet for Wave and Tide Sensor 5218/5218R 
+
+TD 277 
+
+Calculation of current drain for the Pressure Sensor, Tide Sensor and Wave and Tide 
+Sensor. 
+
+
+
+ 
+
+ 
+
+Abbreviations 
+
+ADC 
+
+Analog to Digital Converter 
+
+AiCaP 
+
+Aanderaa Protocol: Automated idle Line CANbus Protocol 
+
+ASCII 
+
+American Standard Code for Information Interchange 
+
+CAN 
+
+Controller Area Network - sometimes referred to as CANbus 
+
+DSP 
+
+Digital Signal Processor 
+
+EPROM 
+
+Erasable Programmable Read Only Memory 
+
+HCL 
+
+Hydrochloric acid (Muriatic acid) 
+
+ 
+
+ 
+
+MSB 
+
+Most significant bit 
+
+RTC 
+
+Real Time Clock 
+
+ 
+
+ 
+
+UART 
+
+Universal Asynchronous Receiver and Transmitter 
+
+UNESCO 
+
+The United Nations Educational, Scientific and Cultural Organization 
+
+USB 
+
+Universal Serial Bus 
+
+WTS 
+
+Wave and Tide Sensor 
+
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+CHAPTER 1 Short description and specifications 
+
+In most measuring systems used in the sea, pressure is a vital parameter to derive other parameters like the 
+water density and the speed of sound. For deep water moorings the pressure can be used to determine the 
+actual depth of the instrument. For fixed installations on the seabed the pressure can be used for deriving the 
+water level and wave parameters. 
+
+The Pressure sensor, Tide sensor and the Wave and Tide sensor are compact yet intelligent sensors designed for 
+use on Aanderaa SeaGuard and SmartGuard as well as in other measuring systems. These sensors measure the 
+absolute pressure based on a silicon piezoresistive bridge. The pressure measurements are sampled and 
+temperature compensated by an advanced Digital Signal Processor. A temperature thermistor is located next to 
+the pressure bridge, Figure 1-1. 
+
+Since all calibration and raw data are stored inside the sensor, the parameters can be presented directly in 
+engineering units without any external calculations. 
+
+The output formats of the 4117, 5217, and 5218 are AiCaP and RS-232, while the output format of the 4117R, 
+5217R, and 5218R are RS-422. The sensors can be used in polled operation when set to Smart Sensor Terminal 
+mode. 
+
+The 4117, 5217, and 5218 version fits directly on to the top end plate of Aanderaa SeaGuard Platform. The 
+sensor is then used in AiCaP mode. When used with SmartGuard both AiCaP and RS-232 mode can be used. The 
+sensors may also be used as a stand-alone RS-232 sensor for other applications. 
+
+The R-versions (4117R, 5217R, and 5218R) cannot be used on a SeaGuard platform. This sensor is for use with 
+SmartGuard or as stand-alone RS-422 sensor on longer cables. 
+
+The first letter in the product number gives the maximum deployment depth for the sensor, refer datasheet for 
+more info. 
+
+ 
+
+ 
+
+ 
+
+IMPORTANT! 
+
+A 4117, 5217, and 5218 sensor cannot be made into an R-version, and a 4117R, 5217R, and 5218R sensor 
+cannot be made into a AiCaP or RS-232 sensor after delivery. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+ 
+
+ 
+
+ 
+
+Figure 1-1 Illustration of sensor 
+
+ 
+
+ 
+
+ 
+
+Figure 1-2 Pin Configuration for 4117, 5217 and 5218 with AiCaP and RS-232 
+
+ 
+
+ 
+
+ 
+
+Figure 1-3 Pin Configuration for 4117R, 5217R and 5218R with RS-422 
+
+
+1.1 Pin Configuration 
+
+The Pressure Sensor 4117, Tide Sensor 5217 and Wave & Tide Sensor 5218 pin configuration is given in Figure 
+1-2. Pressure Sensor 4117R, Tide Sensor 5217R and Wave & Tide Sensor 5218R pin configuration is given in 
+Figure 1-3. A description of the receptacle notation is given in Table 1–1. 
+
+ 
+
+Table 1-1 Description of the Pin Configuration 
+
+Signal 
+
+Description 
+
+CAN_H 
+
+CANbus line (dominant high) 
+
+NCG 
+
+Node Communication Ground 
+
+NCR 
+
+Node Communication Request 
+
+Gnd 
+
+Ground 
+
+Positive supply 
+
+6-14V positive supply. 
+
+NCE 
+
+Node Communication Enable 
+
+BOOT_EN 
+
+Boot Load Enable (do not connect) 
+
+CAN_L 
+
+CANbus line (dominant low) 
+
+RS-232 RXD 
+
+RS-232 Receive line 
+
+RS-232 TXD 
+
+RS-232 Transmit line 
+
+RS-422 TXD+ 
+
+RS-422 Transmit signal+ (non-inverting output) 
+
+RS-422 TXD- 
+
+RS-422 Transmit signal- (inverting output) 
+
+RS-422 RXD+ 
+
+RS-422 Receive signal+ (non-inverting input) 
+
+RS-422 RXD- 
+
+RS-422 Receive signal- (inverting output) 
+
+DNC 
+
+Do Not Connect 
+
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+Pressure illustration copy
+1.2 Pressure measurements for sensors 4117/4117R, 5217/5217R, 5218/5218R 
+
+These sensors measure the absolute pressure at the installation depth. The 4117 sensor is a momentary / 
+instantaneous pressure measurement; the pressure is sampled at an update interval (output interval) from 1 
+second to 255 minutes (user configurable). The absolute pressure measured by the sensor is comprised by the 
+weight of the water column above the sensor (hydrostatic pressure), plus the atmospheric pressure at the sea 
+surface. 
+
+ 
+
+ 
+
+ 
+
+Figure 1-4 Illustration of the pressure 
+measurement situation. 
+
+
+
+ 
+
+If the variation in the measured hydrostatic pressure is 
+dominated by surface waves and ocean swell, the Tide 
+sensor 5217/5217R and Wave & Tide sensor 5218/5218R 
+provide time averaged measurements, to compensate 
+for the dynamic water pressure variations seen by the 
+instrument at depth due to vertical movement of the sea 
+surface. 
+
+The sample set used to filter out waves is separate from 
+that used to calculate wave statistics. Refer chapter 1.3 
+for a description of the Tide sensor, and 1.4 for a 
+description of the Wave & Tide sensor 
+
+The main objective of the temperature reading is to 
+temperature-compensate the pressure reading. AADI 
+offers other sensors designed to measure the water 
+temperature more accurately if required. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+1.3 Tide measurements for sensors 5217/5217R, 5218/5218R 
+
+Tide pressure measurements are an average of the sampled pressure time series measured over a user defined 
+time interval of 10 seconds to 8 minutes (user configurable average base), which filters out all but the longest or 
+low frequency dynamic variations of the water surface. The default sample rate is 2 Hz; the user can enable a 
+higher frequency sampling rate of 4 Hz. 
+
+The sensor update or output interval is user set from 1 second to 255 minutes. The tide parameter output value 
+will be sent as 0 in the beginning until the sensor has performed enough samples to satisfy the average base and 
+calculate the output value, refer chapter 2.4. 
+
+
+Tide illustration copy
+Note! The tide calculations are always based on the latest samples in time, so even though you specify a longer 
+averaging time, e.g. 8 minutes averaging, the computed value for tide will be calculated from a running sample 
+set and a new value sent as an output message at the 1s to 255minute interval according to your settings for the 
+output interval. 
+
+ 
+
+Figure 1-5 Illustration of the tide measurement 
+situation. 
+
+
+
+The sensor measures the pressure at the installation 
+depth. The tide pressure is the average of the measured 
+hydrostatic pressure, refer Eq. 1-1: 
+
+ atmPghP+=ρ
+
+Eq. 1-1 
+
+
+
+Where P is the measured averaged pressure, is the 
+water density1, g is the local acceleration due to gravity, 
+and h is the height of the water column. 
+ρ
+
+1 Equation of state 1980 UNESCO polynomial implementation. Density calculated with pressure = 0. 
+
+2 IEEE Journal of Oceanic Engineering, Vol. OE-5, No. 1, January 1980, page 14 
+
+The tide level above the sensor deployment depth is 
+calculated from Eq. 1-2: 
+
+ 0hgPPhatm−
+−
+=
+ρ
+
+Eq. 1-2 
+
+
+
+Where h0 is the Installation Depth 
+
+Note! Patm, and g are sensor properties that must be set by 
+the user prior to deployment. The water density, ρ, is 
+calculated from the measured water temperature and the 
+salinity2 of the water. Pressure is set to 0. Salinity is set by 
+the user. If you can find precise values for the input 
+parameters at the deployment site, the sensor will 
+calculate the tide level more accurately. 
+
+If Patm can be measured at the site the tide level can be calculated more accurately by means of post processing. 
+The user of an R-version sensor can update the property Patm on request. Patm will not be presented together 
+with the measured data. 
+
+1.4 Wave measurements for sensor 5218/5218R 
+
+The wave measurements are calculated independent from tide and you may choose from 256, 512, 1024 or 
+2048 samples performed at a default rate of 2 Hz or a higher sample rate of 4 Hz (both settings are user 
+configurable). The pressure time series used to calculate wave statistics are therefore measured over a time 
+period of 64 seconds to 17 minutes (measuring time is the product of sample set size and sample frequency). 
+The wave parameters are calculated according to the linear wave theory, refer Appendix 4. 
+
+
+Wave illustration copy
+The wave parameter output values will be 0 in the beginning of the recording until the sensor has performed 
+enough samples needed to calculate the wave statistics. When the sensor has sampled the required pressure 
+samples, all output parameters will be calculated and updated for each output interval. This means that the first 
+non-zero output from the sensor will be the smaller of the sample sets, i.e. tide pressure followed by wave 
+statistics. 
+
+Note! The wave calculations are always based on the latest sample values in the time series. The first set of 
+calculated parameters is presented sometime after the measurements start (at least 64 seconds), but the update 
+interval is according to your settings for the output interval. 
+
+ 
+
+ 
+
+Figure 1-6 Illustration of the wave 
+measurement situation. 
+
+
+
+Patm, and g are sensor properties that must be set by the user 
+prior to deployment. The water density, 3, is calculated 
+from the measured water temperature and the salinity4 of 
+the water. Pressure is set to 0. The salinity is configured by 
+the user. If you can find precise values for the input 
+parameters at the deployment site, the sensor will calculate 
+the tide more accurately. 
+ρ
+
+3 Equation of state 1980 UNESCO polynomial implementation. Density calculated with pressure = 0. 
+
+4 IEEE Journal of Oceanic Engineering, Vol. OE-5, No. 1, January 1980, page 14 
+
+The Distance to seafloor is the distance between the sensor 
+and the sea floor. This distance must be set by the user so 
+that the sensor software selects the correct transfer function 
+in the wave calculations. 
+
+If the distance is longer than 50m, you can still type 50 m 
+since the measurement data will be processed using a “deep 
+water”-transfer function, refer Appendix 4. 
+
+If the wave measurements are calculated from 2048 samples, 
+the software splits the sampled pressure points into two sets 
+of 1024 samples in each set and calculates two wave 
+spectrums. 
+
+Next, the two power spectrums are averaged and the sensor 
+presents a single wave spectrum of 512 frequency 
+components. This procedure increases the statistical 
+reliability of the spectral estimates. 
+
+ 
+
+
+1.5 User accessible sensor properties 
+
+All configuration settings that determine the behavior of the sensor are called properties and are stored in a 
+persistent memory block (flash). One property can contain several data elements of equal type (Boolean, 
+character, integer etc.). The different properties also have different access levels. 
+
+Table 1–2 lists all user accessible properties for the Pressure sensor. 
+
+The user accessible properties of the Tide sensor are the properties of the pressure sensor plus the properties 
+listed in Table 1–3. 
+
+The user accessible properties of the Wave and Tide sensor are the properties of the pressure sensor plus the 
+properties listed in Table 1–4. 
+
+Some properties of the ‘AiCaP’ sensor will not be applicable/visible when the sensor is connected to a SeaGuard 
+instrument, as these properties will be controlled by the instrument, refer Table 1-2. 
+
+ 
+
+1.5.1 Sensor properties for Pressure sensor 4117/4117R 
+
+ 
+
+Table 1-2 Sensor properties for Pressure sensor, FC = Factory Configuration, UM = User Maintenance, SC = System 
+Configuration, DS = Deployment Setting. ENUM=Enumeration, INT =Integer, BOOL=Boolean(‘yes’/’no’) 
+
+Property 
+
+Type 
+
+No of elements 
+
+Use 
+
+Configuration 
+Category 
+
+Access Protection 
+
+ RS232/422 applications 
+
+Product Name 
+
+String 
+
+31 
+
+AADI Product name 
+
+FC 
+
+Read 
+Only 
+
+Product Number 
+
+String 
+
+6 
+
+AADI Product number 
+
+Serial Number 
+
+INT 
+
+1 
+
+Serial Number 
+
+SW ID 
+
+String 
+
+11 
+
+Unique identifier for internal firmware 
+
+SW Version 
+
+INT 
+
+3 
+
+Software version (Major, Minor, Built) 
+
+HW ID X 
+
+String 
+
+19 
+
+Hardware Identifier, X =1..3 
+
+HW Version X 
+
+String 
+
+9 
+
+Hardware Identifier, X =1..3 
+
+System Control 
+
+INT 
+
+3 
+
+For AADI service personnel only 
+
+Production Date 
+
+String 
+
+31 
+
+AADI production date, format YYYY-MM-DD 
+
+Last Service 
+
+String 
+
+31 
+
+Last service date, format YYYY-MM-DD, empty by default 
+
+Last Calibration 
+
+String 
+
+31 
+
+Last calibration date, format YYYY-MM-DD 
+
+Calibration Interval 
+
+INT 
+
+1 
+
+Recommended calibration interval in days 
+
+
+
+
+Interval 
+
+Float 
+
+1 
+
+Set the output interval in seconds 
+
+DS 
+
+No 
+
+Location 
+
+String 
+
+31 
+
+User setting for location 
+
+Geographic Position 
+
+String 
+
+31 
+
+User setting for geographic position 
+
+Vertical Position 
+
+Float 
+
+1 
+
+User setting for describing sensor position 
+
+Reference 
+
+String 
+
+31 
+
+User setting for describing sensor reference 
+
+Enable Temperature 
+
+BOOL 
+
+1 
+
+Controls inclusion of Temperature in the output string 
+
+SC 
+
+Low 
+
+Enable Rawdata 
+
+BOOL 
+
+1 
+
+Controls inclusion of raw data in the output string 
+
+Mode 
+
+ENUM 
+
+1 
+
+Sets the sensor operation mode (AiCaP, Smart Sensor Terminal, 
+AADI Real-Time, Smart Sensor Terminal FW2) 
+
+Enable Sleep 
+
+BOOL 
+
+1 
+
+Enable sleep mode 
+
+Enable Polled Mode 
+
+BOOL 
+
+1 
+
+Enable polled mode for Smart Sensor Terminal Mode. When set to 
+‘no’ the sensor will sample at the interval given by the Interval 
+property. When set to ‘yes’ the sensor will wait for a Do Sample 
+command. 
+
+Enable Text 
+
+BOOL 
+
+1 
+
+Controls the insertion of descriptive text, i.e. parameter names 
+
+Enable Decimalformat 
+
+BOOL 
+
+1 
+
+Controls the use of decimal format in the output string 
+
+Node Description 
+
+String 
+
+31 
+
+User text for describing node, placement etc 
+
+UM 
+
+High 
+
+Owner 
+
+String 
+
+31 
+
+User setting for owner 
+
+Interface 
+
+ENUM 
+
+1 
+
+Factory use only, RS232 for standard version, RS422 for R-version 
+
+Baudrate 
+
+ENUM 
+
+1 
+
+RS232 baudrate: 4800, 9600, 57600, or 115200. Default baudrate 
+is 96005 
+
+Flow Control 
+
+ENUM 
+
+1 
+
+RS232 flow control: ‘None’ or ‘Xon/Xoff’ 
+
+Enable Comm Indicator 
+
+BOOL 
+
+1 
+
+Enable communication sleep (’%’) and communication ready (‘!’) 
+indicators 
+
+Comm TimeOut 
+
+ENUM 
+
+1 
+
+Time communication is active (Always On, 10 s, 20 s, 30 s, 1min, 2 
+min, 5 min, 10 min) 
+
+PT coeffs 0 
+
+Float 
+
+4 
+
+Pressure calibration coefficients 
+
+PT coeffs 1 
+
+Float 
+
+4 
+
+Pressure calibration coefficients 
+
+PT coeffs 2 
+
+Float 
+
+4 
+
+Pressure calibration coefficients 
+
+PT coeffs 3 
+
+Float 
+
+4 
+
+Pressure calibration coefficients 
+
+PT coeffs 4 
+
+Float 
+
+4 
+
+Pressure calibration coefficients 
+
+Temp coeffs 
+
+Float 
+
+4 
+
+Temperature calibration coefficients 
+
+
+
+5 Baud rates lower than 9600 may limit the sampling frequency 
+
+ 
+
+
+1.5.2 Additional sensor properties for Tide Sensor 5217/5217R 
+
+Most user accessible properties of the Tide sensor are the same properties as for the Pressure sensor, refer 
+Table 1-2. Additional sensor properties are listed in Table 1–3. 
+
+ 
+
+Table 1-3 Additional sensor properties for Tide sensor, SC = System Configuration, DS = Deployment Setting. 
+ENUM=Enumeration, INT =Integer, BOOL=Boolean(‘yes’/’no’) 
+
+Property 
+
+Type 
+
+No of elements 
+
+Use 
+
+Configuration 
+Category 
+
+Access Protection 
+
+ RS232/422 applications 
+
+Air Pressure 
+
+Float 
+
+1 
+
+Nominal air pressure 
+
+DS 
+
+No 
+
+Local gravity 
+
+Float 
+
+1 
+
+Set the local gravity 
+
+Salinity 
+
+Float 
+
+1 
+
+Set the salinity at the deployment site 
+
+Installation Depth 
+
+Float 
+
+1 
+
+Installation depth in meter relative to chosen datum, by 
+default set to zero = instrument referred 
+
+DS 
+
+Low 
+
+Enable Tide 
+
+BOOL 
+
+1 
+
+Enable Tide output parameters 
+
+SC 
+
+Low 
+
+Tidal Average Period 
+
+ENUM 
+
+1 
+
+Set the averaging interval for the tide measurements (10 s, 20 
+s, 30 s, 40 s, 50 s, 1 min, 2 min, 3 min, 4 min, 5 min, 6 min, 7 
+min, 8 min) 
+
+Enable high sample rate 
+
+BOOL 
+
+1 
+
+Set the sample rate to 4 Hz 
+
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+ 
+
+1.5.3 Additional sensor properties for Wave and Tide Sensor 5218/5218R 
+
+The user accessible properties of the Wave and Tide sensor are the same properties as for the Pressure sensor, 
+refer Table 1-2. Additional sensor properties are listed in Table 1–4. 
+
+Table 1-4 Additional sensor properties for Wave and Tide sensor, SC = System Configuration, DS = Deployment Setting. 
+ENUM=Enumeration, INT =Integer, BOOL=Boolean(‘yes’/’no’) 
+
+Property 
+
+Type 
+
+No of elements 
+
+Use 
+
+Configuration 
+Category 
+
+Access Protection 
+
+ RS232/422 applications 
+
+Air Pressure 
+
+Float 
+
+1 
+
+Nominal air pressure 
+
+DS 
+
+No 
+
+Local gravity 
+
+Float 
+
+1 
+
+Set the local gravity 
+
+Salinity 
+
+Float 
+
+1 
+
+Set the salinity at the deployment site 
+
+Distance to seafloor 
+
+Float 
+
+1 
+
+Set the distance between the sensor and the seafloor 
+
+Installation Depth 
+
+Float 
+
+1 
+
+Installation depth in meter relative to chosen datum, by 
+default set to zero = instrument referred 
+
+DS 
+
+Low 
+
+Enable Wave 
+
+BOOL 
+
+1 
+
+Enable Wave output parameters 
+
+SC 
+
+ 
+
+Low 
+
+ 
+
+Number of samples 
+
+ENUM 
+
+1 
+
+Set the number of samples: (256, 512, 1024, 2048) 
+
+Enable Tide 
+
+BOOL 
+
+1 
+
+Enable Tide output parameters 
+
+Tidal Average Period 
+
+ENUM 
+
+1 
+
+Set the averaging interval for the tide measurements (10 s, 20 
+s, 30 s, 40 s, 50 s, 1 min, 2 min, 3 min, 4 min, 5 min, 6 min, 7 
+min, 8 min) 
+
+Enable high sample rate 
+
+BOOL 
+
+1 
+
+Set the sample rate to 4 Hz 
+
+Enable Spectrum 
+
+BOOL 
+
+1 
+
+Controls inclusion of spectrum elements in the output string. 
+
+UM 
+
+High 
+
+Enable Pressure Series 
+
+BOOL 
+
+1 
+
+Controls inclusion of the measured hydrostatic pressure in 
+the output string. 
+
+
+
+ 
+
+1.6 Specifications 
+
+ 
+
+For product specifications refer Datasheet D362 for 4117/4117R, D405 for 5217/5217R, and D407 for 
+5218/5218R on our web site http://www.aanderaa.com or contact aanderaa.info@xyleminc.com 
+
+You will always find the latest version of our documentation on the web. 
+
+
+Customers can register to obtain a username and password necessary to gain access to product manuals, 
+technical notes and software. Please contact aanderaa.info@xyleminc.com for guidance. 
+
+ 
+
+1.7 Manufacturing and Quality Control 
+
+ 
+
+Aanderaa Data Instruments products have a record for proven reliability. With over 40 years experience 
+producing instruments for use in demanding environments around the globe, you can count on our reputation 
+of delivering the most reliable products available. 
+
+We are an ISO 9001 Certified Manufacturer. As a company we are guided by three underlying principles: quality, 
+service, and commitment. We take these principles seriously, as they form the foundation upon which we 
+provide lasting value to our customers. 
+
+ 
+
+ 
+
+
+CHAPTER 2 Measurement Principles and Parameters 
+
+The Pressure Sensor 4117/4117R, Tide Sensor 5217/5217R and Wave and Tide Sensor 5218/5218R measure raw 
+data of Pressure and Temperature. The pressure measurement is based on a piezoresistive bridge. This bridge 
+consists of 4 resistors implemented on a silicon diaphragm. One side of the diaphragm is exposed to the water 
+pressure, while the other is facing a zero atmosphere vacuum chamber. When the diaphragm is flexed by the 
+hydrostatic pressure the resistance of the resistors will change. By applying a constant voltage over the bridge, a 
+voltage that varies with the pressure is generated. This voltage is sampled by a high resolution analog to digital 
+converter (ADC) controlled by a digital signal processor (DSP). A thermistor sensing the water temperature is 
+also sampled by this ADC. Engineering data are calculated by software in the sensor (Sensor Firmware) based on 
+these raw data and referred to sets of calibration coefficients stored in the sensor. 
+
+All pressure transducers have a temperature drift. By calibrating the sensor at different temperatures, this drift 
+can be determined. The DSP stores the data from the calibration and is thus able to temperature-compensate 
+sampled pressure data, as well as to convert the data into linearly calibrated data in engineering units. 
+
+All calibration coefficients and settings are stored in the DSP flash-memory. These properties can be displayed 
+and changed using the RS-232 or RS-422 port (see Chapter 7 for how to communicate with the sensor). 
+
+The Sensors can be logged directly by a PC (via the RS-232/RS-422 protocol) and by most PLC’s DCP’s i/o devices, 
+data loggers and systems. 
+
+ 
+
+2.1 Sensor Integrated Firmware 
+
+The firmware’s main task is to sample raw data, compute calibrated temperature compensated and linearized 
+pressure, and present the result at the different interfaces. 
+
+All calibration coefficients and settings are called sensor properties, and are stored in the DSP flash-memory. 
+These properties can be displayed and changed using the RS-232/RS-422 port (see Chapter 7 for how to 
+communicate with the sensor). 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+2.2 Calculated parameters 
+
+Based on the measured parameters described above the sensor software in the Tide sensor 5217 and in the 
+Wave and Tide sensor 5218 calculates additional parameters; refer Table 2-1. 
+
+Refer Appendix 4 for a primer describing the calculation of wave parameters. 
+
+ 
+
+Table 2-1 Calculated Sensor parameters. 
+
+Parameter 
+
+Unit 
+
+Pressure sensor 
+
+4117/4117R 
+
+Tide sensor 
+
+5217/5217R 
+
+Wave and Tide 
+sensor 
+
+5218/5218R 
+
+Pressure 
+
+kPa 
+
+x 
+
+x 
+
+x 
+
+Temperature 
+
+°C 
+
+x 
+
+x 
+
+x 
+
+Tide pressure 
+
+kPa 
+
+ 
+
+x 
+
+x 
+
+Tide level 
+
+m 
+
+ 
+
+x 
+
+x 
+
+Significant wave height 
+
+m 
+
+ 
+
+ 
+
+x 
+
+Maximum wave height 
+
+m 
+
+ 
+
+ 
+
+x 
+
+Mean period 
+
+s 
+
+ 
+
+ 
+
+x 
+
+Peak period 
+
+s 
+
+ 
+
+ 
+
+x 
+
+Energy wave period 
+
+s 
+
+ 
+
+ 
+
+x 
+
+Mean zero crossing period 
+
+s 
+
+ 
+
+ 
+
+x 
+
+Steepness 
+
+- 
+
+ 
+
+ 
+
+x 
+
+Irregularity of sea-state 
+
+- 
+
+ 
+
+ 
+
+x 
+
+Cut-off frequency 
+
+Hz 
+
+ 
+
+ 
+
+x 
+
+Pressure Series 
+
+kPa 
+
+ 
+
+ 
+
+x 
+
+Last Pressure Sample Index 
+
+- 
+
+ 
+
+ 
+
+x 
+
+Spectrum 
+
+m2 
+
+ 
+
+ 
+
+x 
+
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+2.3 Status codes 
+
+Status codes indicate the status of parameters and properties, refer Table 2-2 and Table 2-3 . 
+
+ 
+
+Table 2-2 Status code common 
+
+StatusCode (Common) 
+
+Number 
+
+Description 
+
+OK 
+
+0 
+
+All data OK. 
+
+Error, corrupt configuration 
+
+3 
+
+Internal storage of settings is corrupt. 
+
+Warning, watchdog 
+detected 
+
+16 
+
+Reset generated by software 
+
+Warning, reset detected 
+
+17 
+
+Reset generated by reset command or power loss/low voltage 
+
+Parameter warning 
+
+18 
+
+Data set contains parameter(s) that is not reliable 
+
+
+
+ 
+
+Table 2-3 Status code parameter warning 
+
+StatusCode (Parameter Warning) 
+
+Number 
+
+Description 
+
+Warning, reduced quality 
+
+83 
+
+ 
+
+Warning, not ready 
+
+84 
+
+e.g. too few samples to perform calculation 
+
+
+
+ 
+
+Each data set has a common status code. If the common status code is Parameter warning (18), then one or 
+more of the parameters will have a Parameter Warning status code. 
+
+In RS-232, RS-422 and Polled operation errors and warnings will be indicated with a * in front of the parameter 
+name when the property Enable Text is enabled. 
+
+In AiCaP mode, the Status Codes will be collected by the SeaGuard Platform or SmartGuard and can be 
+presented in SeaGuard Studio or Data Studio. The status codes will be shown in the Status column under the 
+Data List tag. Recordings containing warnings are marked with blue text. Recordings containing errors are 
+marked with red text. The status field will have a Common status code. The Common status code indicates 
+whether there exist problems within the data set. By right clicking the Status field, details and the status codes 
+for each parameter will be shown. 
+
+In addition to the listed status codes from the sensor, the SeaGuard platform and SmartGuard logs status codes 
+for communication errors. 
+
+Error, corrupt configuration (3) indicates internal flash error. Parts of the sensor configuration are lost. Contact 
+AADI Service department for new setting file for the specific sensor with further instructions. 
+
+ 
+
+ 
+
+ 
+
+
+2.4 Startup delay for calculated wave and tide parameters 
+
+The calculations of wave and tide parameters require a number of pressure samples, which will take some time 
+for the sensor to perform due to the Number of samples and the Tidal Average Period set by the user. The value 
+of the output parameter will be 0 until the required samples are available, and the parameter will get a status 
+code: Warning Not Ready. 
+
+Once the sensor has performed the required number of samples, wave and tide parameters will be calculated 
+for every output interval based on the most recent samples in the pressure time series. The pressure time series 
+are updated according to the sampling rate. 
+
+ 
+
+Tide parameters will be calculated after Tidal Average Period in seconds. 
+
+Wave parameters will be calculated after seconds. 
+rateSamplingsamplesofNumber
+
+ 
+
+The sampling rate is by default 2 Hz, but you can enable high sampling rate of 4 Hz, refer Table 1-3 and Table 
+1-4. 
+
+ 
+
+Note! The pressure time series is cleared: after sensor power up, the Reset and Start command, and a change in 
+the properties Interval, Enable high sample rate, Tidal Average Period, Enable Tide, Enable Spectrum, Enable 
+Wave and Number of samples. 
+
+ 
+
+Example: 
+
+A tide sensor set to a Tidal Average Period of ‘40 s’ and a sample rate of 4 Hz will require 40*4 = 160 pressure 
+points before calculating a tide parameter value. If the Interval setting is 2 seconds the sensor will measure 2 * 4 
+= 8 pressure points before the next calculation. 
+
+If the Interval setting is 60 seconds all 160 pressure points in the series will be measured, which takes 40 s. The 
+sensor will enter sleep mode for 20 seconds before it has to start sampling data. 
+
+
+CHAPTER 3 Current drain 
+
+The sensors current drain depends on several property settings and the configuration of output parameters. 
+
+Assumptions to the presented current drain: 
+
+• Enable Sleep is set to Yes 
+• Comm TimeOut is given another input than Always On 
+• Enable Pressure Series is set to No (Wave and Tide sensor only) 
+• Enable Spectrum is set to No (Wave and Tide sensor only) 
+
+
+ 
+
+Other factors that influence the current drain: 
+
+• The total number of enabled output parameters. 
+
+
+ 
+
+Note! 
+
+Refer TD277 for a spread sheet calculating the current drain. 
+
+The current drain will increase when the sensor is connected to a lower voltage power supply (less than 9V) 
+
+ 
+
+ 
+
+3.1 Pressure sensor 4117/4117R 
+
+The pressure sensor current drain depends on the output interval (S), and the sensor operation mode, refer to 
+Table 3-1 for current drain in each mode. 
+
+Table 3-1 Power consumption of the Pressure Sensor 5217/5217R when the assumptions stated in the beginning of 
+Chapter 3 are true. 
+
+Operation Mode 
+
+Current drain@9V 
+
+AiCaP 
+
+0.4 mA + (5.4/S) mA 
+
+RS-232 
+
+0.4 mA + (24/S) mA 
+
+RS-422 
+
+1.1 mA + (22/S) mA 
+
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+3.2 Tide sensor 5217/5217R 
+
+The sensor current drain depends on the sampling interval, the output interval (S), the tidal averaging period (T), and the 
+sampling frequency (Fs) refer to Table 3-2 for current drain in each mode. 
+
+Note! If Enable Tide is No (Tide output parameter are disabled), then the sensor power consumption is similar to 
+the power consumption of the Pressure sensor 4117/4117R, refer chapter 3.1. 
+
+Table 3-2 Power consumption of the Tide Sensor 5217/5217R when Enable Tide is Yes, and the assumptions stated in the 
+beginning of Chapter 3 are true. 
+
+Operation Mode 
+
+Current drain@9V 
+
+T/S ≤ 1 
+
+T/S > 1 
+
+AiCaP 
+
+0.4 mA + (2.2*Fs*T/S) mA 
+
+Fs = 2 Hz: 4.65 mA + (1.5/S) mA 
+
+Fs = 4 Hz: 9.2 mA + (1.5/S) mA 
+
+RS-232 
+
+0.4 mA + (2.5*Fs*T/S) mA 
+
+Fs = 2 Hz: 5.5 mA + (13/S) mA 
+
+Fs = 4 Hz: 10 mA + (13/S) mA 
+
+RS-422 
+
+1.1 mA + (2.4*Fs*T/S) mA 
+
+Fs = 2 Hz: 5.5 mA + (13/S) mA 
+
+Fs = 4 Hz: 10 mA + (13/S) mA 
+
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+3.3 Wave and Tide sensor 5218/5218R 
+
+The sensor current drain depends on the sampling interval (Fs), the output interval (S), the number of samples 
+for wave calculations (N), and the tidal averaging period (T), refer to Table 3-3 for current drain in each mode. 
+
+Note! 
+
+If Enable Wave and Enable Tide are No but Enable Tide is YES (Wave and Tide output parameter are disabled), 
+then the sensor power consumption is similar to the power consumption of the Pressure sensor 4117/4117R, 
+refer chapter 3.1 
+
+If Enable Wave is No (Wave output parameters are disabled), then the sensor power consumption is similar to 
+the power consumption of the Tide Sensor, refer chapter 3.2 
+
+ 
+
+IMPORTANT! If both Enable Wave and Enable Tide are Yes (both Wave and Tide output parameter are 
+enabled), then the correct power consumption will be the greater of the consumption given in Table 3-2 and 
+Table 3-3. 
+
+ 
+
+ 
+
+Table 3-3 Power consumption of the Wave Sensor 5218/5218R when Enable Wave is Yes, Enable Tide is 
+No, and the assumptions stated in the beginning of Chapter 3 are true. If both Wave and Tide output 
+parameters are enabled, the correct power consumption will be the greater of the consumption given in 
+Table 3-2 and Table 3-3. 
+
+Operation Mode 
+
+Current drain@9V 
+
+N/(Fs*S) ≤ 1 
+
+N/(Fs*S) > 1 
+
+AiCaP 
+
+0.4 mA + (2.2*N/S) mA 
+
+Fs = 2 Hz: 4.65 mA + (6.5/S) mA 
+
+Fs = 4 Hz: 9.2 mA + (5.0/S) mA 
+
+RS-232 
+
+0.4 mA + (2.5*N/S) mA 
+
+Fs = 2 Hz: 5.5 mA + (28/S) mA 
+
+Fs = 4 Hz: 10 mA + (28/S) mA 
+
+RS-422 
+
+1.1 mA + (2.4*N/S) mA 
+
+Fs = 2 Hz: 5.5 mA + (28/S) mA 
+
+Fs = 4 Hz: 10 mA + (28/S) mA 
+
+
+
+ 
+
+ 
+
+ 
+
+
+CHAPTER 4 Installation and deployment considerations 
+
+Please refer Table 4-1 for the most important installation and deployment considerations. 
+
+Table 4-1 Installation considerations for the Pressure, Tide and Wave and Tide sensors. 
+
+Description 
+
+Measurement Parameters: 
+
+Pressure/ 
+
+Temperature 
+
+Tide 
+
+Wave 
+
+Install the sensor with the top up 
+
+x 
+
+x 
+
+x 
+
+Install the sensor in a fixed installation 
+
+ 
+
+x 
+
+x 
+
+The deployment depth must be at least 1 meter below the 
+water surface (at the lowest tide level) 
+
+ 
+
+ 
+
+x 
+
+We recommend that the deployment depth is less than 15 m 
+
+ 
+
+ 
+
+x 
+
+
+
+ 
+
+Install the sensor with top up because the pressure inlet is filled with silicone oil. The sensor is calibrated for 
+top-up installations; other positions will produce a small zero offset. 
+
+Valid measurements of tide and wave parameters require a fixed installation on a vertically stable structure to 
+avoid movements of the sensor due to water conditions or settling. 
+
+For wave measurements the sensor should at all times be deployed at least 1 meter below the water surface to 
+ensure valid measurements. Low water levels require more internal calculations. If the water level becomes less 
+than 0.25 meters, the water level will be set to 0.25 meters. 
+
+The data quality of the wave measurements is reduced with increasing installation depth due to wave 
+attenuation, refer Appendix 4. The pressure variations generated by waves are damped, and the cut off 
+frequency reduces the frequency range in the wave spectrum. At depths larger than 20 meters the dampening is 
+difficult to compensate for because of a weak signal. The frequency range is also very limited. 
+
+If the Wave and Tide sensor or the Tide sensor is attached to a floating device the sensor cannot measure tide, 
+but can compute draft of the structure. 
+
+If the Wave and Tide sensor is attached to a very large floating device so that the sensor will be relatively steady 
+in relation to the mean sea level, then the sensor can measure waves with reduced quality. Such a large floating 
+device can be e.g. a floating fish farming facility or oil rig. We recommend installation on the sea floor or 
+attached to a fixed pillar. Installation on a string is not recommended because there will always be some 
+movement of the string/sensor. 
+
+IMPORTANT! Do not deploy the sensor deeper than the pressure rating of the pressure element. 
+
+
+top end plate drawing
+CHAPTER 5 Installation on SeaGuard 
+
+Pressure sensor 4117, Tide sensor 5217, and Wave and Tide sensor 5218 are equipped with a CANbus interface 
+supporting the Aanderaa AiCaP (Automated idle line CANbus Protocol). This standard ensures easy plug and play 
+connection to all Aanderaa SeaGuard and SmartGuard data loggers. 
+
+ 
+
+When connected to a AiCaP network the sensor will report its capabilities and specifications to the data logger 
+at power up. The data logger assembles the information and provides the user with the possibility to configure 
+the instrument based on the present node. The solution provides for great flexibility in both use and design of 
+the different elements within the system. 
+
+Note! This chapter describes the installation and the SeaGuard Configuration of the Pressure sensor, Tide sensor 
+and the Wave and Tide sensor. Refer TD262a for a thorough description of configuring the SeaGuard Instrument, 
+and to perform Node Identification, more Deployment settings, Recorder settings, and to view/edit sensor 
+calibration coefficients. 
+
+5.1 Installation on SeaGuard platform 
+
+The Pressure Sensor 4117, Tide Sensor 5217, and Wave and Tide Sensor 5218 can easily be installed on 
+Aanderaa SeaGuard data loggers. We recommend that you install the sensor in sensor position 2, refer Figure 
+5-1. Sensor 4117/5217/5218 can also be installed in position 3, 4, 5 or 6. If mounted in position 6 you will need 
+to use a patch cable to connect the sensor to the HUB card, refer TD262a SeaGuard Platform Operating Manual. 
+If placed next to the Conductivity sensor, the cell factor calibration performed on the Conductivity sensor might 
+be influenced. 
+
+ 
+
+Figure 5-1 Illustration of the SeaGuard Top-end 
+plate. 
+
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+sealing_plug
+tectyl
+All sensor and sealing plugs except for the center position are secured by means of a setscrew in the side of the 
+top end plate. Start by unscrewing the setscrew for the wanted position (the setscrew will stop when 
+sufficiently extracted). Pull out the sealing plug (or sensor) by inserting a screwdriver in the slot between the 
+plug and the top end plate, see Figure 5-2. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Figure 5-2 Removal of sealing plug. Use a small piece of paper/cardboard to protect the lacquer of the top-
+end plate 
+
+Make sure that the bore surface in the sensor mounting hole is clean and smooth and check also that the O-
+rings at the sensor foot are free from dust and particles and greased with silicon grease. Align the orientation 
+pin in the sensor foot with the orientation hole in the top end plate, and carefully insert the sensor. 
+
+When fully seated on the top end plate, tighten the set screw with only moderate force. 
+
+Note! Always replace O-rings when connecting to a sensor or a sealing plug. 
+
+Apply Tectyl 506 (included in maintenance kit) in the slit between the Sensor and the top end plate, refer Figure 
+5-3. This will prevent crevice corrosion of the top end plate. 
+
+Figure 5-3 Apply Tectyl in the slit between the Sensor and the top end plate. (Example showing tectyl around 
+an electrical terminal). 
+
+ 
+
+
+5.2 Sensor Cable 
+
+ 
+
+AiCaP/RS-232: 
+
+Sensor Cable 4793 is used for remote sensor connection on SeaGuard, See Appendix 5, Figure A 12. If sensor used 
+as 6th sensor or top-end plate us Patch Cable 4999, See Appendix 5, Figure A 13. A watertight free end cable 4762 
+and non-watertight free end cable 3880 is available for connection to third party datalogger, See Appendix 5, Figure 
+A 9 and Figure A 11. For set up and configuration use Sensor Cable 3885 or 4865. 3885 is for laboratory use only, 
+See Appendix 5, Figure A 6 and Figure A 7. 
+
+For sensor connection to AADI SmartGuard use cable 5245 or 5236, for further information contact 
+aanderaa.info@xyleminc.com 
+
+RS-422: 
+
+A watertight free end cable 4763 and non-watertight free end cable 3880 is available for connection to third party 
+data logger, See Appendix 5, Figure A 10 and Figure A 11. For set up and configuration use Sensor Cable 4799, See 
+Appendix 5, Figure A 8. 
+
+ 
+
+5.3 Sensor Configuration Pressure sensor 4117 
+
+Note! Refer to Table 1-2 for a description of the sensor settings and the input parameters. 
+
+5.3.1 System Configuration 
+
+After installing the sensor turn power on and open the System Configuration from the Menu button. Select the 
+folder labeled Sensors. Select the newly installed Pressure sensor which should appear in the list of Sensors, and tap 
+Configure in the lower part of the window, refer Figure 5-4 
+
+The System Configuration holds a list of output parameters that can be enabled/disabled by the user. Enabled 
+properties (Yes) are stored in the data logger 
+
+• Enable Temperature in engineering units. 
+• Enable Raw data, refer chapter 2.2 
+
+
+
+ 
+
+Figure 5-4 System configuration 
+
+To enable/disable a parameter: 
+
+Select the output parameter from the list, press View/Edit in the lower part of the window, and change the setting 
+by clicking the box (box is now checked), press Save to save and close the window. 
+
+We recommend that you enable all parameters in case of later use. The memory card storage capacity is normally 
+not a limitation for the SeaGuard. Raw data can be used e.g. to control calibration coefficients and perform quality 
+control on the data. 
+
+The System Configuration holds output parameters which can be enabled/disabled by the user, refer Figure 5-4 
+
+Select the property, and press View/Edit to set the value. Tap OK to return to the System Configuration display, 
+refer Figure 5-4. Press Finish to store the settings when complete. 
+
+5.3.2 Deployment Settings 
+
+The Deployment Settings hold a list of user defined inputs: location, geographic position, vertical position and 
+reference. To add information to one of these properties, select the property, press View/Edit and with the 
+keyboard panel enter the text or numbers. Press OK and Finish storing the information. 
+
+5.3.3 User maintenance 
+
+Node Description, User Information and calibration coefficients are found in User Maintenance 
+
+Open Administrative Tools from the Menu button Select User Maintenance and then Pressure Sensor from the 
+sensor list. Refer Figure 5-5. In User Maintenance you find properties that are password protected, and are 
+set/altered by the ‘advanced user’, note! the password is: 1000 The properties in user maintenance are therefore 
+not changed during normal operation. The user maintenance holds three submenus: 
+
+• Node Descriptions 
+• Owner 
+• Calibration Coefficients 
+
+
+
+ 
+
+Figure 5-5 User Maintenance. 
+
+ 
+
+Select the Node Description property, press View/Edit in the lower part of the 
+window, and change the setting. Press Save to store the setting when completed. 
+
+Node Description is a user entered text describing the sensor, placement etc. If 
+using for example a SeaGuard sensor string with multiple sensors connected; 
+renaming the sensor can facilitate analyzing data. The text is by default set to the 
+product name followed by product model and serial number, e.g. Pressure Sensor 
+4117#52. 
+
+Press Next> to continue with the next submenu. 
+
+ 
+
+ 
+
+Figure 5-6 Node Description 
+
+The second submenu is the Owner property, press View/Edit in the lower part of 
+the window, and change the text. Press Save to store the setting when completed. 
+
+Owner is a user entered text describing the sensor owner, name and address etc. If 
+using. The text is by default empty 
+
+Press Next> to continue with the next submenu. 
+
+ 
+
+ 
+
+ 
+
+Figure 5-7 Owner 
+
+
+The third submenu is the Calibration Coefficients property. For each calibration 
+property to be set, you must first select the property then press View/Edit and 
+type the correct value. Press Save to store the settings. 
+
+Press Finish > to complete and exit and store the changes made 
+
+ 
+
+Always press Finish to complete, exit and store the changes made in the Pressure 
+Sensor User Maintenance. Selecting Cancel or clicking on the ‘X’ in the top right 
+corner to close the screen exits the menu without saving any of the changes. 
+
+ 
+
+ 
+
+Figure 5-8 Calibration Coefficients 
+
+ 
+
+5.4 Sensor Configuration Tide sensor 5217 
+
+Note! Refer to Table 1-3 for a description of the sensor settings and the input parameters. 
+
+ 
+
+5.4.1 System configuration 
+
+Open the System Configuration from the Menu button. Select the Tide Sensor 
+from the list of sensors, and tap Configure in the lower part of the window. 
+
+The System Configuration holds output parameters which can be set by the user, 
+refer Figure 5-9. 
+
+Select the property, and press View/Edit to set the 
+
+value. Tap OK to return to list. 
+
+Press Finish to store the measurement configuration or Cancel to continue 
+without storing. 
+
+For property Enable High Sample Rate, if you select No the sampling rate will be 
+2Hz. If Yes the sampling rate will be 4Hz 
+
+Figure 5-9 System Configuration; 
+
+measurement settings. 
+
+ 
+
+For property Enable Temperature and Enable Rawdata. If set to Yes the parameter will be included in the dataset, if 
+set to No the data will not be stored or displayed. 
+
+For property Enable Tide. The sensor will act as a Pressure Sensor if set to No. Select Yes if you want to output Tide 
+data. 
+
+
+Property Tidal Average Period will select the averaging interval for the tide measurements, select a period from 10 
+seconds to 8 minutes from the drop down menu. 
+
+5.4.2 Deployment settings 
+
+Open the Deployment Settings from the Menu button. Select the Tide Sensor from the list of sensors, and tap 
+Configure in the lower part of the window. 
+
+The Deployment Settings(1/2) holds a list of user defined input: owner, location, geographic position, vertical 
+position and reference. To add information to one of these properties, select the property, press View/Edit and with 
+the keyboard panel enter the text or numbers. Press OK and Finish storing the information. 
+
+The Deployment Settings(2/2) holds a list of fixed parameters that must be valid 
+at the deployment site (refer chapter 1.3 and 1.4 for a short description): 
+
+• Atmospheric Pressure 
+• Local Gravity Acceleration 
+• Salinity 
+
+
+ 
+
+Type the value in the input field using keypad panel. The parameters are used in 
+calculating the tide parameters. 
+
+At delivery, these parameters are set to 101.3 kPa (Ambient Air Pressure), 9.81 
+m/s2 (Local Gravity), 35.0 psu (Salinity). 
+
+Figure 5-10 Deployment Settings; 
+
+fixed settings. 
+
+ 
+
+5.4.3 User maintenance 
+
+ 
+
+The User Maintenance holds Node Description, Interface settings, and calibration coefficients. 
+
+See chapter 5.3.3 for details since this is identical to Pressure Sensor 4117 User Maintenance. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+ 
+
+5.5 Sensor Configuration Wave and Tide sensor 5218 
+
+Note! Refer Table 1-4for a description of the sensor settings and the input parameters. 
+
+ 
+
+5.5.1 System configuration 
+
+Open the System Configuration from the Menu button. Select the Wave and Tide Sensor from the list of sensors, 
+and tap Configure in the lower part of the window. 
+
+The System Configuration holds output parameters which can be set by the user, refer Figure 5-11;. 
+
+ 
+
+Select the property, and press View/Edit to set the 
+
+value. Tap OK to return to list. 
+
+Press Finish to store the measurement configuration or Cancel to continue 
+without storing. 
+
+For property Enable High Sample Rate, if you select No the sampling rate will be 
+2Hz. If Yes the sampling rate will be 4Hz. 
+
+For property Enable Temperature and Enable Rawdata. If set to Yes the 
+parameter will be included in the dataset, if set to No the data will not be stored 
+or displayed. 
+
+ 
+
+ 
+
+Figure 5-11 System Configuration; 
+
+measurement settings. 
+
+ 
+
+For property Enable Tide and Enable Wave. The sensor will act as a Pressure Sensor if both are set to No. If Enable 
+Tide is set to Yes and Enable Wave is set to no it will act a Tide Sensor. If both are set to Yes it will record all available 
+parameters for pressure, tide and wave. 
+
+For property Tidal Average Period will select the averaging interval for the tide measurements, select a period from 
+10 seconds to 8 minutes from the drop down menu 
+
+For property Number of Samples select the number of samples desired in one wave measurement from the drop 
+down menu. 
+
+ 
+
+ 
+
+ 
+
+
+Deploy 2 wts
+5.5.2 Deployment settings 
+
+Open the Deployment Settings from the Menu button. Select the Wave and Tide Sensor from the list of sensors, and 
+tap Configure in the lower part of the window. 
+
+The Deployment Settings(1/2) holds a list of user defined input: owner, location, geographic position, vertical 
+position and reference. 
+
+Figure 5-12Deployment Settings; fixed 
+settings. 
+
+
+
+ 
+
+The Deployment Settings(2/2) holds a list of fixed parameters that 
+must be valid at the deployment site (refer chapter 1.3 and 1.4 for a 
+short description): 
+
+• Ambient Air Pressure 
+• Local Gravity 
+• Salinity 
+• Distance to Seafloor 
+
+
+ 
+
+Type the value in the input field using keypad panel. The parameters 
+are used in calculating the wave and tide parameters. 
+
+At delivery, these parameters are set to 101.3 kPa (Ambient Air 
+Pressure), 9.81 m/s2 (Local Gravity), 35.0 psu (Salinity), and 0 m 
+(Distance to Seafloor). 
+
+ 
+
+Press Finish to store the settings when complete. 
+
+5.5.3 User Maintenance 
+
+Open Administrative Tools from the Menu button Select User Maintenance and then Wave and Tide Sensor from 
+the sensor list. Refer Figure 5-13.. In User Maintenance you find properties that are password protected, and are 
+set/altered by the ‘advanced user’, note! the password is: 1000 The properties in user maintenance are therefore 
+not changed during normal operation. The user maintenance holds four submenus: 
+
+• Node Descriptions 
+• Owner 
+• Pressure Series and Wave Spectrum 
+• Calibration Coefficients 
+
+
+
+ 
+
+Figure 5-13 User Maintenance. 
+
+ 
+
+Select the Node Description property, press View/Edit in the lower part of the 
+window, and change the setting. Press Save to store the setting when completed. 
+
+Node Description is a user entered text describing the sensor, placement etc. If 
+using for example a SeaGuard sensor string with multiple sensors connected; 
+renaming the sensor can facilitate analyzing data. The text is by default set to the 
+product name followed by product model and serial number, e.g. Wave and Tide 
+Sensor 5218#52. 
+
+Press Next> to continue with the next submenu. 
+
+ 
+
+Figure 5-14 Node Description 
+
+ 
+
+The second submenu is the Owner property, press View/Edit in the lower part of 
+the window, and change the text. Press OK to store the setting when completed. 
+
+Owner is a user entered text describing the sensor owner, name and address etc. If 
+using. The text is by default empty 
+
+Press Next> to continue with the next submenu. 
+
+ 
+
+ 
+
+ 
+
+Figure 5-15 Owner 
+
+
+The third submenu is the Enable Pressure Series and Enable Spectrum property, 
+press View/Edit in the lower part of the window, and enable or disable the 
+property in the box. Press OK to store the setting when completed. 
+
+These properties are by default disabled 
+
+Press Next> to continue with the next submenu. 
+
+ 
+
+NOTE! The Pressure time series/spectrum parameter holds a large amount of 
+data, hence occupies a large part of the storage capacity. Pressure time 
+series/spectrum should only be recorded in special occasions. 
+
+ 
+
+Figure 5-16 Enable Pressure Series and Spectrum. 
+
+ 
+
+The fourth submenu is the Calibration Coefficients property. For each calibration 
+property to be set, you must first select the property then press View/Edit and 
+type the correct value. Press Save to store the settings. 
+
+Press Finish > to complete and exit and store the changes made 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Figure 5-17 Calibration Coefficients. 
+
+ 
+
+Always press Finish to complete, exit and store the changes made in the Pressure Sensor User Maintenance. 
+Selecting Cancel or clicking on the ‘X’ in the top right corner to close the screen exits the menu without saving any of 
+the changes. 
+
+ 
+
+
+CHAPTER 6 Sensor configuration using AADI Real-Time Collector 
+
+The sensors that are updated with Sensor Framework version 3 can be configured as stand-alone sensors using AADI 
+Real-Time Collector. 
+
+Open the sensor connection as described in TD268 AADI Real-Time collector operating manual. 
+
+When the connection is established you can start and stop recordings or configure the device, refer Figure 6-1 . 
+Open Device Configuration and press Get Current Configuration. Check Include User Maintenance to view 
+maintenance settings. The password is 1000. 
+
+Figure 6-1 AADI Real-Time Collector screen views 
+
+ 
+
+ 
+
+ 
+
+
+
+User accessible sensor properties are found in Deployment settings, System Configuration and User Maintenance. 
+Refer Table 1-2, Table 1-3 and Table 1-4 in chapter 1 for an overview of the properties and the chapter 1 text for a 
+description of sensor properties. To edit the configuration, click in the value-field and enter new value. Press Next to 
+update sensor flash and store changes. 
+
+Figure 6-2, Figure 6-3, Figure 6-4 and Figure 6-5present screen views of AADI Real-Time Collector. 
+
+Note! These screen shots might show minor discrepancies compared to screen shots taken from your sensor due to 
+sensor updates. 
+
+ 
+
+ 
+
+ 
+
+
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Figure 6-2 Sensor deployment settings 
+
+
+
+ 
+
+Figure 6-3 Sensor system configuration 
+
+ 
+
+
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Figure 6-4 Sensor user maintenance part 1 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Figure 6-5 Sensor user maintenance part 2 
+
+ 
+
+
+
+
+ 
+
+Figure 6-6 Data visualization 
+
+ 
+
+Figure 6-6 showing real-time data from sensor obtained via the data visualization tool in Real-time 
+Collector. This data can either be displayed in the text viewer as shown in figure 6-6 or in graphs by 
+using the graph viewer. For more info on this feature refer to TD268 AADI Real-Time collector operating 
+manual. 
+
+
+
+
+Description: Cable 3855 10p_9Dsub_Bus_open
+Connection to the 
+sensor 
+
+
+Connection to the 
+USB port for power 
+supply 
+(alternative1) 
+
+
+Connection to an 
+external power 
+supply (alternative2) 
+
+
+Connection to the PC 
+serial Port 
+
+ 
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+CHAPTER 7 Connection to PC 
+
+This chapter describes how to connect and communicate with the Pressure Sensor 4117, Tide Sensor 5217 and Wave 
+and Tide Sensor 5218 using the RS-232 Smart Sensor Terminal protocol. Sensor configuration is described in chapter 
+4 and 5. 
+
+Sensor Cable 3855 (1.5m) is not intended for in water use, it is for sensor setup in an office environment only, for 
+laboratory or in water use Sensor Cable 4865 to connect pressure Sensor 4117/5217/5218 to a PC. 
+
+Note! The connector on Sensor Cable 3855 is made of Aluminum, due to risk of corrosion it is not recommended for 
+use in saltwater. Same pin configuration as Cable 4865. 
+
+Either connect the additional USB plug in a USB port for providing power to the sensor (the USB port normally gives 
+5V power), or connect the USB plug to an included extension of the USB and connect to external power (5-14V), 
+refer Figure 7-1. 
+
+Note! If power cannot be obtained from an USB port a practical solution is to use a 9V alkaline battery (6LF22) to set 
+the sensor up or log data in the laboratory. 
+
+Sensor Cable 4865 is also available in other lengths. The cable has a titanium plug, and can be used in applications 
+that require a direct connection to a PC in RS-232 operations. 
+
+Figure 7-1 Sensor Cable 3855. 
+
+ 
+
+See Appendix 5 for illustrations of all available cables. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+7.1 Operation mode: AiCaP and Smart Sensor Terminal 
+
+7.1.1 AiCaP sensors 
+
+‘AiCaP’ sensors can be used either with AiCaP protocol or Smart Sensor Terminal protocol. At delivery, the sensor is 
+configured with ‘AiCaP’ mode. Ensure that the sensor is configured for AiCaP mode when used in SeaGuard 
+applications or SmartGuard with AiCaP connection. If the sensor is set in another mode it will not be detected by the 
+logger. Refer Table 1-2 (page 14) for Mode property settings. 
+
+The sensor must be configured to Smart Sensor Terminal mode before it can be used in RS-232 operations. Refer to 
+chapter 7.2 for serial communications setup and chapter 7.4 for scripting. 
+
+Procedure to configure the sensor to Smart Sensor Terminal mode from AiCaP: 
+
+1. Disconnect the sensor from the SeaGuard or SmartGuard Platform. 
+2. Connect the sensor to a PC using e.g. cable 3855/4865. 
+3. Open a terminal emulation program on your PC, copy and paste or write a text file in an ordinary text editor 
+the command lines and save this file. This file can then be sent to the sensor in one operation. The first line 
+in the example below is a user comment line that is disregarded by the Sensor. Strings starting with either 
+‘//’ or ‘;’ are ignored by the software, and do not produce any errors nor are they acknowledged by the 
+sensor. 
+4. Set the Mode property to Smart Sensor Terminal, refer Table 1-2. Followed by sending the Save and Reset 
+commands to Save the configuration and reset the sensor. 
+
+
+Example: 
+
+ //Press Enter to start communicating with the sensor, refer chapter 7.2.2. 
+
+↵ //press Enter 
+
+Stop ↵ //Wait for ack #. Repeat if necessary 
+
+Set Passkey(1) ↵ 
+
+Set Mode(Smart Sensor Terminal) ↵ //wait for ack # 
+
+Save ↵ // wait for ack # 
+
+Reset ↵ // the sensor will restart with new settings 
+
+ 
+
+Procedure to configure the sensor to AiCaP mode from Smart Sensor Terminal: 
+
+1. Connect the sensor to a PC using e.g. cable 3855. 
+2. Set the Mode property to AiCaP, refer Table 1-2. Save the configuration and reset the sensor. 
+3. Mount the sensor to the SeaGuard or SmartGuard Platform, refer Figure 5-1.. 
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+Rs422 signal
+7.1.2 R-version sensors 
+
+The R-version sensor supports only RS-422 and Polled operations. These sensors cannot be used in SeaGuard 
+applications. 
+
+Sensors with RS-422 output must use a cable designed for RS-422 communication when connected to the PC. If your 
+PC does not support RS-422, you can buy an expansion card or you can use an RS-232 port and an RS-232/RS-422 
+converter. AADI can provide such a cable: sensor cable 4799 to PC (with RS-232/RS-422 converted included). 
+
+Note! It is possible to receive data from the ‘R’ sensor using sensor cable 3855 to PC, but it is not possible to transmit 
+commands to the sensor when connected to cable 3855. 
+
+7.1.3 RS-422 transmission line 
+
+RS-422 has differential transmission lines with twisted pairs. The sensor signals are less influenced by external noise 
+than a sensor with RS-232 serial communication, which makes it possible to communicate using longer cables (in RS-
+422 operations). 
+
+RS-422 has one balanced signal pair for the transmitted signal, TxD (also called TxD+ and TxD-) and one balanced 
+signal pair for the received signal, RxD (also called RxD+ and RxD-). 
+
+RxD+ and TxD+ are often named B and called non-inverting input and output, respectively. 
+
+RxD- and TxD- are often named A and called inverting input and output, respectively. 
+
+The EIA standard uses the notation A and B as described above; many manufacturers of signal converters uses the 
+opposite naming (A for non-inverting input/output, and B on inverting input/output) which is not correct. 
+
+Note! Always ensure which signal is non-inverting and which is inverting. 
+
+Figure 7-2 illustrates the balanced signals of an RS-422 line during transmission of a byte. The non-inverting signal is 
+called TxD+ while the inverting signal is called TxD-. 
+
+ 
+
+ 
+
+
+
+Figure 7-2 Example of a RS-422 signal 
+
+ 
+
+ 
+
+
+7.1.4 Polled mode 
+
+Sensors set to Smart Sensor Terminal mode can be used in Polled operation with third party hardware, where the 
+sensor presents measurement data on user request only. 
+
+The Pressure sensor: 
+
+• The Do Sample command updates pressure and temperature measurements. 
+• The Do Output command presents the last set of measured data. 
+
+
+ 
+
+ 
+
+ 
+
+Tide sensor and Wave and Tide sensor: 
+
+• The Do Sample command starts a calculation and presents one set of output data. 
+• The Do Output command presents the last set of calculated data. 
+
+
+ 
+
+The Tide Sensor and the Wave and Tide sensor are sampling continuously (if tide or wave is enabled) to ensure that 
+there is a complete pressure time series ready at all times for calculation of output parameters. The temperature 
+measurement is updated at sensor power up, clearing of the pressure series and at a 10 min interval. 
+
+After sensor start up or clearing of the pressure series some time will elapse before the required number of pressure 
+samples are available, hence wave and tide parameters cannot be calculated. The parameters will be set to 0 and 
+there will be a status code “Not ready”. Refer chapter 2.4 for details and information about when the pressure series 
+are cleared. 
+
+ 
+
+Procedure to configure the sensor to Polled operations from RS-422: 
+
+1. Connect the sensor to a PC. Use e.g. cable 4799 if connecting to the PC RS-232 serial port. 
+2. Set the Enable Polled Mode property to yes. Save the configuration and reset the sensor. 
+
+
+Example: //Press Enter to start communicating with the sensor, refer chapter 7.2.2. 
+
+↵ //press Enter 
+
+Stop ↵ //Wait for ack #. Repeat if necessary 
+
+Set Passkey(1) ↵ 
+
+Set Enable Polled Mode(yes) ↵ //wait for ack # 
+
+Save ↵ // wait for ack # 
+
+Reset ↵ // the sensor will restart with new settings 
+
+ 
+
+ 
+
+ 
+
+
+7.1.5 Description of user configurable properties 
+
+The Node Description property is a user defined text that describes the sensor or the location of the sensor. 
+
+The Mode property is used to set the sensor operation mode of the sensor. Set the mode property to AiCaP, Smart 
+Sensor Terminal, AADI Real-Time, Smart Sensor Terminal FW2 to enable the different sensor operations. Note! The 
+mode Smart Sensor Terminal FW2 brings the sensor into an operation mode with output string that is compatible 
+with AADI framework 2. ‘AiCaP’ sensors will be set to RS-232 operation if configured to RS-422 communication 
+interface. An R-sensor will be set to RS-422 operation if configured to AiCaP or RS-232 communication interface. 
+
+Set the Enable Text to Yes for the sensor to output a detailed text string (including the output parameter name and 
+engineering unit names) with the measurements, or No to output the measured values without the descriptive text. 
+
+Set the Enable Decimalformat to Yes to output the measured values in decimal format. Set the property to No 
+(default) to output the values in exponential format (higher resolution in the output parameter value). Example of 
+decimal format: the presented value is e.g. 0.0025. Example of exponential format: the presented value is e.g. 
+2.500000E-03. 
+
+Set the Enable Sleep to Yes (default) for the sensor to go to sleep between recordings, or No for the sensor to stay 
+continuously switched on between recordings (consumes more power). 
+
+Note! After receiving input at the RS-232 or RS-422 interface or as Polled input, Comm TimeOut will decide when the 
+sensor is allowed to re-enter sleep mode. In AiCaP mode the sensor will always enter sleep mode between 
+recordings/calculations. Setting No is not recommended for battery operation as the current drain will rise by up to 
+9mA continuous. The accuracy of the temperature readings will also be reduced and may not meet published 
+accuracy specification with this setting due to internal self-heating. 
+
+The Interval property describes the output interval in seconds (stand-alone sensor). The value must be a float 
+between 1 and 15300. The sensor provides a set of measured/calculated data for every output interval. When 
+configured to non-polled mode the sensor can be used in systems with one-way communication. In Polled operation 
+the sensor will present data only on request (the internal interval timer is disabled). In AiCaP mode the interval is 
+controlled by the SeaGuard or SmartGuard instrument (minimum 2 seconds). 
+
+Note! For 5218/5218R Wave and Tide sensor with pressure series and/or spectrum enabled, the interval will 
+automatically be extended to 1 min if the interval setting is less than 60 seconds. 
+
+The Vertical Position property is a user defined value that describes the sensor installation depth. The information is 
+not used in calculation of parameters. 
+
+Set the Enable Temperature and Enable Rawdata to Yes to include these parameters in the output string. The raw 
+data readings are values directly from the 24 bit ADC. 
+
+The Comm TimeOut property controls how long the sensor will wait for the next command before it shuts down the 
+transceiver (indicated by the communication sleep indicator ‘%’). In this time period the sensor is not allowed to 
+enter communication sleep. If set to Always On, the sensor will not need a wakeup character and is always ready to 
+read incoming commands. This setting will not allow the sensor to enter communication sleep, and is not 
+recommended for battery operation. In AiCaP mode the setting is overridden to 1 minute when configured using the 
+RS232 line. 
+
+
+PT coeffs 0,1,2,3,4 and Temp coeffs holds the calibration data needed to convert from raw data to engineering 
+values. The sensors are calibrated at delivery; if these settings are lost AADI Service Department will provide the 
+calibration data. 
+
+ 
+
+7.1.6 Additional configuration of the Tide Sensor and Wave and Tide Sensor 
+
+Set the Enable Tide to Yes to include this parameter in the output string. 
+
+Set the Tidal Average Period in seconds (default is 40 seconds). The minimum averaging time is 10 seconds; the 
+maximum averaging time is 8 minutes, refer chapter 1.3. 
+
+Set the Air Pressure, Local gravity and Salinity at the deployment site. These properties are used in calculations of 
+the tide parameters and wave parameters, refer Table 1-2, Table 1-3 and Table 1-4. At delivery, these parameters 
+are set to 101.3 kPa (Ambient Air Pressure), 9.81 m/s2 (Local Gravity), 35.0 psu (Salinity). Air pressure variations of 5 
+kPa gives approximately 50 cm variation in the tide level parameter. The equation for calculating the water density is 
+only accurate for salinity values between 2 and 42. 
+
+The Installation Depth property can be used for referring the Tide Level to a chosen datum (reference level). Set this 
+property to the distance in meters from the datum to where the sensor is installed. 
+
+Set the Enable high sample rate to Yes to sample at 4 Hz rate. The factory setting is No (which means 2 Hz sampling 
+rate). 
+
+Set the Enable Wave to Yes to include these parameters in the output string (Wave and Tide Sensor). 
+
+Set the Number of Samples to be collected for wave calculations, refer chapter 1.3 (Wave and Tide Sensor). Wave 
+parameters are calculated with better accuracy if the number of pressure samples is high. If you select 2048 samples, 
+the sensor averages two frequency spectrums each of 1024 samples. 
+
+Set the property Enable Spectrum to Yes to present the spectrum elements in the output string. The spectrum is 
+presented as the value of each frequency component in the wave spectrum. Spectral components outside of the 
+calculated cut-off frequencies are set to 0. When in Smart Sensor Terminal mode the XML output format can be 
+access when in Polled mode or when in AADI Real-Time mode using Aanderaa’s Real-Time Data Collector software 
+XML Output is enabled and the spectrum info length, freq. resolution etc are shown, refer chapter 7.2.10 XML 
+Commands (Wave and Tide Sensor) Table 1-4; Table 7-2and Appendix 4 Note! When the Wave & Tide sensor is 
+connected to a SeaGuard instrument we recommend that you enable wave spectrum and/or pressure time series only 
+for short deployments due to current drain and memory usage. The output update interval will be at least 10 seconds 
+for AiCaP applications, and at least 1 minute for RS232/RS422 operation. 
+
+Set the property Enable Pressure Series to Yes to present the Pressure Time Series and Last Pressure Sample Index. 
+The Pressure Time Series is the sample set used for the spectrum and wave calculation. (Wave and Tide Sensor only). 
+
+Set the Distance to seafloor as the distance between the sensor and the seafloor in meters. The value is used in 
+wave calculations. For values below 50 meters, you can set the value to 50 meters. Set the property to 0 (default) if 
+the sensor is deployed on the seabed (Wave and Tide Sensor). 
+
+
+7.2 Smart Sensor Terminal communication setup 
+
+Most terminal programs can be used for Smart Sensor Terminal communication with the sensor when connected to 
+a PC, e.g. Teraterm. A copy of Teraterm is included on the CD following the sensor. Copy the content of the zip file to 
+the Program File folder on your PC. Start the teraterm.exe file and the terminal program will start up with standard 
+sensor setup. 
+
+The following Smart Sensor Terminal setup should be used: 
+
+9600 Baud 
+
+8 Data bits 
+
+1 Stop bit 
+
+No Parity 
+
+Xon/Xoff Flow Control 
+
+ 
+
+IMPORTANT! The terminal program must send a Line Feed after each Carriage Return. 
+
+ 
+
+RS-232/RS-422 operation: 
+
+When connected, you will get measurement data according to the output interval stored in the flash memory. If the 
+measurement interval is set to zero, you can type the command Reset to get the operation mode and a single set of 
+measurement data. 
+
+ 
+
+7.2.1 Polled Mode: 
+
+Type a command to retrieve data/information from the sensor, refer e.g. chapter 7.1.4, chapter 7.2.6 and chapter 
+7.2.10for a description of available commands. 
+
+ 
+
+7.2.2 Sensor startup 
+
+When property Enable Text is set to Yes, StartupInfo is displayed at sensor power up or after reset. StartupInfo 
+contains this information about product number, serial number, current mode setting, Protocol version for Smart 
+Sensor Terminal operation and Config Version. 
+
+ 
+
+
+
+Figure 7-3 Sensor Startup Information 
+
+
+When used in Smart Sensor Terminal mode the sensor will always start by doing a sample that will be presented 
+within 2 seconds from powering the sensor. This does not apply for Polled operations. Please note that some of the 
+parameters starts with a *. This indicates that the parameter cannot be calculated because the required number of 
+pressure samples is not available. 
+
+In order to minimize the current drain the sensor normally enters a power down mode after each sampling; the 
+sensor can be awakened by any characters on the Smart Sensor Terminal input, and will stay awake for a time set by 
+the Comm TimeOut property after receiving the last character. 
+
+If the property Comm TimeOut is set to other than ‘Always On’ the serial interface will not be activated after power-up 
+(or the Reset command). Any character will activate the serial interface, but a Carriage Return (CR or CR+LF), ‘/’ or ‘;’ are 
+often preferred since these character do not interfere with the command syntax. The serial interface will then be active 
+until a period of input inactivity specified by the Comm TimeOut value (10 s,20 s,30 s,1 min,2 min,5 min,10 min). The 
+Communication Sleep Indicator, ‘%’, will be transmitted when the serial communication is deactivated, and the 
+Communication Ready Indicator, ‘!’ is outputted subsequent to activation. When Comm TimeOut is set to ‘Always On’ the 
+communication (and microprocessor) will be kept active all time. 
+
+The Communication Sleep Indicator ‘%’ and the Communication Ready Indicator ‘!‘ are not followed by Carriage Return 
+and Line Feed. 
+
+The character ‘%’ indicates that communication with the sensor is not possible (shut-down); refer third line in the 
+screen dump presented in Figure 7-4. In this mode the electronics requires up to 500 ms start up time. 
+
+Any character will cause the electronics to return to normal operation; when the sensor has responded with the 
+character ‘!’, new commands may be entered. 
+
+When communicating with the sensor, you must start by pressing Enter. The sensor will respond in two ways (Comm 
+TimeOut is 1 minute by default in the following description): 
+
+• If the sensor is ready for communication, it will not send any response indicator. The sensor will stay awake and 
+ready to receive commands for 1 minute (controlled by the Comm TimeOut) since the last command. 
+• If the sensor is in sleep mode and not ready for communication, the sensor will send a ‘communication ready’ 
+indicator (!) when awakened (within 500ms). The sensor will then be ready for communication. 
+
+
+The ‘communication sleep indicator ‘%’ and the ‘communication ready’ indicator ‘!‘ are not followed by Carriage 
+Return and Line Feed. 
+
+ 
+
+7.2.3 Smart Sensor Terminal protocol 
+
+All inputs to the sensor are given as commands with the following format: 
+
+• MainCmd SubCmd or MainCmd Property(Value.., Value) 
+
+
+ 
+
+Description of ASCII coded communication rules: 
+
+• The main command, MainCmd, is followed by an optional subcommand (SubCmd) or sensor property (Property). 
+
+
+
+• The MainCmd and the SubCmd/Property must be separated with the space ‘ ’ character. 
+• When entering new settings the Property is followed by a parenthesis containing comma-separated values. 
+• The command string must be terminated by Carriage Return and Line Feed (ASCII code 13 & 10). 
+• The command string is not case sensitive (UPPER/lower-case). 
+• The ENUM property settings are case sensitive. E.g. “Set Mode(AiCaP)” Here AICAP will result in argument error. 
+Refer Table 1-2 
+• A valid command string is acknowledged with the character ‘#’ while character ‘*’ indicates an error. Both are 
+followed by Carriage Return/ Line Feed (CRLF). 
+• For most errors a short error message is also given subsequent to the error indicator. 
+• There are also special commands with short names and dedicated tasks, as save, reset, and help. 
+• All names and numbers are separated by tabulator spacing (ASCII code 9). 
+• The string is terminated by Carriage Return and Line Feed (ASCII code 13 & 10). 
+
+
+ 
+
+Note! Losing power during the flashing process can cause corruption of vital settings, such as coefficients, serial 
+number, model number etc. If losing settings, contact AADI Service department for new setting file for the specific 
+sensor with further instructions. 
+
+7.2.4 Passkey for write protection 
+
+To avoid accidental change, most of the properties are write-protected. There are four levels of access protection, 
+refer Table 7-1. 
+
+A special property called Passkey must be set according to the protection level before changing the value of 
+properties that are write-protected, refer Table 1-2. After a period of inactivity at the serial input, the access level 
+will revert to default. This period corresponds to the Comm TimeOut setting, or 1 minutes it the Comm TimeOut is 
+set to Always On. 
+
+ 
+
+Table 7-1 Access protection levels 
+
+Output 
+
+Passkey 
+
+Description 
+
+No 
+
+ 
+
+No Passkey needed for changing property 
+
+Low 
+
+1 
+
+The Passkey must be set to 1 prior to changing property 
+
+High 
+
+1000 
+
+The Passkey must be set to 1000 prior to changing property 
+
+This Passkey value also give read access to factory properties that usually are hidden 
+
+Read 
+Only 
+
+ 
+
+The user have only read access 
+
+
+
+
+7.2.5 Save and Reset 
+
+When the required properties are set, you should send a Save command to make sure that the new configuration is 
+saved internally in the flash memory. The sensor always reads the configuration from the internal flash memory 
+after reset and power up. The Save command takes about 20 seconds to complete (indicated with the character ‘#’). 
+
+Always send a Reset command when a new configuration has been saved (or switch the power OFF and then back 
+ON), or else calculated parameters may be corrupt. This forces the sensor to start up with the new configuration 
+input. If the Enable Sleep property is set to Yes and the Comm TimeOut property is not set to Always On the sensor 
+enters sleep mode after reset. 
+
+At startup/reset the sensor performs measurements according to the interval setting if the mode is Smart Sensor 
+Terminal, refer Figure 7-4. If Enable Text is set to Yes, the Startup Info is presented. 
+
+If the Save command is executed the new setting will be stored in the internal Flash memory. 
+
+Property changes will be lost when the sensor is reset or loses power unless you type the Save command. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+Figure 7-4 Sensor start up after reset. 
+
+ 
+
+ 
+
+
+7.2.6 Available commands 
+
+Available commands and properties for the sensors are given in Table 7-2 and Table 1-2 respectively. 
+
+Table 7-2 Available RS-232/RS-422 commands. 
+
+Command 
+
+Description 
+
+Start 
+
+Start a measurement sequence according to current configuration 
+
+Stop 
+
+Stop a measurement sequence 
+
+Do Sample 
+
+Calculates and presents a new single set of measurement data. (used in polled 
+mode.) 
+
+Do Output 
+
+Presents the last set of calculated measurement data. 
+
+Get ConfigXML 
+
+Outputs information about the configuration in XML format 
+
+Get DataXML 
+
+Outputs information about available(enabled) parameters in XML format 
+
+Get Property 
+
+Output Property value (refer Table 1-2) 
+
+Get All 
+
+Output all property values 
+
+Set Property(Value,.. Value) 
+
+Set Property to Value,… Value 
+
+Set Passkey(Value) 
+
+Set passkey to change access level 
+
+Save 
+
+Store current settings 
+
+Load 
+
+Reloads previous stored settings 
+
+Reset 
+
+Resets the sensor with last saved new configuration 
+
+Help 
+
+Print help information 
+
+; 
+
+Comment string, following characters are ignored 
+
+// 
+
+Comment string, following characters are ignored 
+
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+7.2.7 The Get command 
+
+The Get command is used to read the value/values of a property and to read the latest value of a parameter. 
+
+The command name Get followed by a Property returns a string in the following format: 
+
+Property ProductNo SerialNo Value, ..Value 
+
+The string starts with the name of the property, the product number and serial number of the sensor, and finally the 
+value of the property, refer example in Figure 7-5. 
+
+The command name Get followed by a parameter returns the name and unit of the parameter, the product and 
+serial number of the sensor, and finally the latest parameter reading, refer example in Figure 7-5. 
+
+A special version, Get All, reads out all available properties in the sensor. Some properties are passkey protected and 
+will not be shown without first writing the passkey. Refer chapter 1.5for properties and chapter 5.4 for passkey. 
+
+ 
+
+ 
+
+
+
+Figure 7-5 Examples of the Get command. 
+
+ 
+
+7.2.8 The Set command 
+
+The Set command is used for changing a property. The corresponding Get command can be used to verify the new 
+setting, refer example in Figure 7-6. 
+
+ 
+
+ 
+
+
+
+Figure 7-6 Example of the Set command. 
+
+ 
+
+Use the Save command to permanently store the new property value. 
+
+
+The Mode property will require a Reset before the change is executed. All other property changes will be executed 
+immediately. 
+
+Some property changes will automatically restart the collection of pressure samples, refer chapter 2.4. 
+
+Some properties are passkey protected and will not be accessible without first writing the passkey. If the passkey is 
+needed you get the error message: “ERROR PROTECED PROPERTY”. Refer chapter 1.5 for properties and chapter 
+7.2.4 for passkey. 
+
+ 
+
+7.2.9 Formatting the output string 
+
+The property called Enable Text controls the presentation of measured data. When the property is set to Yes the 
+output string includes the descriptive parameter name with engineering units of measure. When the property is set 
+to No, the output parameters are presented without descriptive parameter names and engineering units; the 
+parameter order is the same, refer Figure 7-4 for an example. 
+
+The property called Enable DecimalFormat controls the format of the output values, either as decimal numbers 
+(Yes), or in exponential format (No). Refer Figure 7-7 for an example. 
+
+ 
+
+ 
+
+
+
+Figure 7-7 Example of output string: decimal/exponential format. 
+
+ 
+
+The property setting affects the presentation of measured values in the output string, not in the sensors response to 
+the Get command (which is always in exponential format). 
+
+ 
+
+ 
+
+
+7.2.10 XML commands 
+
+The Get ConfigXML command outputs all available sensor properties in XML-format. 
+
+The Get DataXML command outputs all available sensor parameters in XML-format. 
+
+The XML-output is a general format shared by all Aanderaa smart sensors; the output from different types of smart 
+sensors can be read and present e.g. in a general smart sensor setup program. Refer Table 7-2 
+
+ 
+
+7.3 Examples of Smart Sensor Terminal communication 
+
+Use a terminal program e.g. Teraterm or Hyperterminal, refer chapter 7.2 for communication setup. 
+
+In the following examples the sensor update interval is 5 seconds. They illustrate several configuration changes. The 
+command Stop is recommended to avoid output strings while configuring the sensor. 
+
+Example 1: Enable Rawdata 
+
+//Press Enter to start communicating with the sensor, refer chapter 7.2.2. 
+
+↵ //press Enter 
+
+Stop ↵ //Wait for ack #. Repeat if necessary 
+
+Set Passkey(1) ↵ 
+
+Set Enable Rawdata(yes) ↵ //wait for ack # 
+
+Save ↵ // wait for ack # 
+
+Reset ↵ // the sensor will restart with new settings 
+
+ 
+
+Example 2: Change Number of Samples to 2048 
+
+//Press Enter to start communicating with the sensor, refer chapter 7.2.2. 
+
+↵ //press Enter 
+
+Stop ↵ // Stop current measurement. Wait for ack #. Repeat if necessary. 
+
+Set Passkey(1) ↵ //wait for ack # 
+
+Set Number of Sample(2048) ↵ //wait for ack # 
+
+Save ↵ // wait for ack # 
+
+Reset ↵ // the sensor will restart with new settings 
+
+ 
+
+Example 3: Disable wave measurement 
+
+//Press Enter to start communicating with the sensor, refer chapter 7.2.2. 
+
+↵ //press Enter 
+
+Stop ↵ // Stop current measurement. Wait for ack #. Repeat if necessary. 
+
+Set Passkey(1) ↵ //wait for ack # 
+
+Set Enable Wave(no) ↵ //wait for ack # 
+
+Save ↵ // wait for ack # 
+
+Reset ↵ // the sensor will restart with new settings 
+
+
+ 
+
+Example 4: Set Comm TimeOut to 20 sec 
+
+//Press Enter to start communicating with the sensor, refer chapter 7.2.2. 
+
+↵ //press Enter 
+
+Stop ↵ // Stop current measurement. Wait for ack #. Repeat if necessary. 
+
+Set Passkey(1000) ↵ //wait for ack # 
+
+Set Comm TimeOut(20 s) ↵ //wait for ack # 
+
+Save ↵ // wait for ack # 
+
+Reset ↵ // the sensor will restart with new settings 
+
+ 
+
+Example 5: Set Tidal Average Period to 1 min 
+
+//Press Enter to start communicating with the sensor, refer chapter 7.2.2. 
+
+↵ //press Enter 
+
+Stop ↵ // Stop current measurement. Wait for ack #. Repeat if necessary. 
+
+Set Passkey(1) ↵ //wait for ack # 
+
+Set Tidal Average Period(1 min) ↵ //wait for ack # 
+
+Save ↵ // wait for ack # 
+
+Reset ↵ // the sensor will restart with new settings 
+
+7.4 Scripting -sending a string of commands 
+
+Often it may be usefully to include more than one command in a text file. For example the instructions below can be 
+written in an ordinary text editor and saved as a text file, which can be sent to the sensor. 
+
+Example of text file: 
+
+// Set sampling interval to 30 seconds 
+
+Stop ↵ // Stop current measurement. Wait for ack #. Repeat if necessary. 
+
+Set Passkey(1) ↵ //wait for ack # 
+
+Set Interval(30) ↵ //wait for ack # 
+
+Save ↵ // wait for ack # 
+
+Reset ↵ // the sensor will restart with new settings 
+
+Get All ↵ 
+
+ 
+
+Note! The last line, Get All, reads out available properties for the sensor. 
+
+The first line is a comment line that is disregarded by the sensor. Strings starting with either ‘//’ or ‘;’ are ignored by 
+the software, and do not produce errors or acknowledgements. 
+
+Always press Enter before sensing a script file, refer chapter 7.2.2. 
+
+
+CHAPTER 8 Quality assurance, maintenance, calibration 
+
+Aanderaa Instruments’ established routines and quality checks throughout the production process are based on a 
+relentless QC program of continuous monitoring to maintain the highest standards of reliability. 
+
+In order to assure the quality of this sensor, critical properties are tested and documented during production. A 
+special form, named “Test and Specification Sheet” (refer chapter 8.3for examples) lists the required tests and the 
+result of these tests and checkpoints. 
+
+ 
+
+8.1 Maintenance 
+
+The Pressure sensor, Tide sensor, and Wave and Tide sensor requires modest maintenance. For deployments where 
+the water contains high concentrations of sediment or where the organic fouling is extensive it is important to check 
+that the pressure port is not clogged. Unscrew the pressure port cap, inspect the holes of the cap and clean it if 
+necessary. Before replacing the pressure port cap, inspect that there is silicon oil in the pressure port. 
+
+To avoid clogging the pressure port is filled with high viscous silicon oil. After long time use this oil may vanish. If no 
+oil can be seen in the pressure port we recommend that the sensor is returned to the factory for refilling. 
+
+The sensor housing is easily cleaned if exposed to a vinegar solution (5%) over night. Carefully remove barnacles and 
+similar fouling the next day. 
+
+ 
+
+8.1.1 Maintenance procedure prior to every deployment 
+
+• Inspect the O-rings. 
+• Make sure that the surfaces of the O-ring seating’s are clean and smooth. 
+• Replace O-rings if necessary. 
+• Lubricate the O-ring with silicon grease. 
+
+
+ 
+
+8.2 Calibration 
+
+Each sensor is calibrated using highly accurate instruments that are traceable to international standards. 
+
+For most versions of the sensor this involves 5 pressure points at 4 different temperatures. 
+
+From this calibration the 20 calibration coefficients are calculated and stored in each sensor. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+8.3 Example of Test & Specification sheet and Calibration certificate 
+
+ 
+
+Figure 8-1 Example of Test and Specification Sheet. 
+
+
+ 
+
+Figure 8-2 Example of Calibration Certificate. 
+
+
+Appendix 1 Mechanical design of the sensors 
+
+ 
+
+ 
+
+Figure A 1 Sensor Housing 
+
+ 
+
+ 
+
+ 
+
+Sensors 4117/4117R, 5217/5217R and 5218/5218R are housed in a cylinder of ABS/PC, Sensor Fott and Pressure port 
+is made of Titanium. 
+
+The sensor foot holds the electrical connector and O-rings for bulk head mounting. The pressure port at the other 
+end is equipped with a Swagelok™ 1/8 inch compression fitting, allowing easy connection to calibration and test 
+equipment. 
+
+In order to avoid clogging and internal corrosion, the pressure inlet is filled with high viscous silicon oil to isolate the 
+pressure element from Seawater. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+ ADC 
+
+ 
+
+
+DSP 
+
+TMS320F28335 
+
+
+Output 
+Interface 
+
+
+AiCaP/ 
+
+RS422 
+
+
+RS232 
+
+
+Pressure Transducer 
+
+ 
+
+
+Thermistor 
+
+
+Appendix 2 Sensor construction 
+
+The sensor is designed to measure the pressure differential produced by a head of water above the instrument and 
+an absolute reference pressure. The pressure element is based on a piezoresistive bridge. This bridge consists of 4 
+resistors implemented on a silicon diaphragm. One side of the diaphragm is exposed to the water pressure, while the 
+low pressure side faces a vacuum chamber. 
+
+When the diaphragm is flexed by the pressure the resistance of the bridge circuit will change. By applying a constant 
+voltage over the bridge, a voltage that varies with the pressure is generated. This voltage is sampled by a high 
+resolution analogue to digital converter (ADC) controlled by a digital signal processor (DSP). A thermistor sensing the 
+water temperature is also incorporated in the sensor and sampled by the ADC. 
+
+All pressure transducers have a temperature drift. By calibrating the sensor at different temperatures, the drift can 
+be estimated. The DSP stores the data from the calibration and are thus able to temperature compensate sampled 
+pressure data, as well as convert the data to linear calibrated data in engineering units. 
+
+ 
+
+ 
+
+
+
+Figure A 2 Functional Diagram 
+
+
+Index 1 Index 2 Index 3 Index 4 
+
+
+Appendix 3 Calculating engineering values from raw data 
+
+Sensor calibration coefficients, Temp coeffs, PT coeffs 0, PT coeffs 1, PT coeffs 2, PT coeffs 3 and PT coeffs 4 are 
+stored inside the sensor. The coefficients are available as output from the sensor, refer Table 1-2 and Figure A3. 
+
+ 
+
+ 
+
+ 
+
+
+
+Figure A 3 Sensor calibration coefficients properties are available as sensor output. 
+
+ 
+
+Each coefficient holds a set of 4 values, e.g. PT coeffs 01, PT coeffs 02, PT coeffs 03, PT coeffs 04. 
+
+The engineering data are calculated from the raw sensor readings and these calibration coefficients using the 
+following equations: 
+
+Temperature: 
+
+Temperature = TempCoeffs0 + TempCoeffs1⋅TNorm + TempCoeffs2⋅TNorm2 + TempCoeffs3⋅TNorm3, where 
+
+TRaw = RawdataTemp 
+
+TNorm = 18388608−RawT
+
+
+Pressure: 
+
+Pressure = C0 + C1⋅PNorm + C2⋅PNorm2 + C3⋅PNorm3 + C4⋅PNorm4 
+
+where 
+
+PRaw = RawdataPressure 
+
+PNorm = 
+8388608RawP
+
+C0 = PTCoeffs00 + PTCoeffs01⋅TNorm + PTCoeffs02⋅TNorm2 
++ PTCoeffs03⋅TNorm3 
+
+C1 = PTCoeffs10 + PTCoeffs11⋅TNorm + PTCoeffs12⋅TNorm2 
++ PTCoeffs13⋅TNorm3 
+
+C2 = PTCoeffs20 + PTCoeffs21⋅TNorm + PTCoeffs22⋅TNorm2 
++ PTCoeffs23⋅TNorm3 
+
+C3 = PTCoeffs30 + PTCoeffs31⋅TNorm + PTCoeffs32⋅TNorm2 
++ PTCoeffs33⋅TNorm3 
+
+ 
+
+ 
+
+
+Appendix 4: Calculations of wave parameters (5218/5218R) 
+
+Raw Wave data are simply the pressure measured at the location of the instrument. 
+
+The pressure changes according to changes in distance between the surface and the instrument. As the distance 
+increases, the pressure increases. As the distance decreases, the pressure decreases. 
+
+The wave parameters are calculated from wave records containing 2N samples where N = 8, 9, 10, 11. The pressure 
+is sampled at either 2 or 4 Hz so that the duration of the wave records ranges from 64 seconds to 17 min (1024 
+seconds)
+
+ 
+
+Processing of raw data 
+
+In general, the measured water pressure consists of a hydrostatic and dynamic components: ()dynatmPPghP++=ρ
+
+The dynamic part is due to surface wave motion. To reveal the dynamic pressure, the measured time series are pre-
+processed in a two-step manner: 
+
+First, the contribution from the atmospheric pressure, Patm, to the absolute pressure is subtracted from the samples. 
+In AiCaP CANbus mode, the sensor uses the fixed atmospheric pressure set by the user in Sensor Configuration, refer 
+chapter 5. In RS232/RS422 the atmospheric Air Pressure is a property that must be set by the user, refer e.g. chapter 
+6. 
+
+Second, the hydrostatic pressure is calculated by subtracting the atmospheric pressure from the time series samples. 
+The hydrostatic pressure is used to calculate the deployment depth. 
+
+ 
+
+Calculation of Wave Spectrum: 
+
+The dynamic pressure time series are used to calculate the wave spectrum. This involves Fourier transformation of 
+the time series using a Fast Fourier Transform (FFT) algorithm and scaling of the power spectrum to compensate for 
+the damping of the dynamic pressure. 
+
+ 
+
+Power Spectrum Scaling: 
+
+The wave motion at the sea surface causes a dynamic pressure that can be measured using a pressure sensor 
+deployed somewhere between the seabed and the sea surface. The magnitude of the observed dynamic pressure 
+depends on the surface wave period and the sensor deployment depth. 
+
+The deeper the sensor is deployed the more the dynamic pressure is damped. The shorter the surface wave period 
+the faster the damping of the dynamic pressure. Hence, the power spectrum must be scaled to correct for the 
+
+
+difference between the true dynamic pressure and the observed dynamic pressure before the wave parameters 
+can be calculated. 
+
+The damping of the dynamic pressure can be described by the Linear Wave Theory (sometimes known as the Airy 
+Wave Theory). Figure A 4 illustrates the damping of the dynamic pressure as a function of the wave period in [m] 
+and of the deployment depth. A small damping factor means that the dynamic pressure is significantly damped, 
+while less damped when the damping factor is larger; as the damping factor approaches 1, the observed dynamic 
+pressure approaches the true dynamic pressure. 
+
+ 
+
+To compensate for the damping of the dynamic pressure, the power spectrum is multiplied with a 
+transfer function that is the inverse of the function describing the damping of the dynamic pressure. 
+
+ 
+
+Figure A 4 Damping of the dynamic pressure in deep water as a factor of wave period and 
+deployment depth. 
+
+ 
+
+Linear Wave Theory: 
+
+The Linear Wave Theory provides a number of equations that can be applied to compute wave properties as e.g. 
+significant wave height, mean zero crossing and mean wave period. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+Wave Spectrum: 
+
+The magnitude of one frequency component of the power spectrum is proportional to the square of the amplitude 
+of the signal with the very same frequency. That is, if the wave is a pure sine wave with amplitude a, the magnitude 
+of the spectrum component with the same frequency as the sine wave, is a2. The wave energy is given as: 
+
+ 
+2282gHgaEρρ==
+
+where ρ is the medium density, g is the gravitational coefficient and H is the wave height. The wave spectrum 
+calculated by the WTS are scaled in this manner. 
+
+ 
+
+Spectral Moments: 
+
+A number of spectral moments are calculated based on the wave spectrum. Next, these spectral moments are used 
+to compute wave parameters. The spectral moments are defined as follow: 
+
+ 
+0()
+NnniiimfSf=
+=Σ
+
+where fi is a specific frequency and S(fi) is the wave spectrum component at that frequency. Hence, the moment of 
+order zero, mo, is found by summing the wave spectrum components from zero frequency up to the cut-off 
+frequency. 
+
+Based on the above considerations and the definition of the spectral moments, the moment of order zero is equal to: 
+
+ 
+2002Niiam=
+=Σ
+
+Assuming that X is a simple sinusoidal wave with amplitude a, the sampled values Xi are: 
+
+ sin()iiXay=
+
+The variance, σ, of X is: 
+
+ 
+2222()(sin())
+2iiaEXEayσμ=−=⋅=
+
+where E denotes the expectation and μ is the average of X (μ =0 for an ideal sine wave). The wave motion can be 
+modelled as a superposition of simple sinusoidal waves. Hence, the individual spectral components in the wave 
+spectrum can be seen as the variance of individual sinusoidal waves with different frequencies. The zero order 
+spectral moment, m0, which then is the sum of the variances of the individual spectral components, can be seen as 
+the total variance of the wave record. 
+
+ 
+
+
+Cut-off Frequency: 
+
+The WTS is applicable for studies of waves with wave period as small as 1 second without aliasing, according to the 
+Nyquist theorem. However, the dynamic pressure caused by waves with short wave period is damped rapidly with 
+depth, see Figure A , hence the WTS calculates a cut-off frequency based on the deployment depth as measured by 
+the pressure sensor6: 
+
+6 IEEE Journal of Oceanic Engineering, VOL 26, No2, April 2001, p 171-180 
+
+ 
+dgfOffCut⋅=−282.0
+
+where g is the gravitational coefficient and d the deployment depth. 
+
+ 
+
+Calculation of Wave parameters 
+
+The sea conditions can be described by a number of wave parameters, like e.g. 
+
+ Significant Wave Height 
+ Maximum Wave Height 
+ Mean Zero Crossing 
+ Peak Wave Period 
+ Mean Wave period 
+ Energy Wave Period 
+ Irregularity 
+ Wave Steepness 
+
+
+ 
+
+These parameters are provided by the WTS, and will be described below. For more information regarding the wave 
+parameters, see the ‘Guide to Wave Analysis and Forecasting’, World Meteorological Organization (WMO) report 
+number 702. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+Significant Wave Height: 
+
+Originally, Significant Wave Height,, was defined as the average height of the 1/3 highest waves in a wave 
+record. should roughly approximate to visually observed wave heights. 
+1/3H1/3H
+
+The wave energy for a superposition of sinusoidal waves is given as: 
+
+ 
+220082NNiiiiagEHgρρ==
+==ΣΣ
+
+Comparing this equation with the expression for the moment of zero order, m0, it is easily seen that an expression 
+for the wave height can be estimated. 
+
+For historical reasons a parameter that corresponds close to has been defined: 1/3H
+
+ 004mHm=
+
+Note that both and are called Significant Wave Height. The parameter provided by the WTS is . 1/3H0mH0mH
+
+ 
+
+Maximum Wave Height: 
+
+The expected Maximum Wave Height is estimated based on the statistical distribution of the wave height parameter. 
+Assuming that the sea surface can be modelled as a narrow-banded Gaussian Process, the standard model is a wave 
+amplitude distribution based on the Rayleigh‘s distribution. This yields the following estimate of the Maximum Wave 
+Height: 
+
+ ()()MDMDMaxRRCHln5.0ln1⋅==
+
+where C1 is a scaling parameter and RMD is equal to the ratio of the Mean Wave Period and the Duration of wave 
+record (the number of waves in the wave record). The WTS uses the above expression for calculation of the 
+maximum wave height. 
+
+NOTE! The assumptions regarding the scale parameter, C1, and the statistical distribution will influence the estimate 
+of the maximum wave height. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+Mean Zero Crossing Period: 
+
+The Mean Zero Crossing Period is originally directly computed from the wave records. It is defined as the record 
+length divided by the number of down-crossings (or up-crossings) in the record. 
+
+The Mean Zero Crossing Period is defined as: 
+
+ 0022mmTm=
+
+According to WMO, the wave period is sensitive to the cut-off frequency in the calculations of the spectral 
+moments. Refer to NOTE on page 71. 
+02mT
+
+. 
+
+ 
+
+Figure A 5 Part of a wave record. Zero down-crossings are circled. 
+
+ 
+
+Peak Wave Period: 
+
+The Peak Wave Period, TWp, is equal to the inverse of the frequency of the peak of the wave spectrum: 
+
+ 
+WpWpfT1=
+
+where fWp is the frequency of the peak of the wave spectrum. Hence, the Peak Wave Period is the period of the 
+wave that dominates the wave motion, assuming that the wave motion can be modelled as a superposition of waves. 
+Refer NOTE on page 71. 
+
+ 
+
+ 
+
+
+Mean Wave Period: 
+
+The Mean Wave Period is defined as: 
+
+ 0011()
+()
+iimiiiSfmTmfSf==
+ΣΣ
+
+From this equation it can be seen that the mean wave period, , is the inverse of the weighted average frequency 
+of the spectrum and hence a measure of the average period of the wave motion. Refer NOTE on page 71. 
+01mT
+
+Energy Wave Period: 
+
+The Energy Wave Period is defined as: 
+
+ 1100mmTm−
+−=
+
+The Energy Wave period is used in calculations of the wave power in [kW/m] of wave fronts. The wave power is 
+given as: 
+
+ 102049.0−⋅⋅=mmTHJ
+
+Refer NOTE on page 71. 
+
+ 
+
+Regularity: 
+
+When studying the wave parameters provided e.g. by the WTS, note that the motion of the sea surface caused by 
+the waves is a random process. 
+
+Significant wave height is for example a measure of the average wave height. The height of many, if not most, of the 
+waves in a record will differ from the significant wave height. The more irregular the sea state, the broader the wave 
+spectrum. A measure of the peakedness of the spectrum, and correspondingly of the regularity of the sea is: 
+
+ 2222000022()()
+NpiiQfSfdffSfmm∞
+=⋅≈⋅Σ∫
+
+Generally, a calm sea gives a narrow/peaked spectrum and a high factor; an irregular sea will give a broader 
+spectrum and a lower value. 
+pQpQ
+
+ 
+
+ 
+
+
+ 
+
+Wave Steepness: 
+
+Wave Steepness is generally defined as: 
+
+ 
+Hξλ=
+
+where H is wave height. Replacing wavelength with wave period using the equation given by the linear wave theory 
+the wave steepness becomes: 
+
+ 22HgTπξ=
+
+The WTS uses and for wave height and wave period. 0mH01mT
+
+ 
+
+According to Stokes theory, waves cannot attain heights of more than 1/7 of the wavelength without breaking. 
+
+ 
+
+Note! Additional information about the four parameters Mean Zero Crossing Period, Peak Wave Period, Mean Wave 
+Period and Energy Wave Period: If the pressure variations caused by the waves are smaller than what can be 
+measured by the pressure sensor, the estimated wave periods will approach 1/fCut-Off. This will happen e.g. if the 
+instrument is deployed too deep to monitor the current sea state. 
+
+ 
+
+Spectrum and pressure series 
+
+The spectrum is presented as the value of each frequency component in the wave spectrum. Spectre 
+components outside of the calculated cut-off frequencies are set to 0. The first frequency component in the 
+spectrum is 0 Hz. 
+
+Number of Samples 
+
+Number of freq. 
+components 
+
+Resolution at 2 Hz 
+sampling 
+
+Resolution at 4 Hz sampling 
+
+256 
+
+128 
+
+0.0078125 Hz 
+
+0.015625 Hz 
+
+512 
+
+256 
+
+0.00390625 Hz 
+
+0.0078125 Hz 
+
+1024/2048 
+
+512 
+
+0.001953125 Hz 
+
+0.00390625 Hz 
+
+
+
+Table A 1 Access protection levels 
+
+ 
+
+ 
+
+
+ 
+
+The pressure series can be used as raw data input for e.g. other spectra or wave calculations. The Last Pressure 
+Sample Index parameter is the index of the last element in the pressure series. It tells how many continuous 
+samples the sensor has collected. Depending on the recording Interval setting there can be overlap between 
+the pressure series. The parameter makes it easy to remove duplicated data (overlap) and generate continuous 
+pressure samplings at 2 or 4 Hz. Continuous pressure samplings can be used for e.g. tsunami warning systems. 
+If samplings are not performed during the entire recording interval, the Last Pressure Sample Index will be reset 
+for each recording and the value will be the Number of Samples setting plus a few samples in the beginning 
+that are not used. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+3855
+Appendix 5 Illustations 
+
+Figure no. 
+
+Description 
+
+For use with 
+
+4117/5217/5218 
+
+4117R/5217R/5218R 
+
+Figure A 6 
+
+Set up and configuration Cable 3855, RS-232 
+
+X 
+
+ 
+
+Figure A 7 
+
+Set up and configuration Cable 4865, RS-232 
+
+X 
+
+ 
+
+Figure A 8 
+
+Set up and configuration Cable 4799, RS-422 
+
+ 
+
+X 
+
+Figure A 9 
+
+Free end Cable 4762, Rs-232 
+
+X 
+
+X 
+
+Figure A 10 
+
+Free end Cable 4763, Rs-422 
+
+ 
+
+X 
+
+Figure A 11 
+
+Free end Cable 3880 
+
+X 
+
+X 
+
+Figure A 12 
+
+Remote Sensor Cable 4793, AiCaP 
+
+X 
+
+ 
+
+Figure A 13 
+
+Patch Cable 4999, AiCaP 
+
+X 
+
+ 
+
+
+
+ 
+
+Table A 2 Access protection levels 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Figure A 6 Set up and configuration cable 3855, for laboratory use. 
+
+
+
+
+4865
+4799 
+
+
+Figure A 7 Set up and configuration cable 4865, RS-232 for field use. 
+
+ 
+
+ 
+
+ 
+
+Figure A 8 Set up and configuration cable 4799, RS-422 for field use. 
+
+
+
+
+4762
+4763 
+
+
+Figure A 9 Drawing Free end Cable 4762, RS-232 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Figure A 10 Drawing Free end Cable 4763, RS-422 
+
+
+
+
+3880
+V-10388 
+
+
+ 
+
+ 
+
+Figure A 11 Drawing Free end Cable 3880 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Figure A 12 Drawing Remote Sensor Cable 4793, AiCaP 
+
+
+
+ 
+
+
+
+
+V-9734 
+
+
+Figure A 13 Drawing Patch Cable 4999, AiCaP 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+
+Appendix 6 Product change notification: Frame Work3 
+
+Copy of content in Product Change Notification Document ID: DA-50009-01 of date 09 December 2011: 
+
+Product(s) Affected: 
+
+Product Number 
+
+Product Name 
+
+From Serial No. 
+
+4050 
+
+Temperature Sensor 
+
+300 
+
+4060 
+
+Temperature Sensor 
+
+500 
+
+4017 
+
+Pressure Sensor 
+
+700 
+
+4117 
+
+Pressure Sensor 
+
+600 
+
+4319(A/B) 
+
+Conductivity Sensor 
+
+800 
+
+4330(F/A) 
+
+Oxygen Optode 
+
+1000 
+
+4420 
+
+ZPulse® Doppler Current Sensor 
+
+500 
+
+4520 
+
+ZPulse® Doppler Current Sensor 
+
+600 
+
+4117(R) 
+
+Pressure Sensor 
+
+600 
+
+5217(R) 
+
+Tide Sensor 
+
+600 
+
+5218(R) 
+
+Wave and Tide Sensor 
+
+600 
+
+4830 
+
+ZPulse® Doppler Current Sensor 
+
+100 
+
+4835 
+
+Oxygen Optode 
+
+300 
+
+4930 
+
+ZPulse® Doppler Current Sensor 
+
+100 
+
+4880(R) 
+
+Temperature Sensor 
+
+200 
+
+4930 
+
+ZPulse® Doppler Current Sensor 
+
+100 
+
+
+
+ 
+
+General Change Description: 
+
+Most of AADI’s Smart Sensors utilized common communication protocols for use at the RS232 and RS422 
+interface. Two protocols are available; Smart Sensor Terminal protocol and the AADI Real Time protocol, 
+where the Smart Sensor Terminal protocol is a simple ASCII command string based protocol and the AADI 
+Real Time is an XML based protocol. To accommodate for higher security and future expansions both 
+protocols will be updated when releasing Sensor Framework version 3 (common software for the above 
+sensors). This notification aim is to give an overview of the changes in the Smart Sensor Terminal protocol. 
+Please refer to the equipment specific Operating Manuals for further details and to Technical Description 
+TD267a for updates in the AADI Real Time protocol. 
+
+
+Xylem_tag_k
+Specific Changes: 
+
+1. Input command line termination is changed from line feed (LF) with optional carriage return to 
+line feed and mandatory carriage return (LF+CR). 
+2. ‘Do Stop’ and ‘Do Start’ command changed to ‘Stop’ and ‘Start’ 
+3. All units in output string changed from ‘(‘ and ‘)’ type parenthesis to ‘[‘ and ‘]’ type, example 
+[hPa]. 
+4. The Sleep indicator (‘%’) and the Wakeup indicator (‘#’) is replaced by a Communication Sleep 
+(‘%’) indicator and a Communication Ready (‘!’) indicator. A property called ‘Enable Comm 
+Indicator’ can be used for enabling/disabling of these characters. 
+5. Polled mode is no longer enabled by setting the interval to zero (Set Interval(0) is now illegal). A 
+property called Enable Polled Mode is now used for controlling polled/non-polled mode. 
+6. The ‘Output’ property is substituted by a ‘Mode’ property for changing the operation mode, for 
+example; ‘Set Mode(Smart Sensor Terminal)’. Specific properties control the formatting of the 
+output string, for example ‘Set Enable Text(no)’. 
+7. The startup notification (at power up) is changed from ‘Mode <Mode name>’ to the following 
+format: ‘StartupInfo <Product No.> <Serial no.> Mode <Protocol Name> Version 
+<Version No.> Config Version <Version No.>’, for example; ‘StartupInfo 4330 83 
+Mode AADI Smart Sensor Terminal Protocol RS232 Protocol Version 3 Config Version 
+6’ 
+8. The startup notification will be switched off when the ‘Enable Text’ property is set to ‘no’. 
+9. A ‘*’ will precede the parameter name if an error status related to the specific parameter occur. 
+This applies for example to the tide parameter of the Wave an Tide Sensor before the sample 
+base is complete : ‘*Tide Pressure[kPa] 0.000000E+00’ 
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Aanderaa Data Instruments AS 
+
+P.O.Box 103 Midtun, Sanddalsringen 5b, N-5828 Bergen, Norway 
+
+Tel: +47 55 60 48 00 Fax: +47 55 60 48 01 
+
+email: aanderaa.info@xyleminc.com - www.aanderaa.com 
+
+ 
+
+Aanderaa Data Instruments AS is a trademark of Xylem Inc. or one of its subsidiaries. 
+
+© 2011 Xylem, Inc. January 2014 
+
+
+
+ 
+
+

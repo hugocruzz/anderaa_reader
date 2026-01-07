@@ -1,0 +1,171 @@
+ Program Version: 5.3.1 Product: Oxygen Optode 4330IW 
+
+ Serial No: 4445 
+
+ 
+
+ 
+
+ 
+
+Visual and Mechanical Checks: 
+
+ 1.1 Soldering quality 
+
+ 1.2 Visual surface 
+
+ 1.3 Galvanic isolation between housing and electronics 
+
+ 
+
+Current Drain and Voltages: 
+
+2.1 Average current drain at 0.5 Hz sampling (Max.: 33 mA) 22.9 mA 
+
+2.2 CANBus Current drain at 0.5 Hz sampling (Max.: 33 mA) 21.6 mA 
+
+2.3 Current drain in sleep (Max.: 270 A) 113 A 
+
+2.4 CANBus Current drain in sleep (Max.: 180 A) 101 A 
+
+2.5 DSP IO voltage, J4.18 (3.3 0.15V) 3.28 V 
+
+2.6 DSP Core voltage, J4.17(1.8 0.05 V) 1.80 V 
+
+2.7 Excitation driver voltage, C4 Analog Board (4.3 0.1 V) 4.30 V 
+
+ 
+
+Performance test: Channel: Blue Red 
+
+1.9 
+
+mV 
+
+0.1 
+
+mV 
+
+2.54 
+
+mV 
+
+1.43 
+
+mV 
+
+15.3 
+
+mV 
+
+846.2 
+
+mV 
+
+
+
+ 3.1 Average of Receiver readings (0150mV) 
+
+ 3.2 Standard Deviation of Receiver readings (Max.: 45mV/10mV) 
+
+ 3.3 Amplitude measurement with non-fluorescence foil (<60mV/650-1200mV) 
+
+ 3.4 CANBus Output test 
+
+ 
+
+Function test from 0 to 40°C: Channel: Blue Red 
+
+679.2 
+
+mV 
+
+677.7 
+
+mV 
+
+1077.7 
+
+mV 
+
+1071.4 
+
+mV 
+
+34.45 
+
+° 
+
+7.86 
+
+° 
+
+41.99 
+
+° 
+
+8.38 
+
+° 
+
+0.03 
+
+° 
+
+0.02 
+
+° 
+
+ 
+
+ 
+
+-400.6 
+
+mV 
+
+ 
+
+
+ 
+
+809.3 
+
+mV 
+
+
+
+4.1 Minimum amplitude measurement (Blue: >550 mV, Red >550 mV) 
+
+4.2 Maximum amplitude measurement (Blue: <1600 mV, Red <1400 mV) 
+
+4.3 Minimum phase measurement (Blue: >32°, Red: >3°) 
+
+4.4 Maximum phase measurement (Blue: <45°, Red: <10°) 
+
+4.5 Maximum standard deviation of Phase measurement: (< 0.07°) 
+
+4.6 Minimum temperature raw data measurement: (<-200 mV) 
+
+4.7 Maximum temperature raw data measurement: (>450 mV) 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Date: 31 Jan 2024 Sign: 
+
+ 
+
+SampleSignature.png
+

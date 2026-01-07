@@ -1,0 +1,258 @@
+Oxygen Optode 4330W/4330/4330F 
+The Oxygen Optode 4330 is a compact fully integrated sensor 
+for measuring the O2 concentration and temperature. 4330W 
+is equipped with ultra-stable foil FDO701, while 4330F is 
+equipped with fast response sensing foil Pst3 (See Sensing Foil 
+Considerations overleaf). 
+
+Advantages 
+
+• Optical lifetime-based luminescence quenching 
+measurement principle 
+• Multipoint calibrated in 40 points 
+• Long time stability with pre-burned foil and 
+red reference LED 
+• Low maintenance needs 
+• Not stirring sensitive (it consumes no oxygen) 
+• User friendly 
+• Use with Aanderaa SeaGuard and SmartGuard Platform 
+• Automatically detected and recognized 
+• Use with other loggers, stand-alone sensor 
+Since oxygen is involved in most of the biological and 
+chemical processes in aquatic environments, it is a crucial parameter to 
+measure. Oxygen can also be used as a tracer in oceanographic studies. 
+Aanderaa revolutionized oceanographic oxygen monitoring/research 
+with the introduction of oxygen optodes in 2002. Applications range 
+from shallow creeks to the deepest trenches, from tropical to in-ice/insediment 
+measurements. More than 200 scientific papers have so far been 
+published using Aanderaa optodes. 
+
+
+
+Specifications OXYGEN SENSOR 4330W/4330/4330F 
+
+Technical Details 
+Securing plate 
+
+Sapphire window 
+
+Thermistor 
+
+Securing plate 
+
+Blue excitation 
+LED 
+
+Analog board 
+
+62mm 
+Digital board 
+
+Interface board 
+
+Orientation pin 
+O-ring 13.1 x 1.6 
+
+
+24mm Sensor foot 
+Ø 16mm 
+
+10-pin insert
+
+ M 16 x 1 
+
+
+Ø 36mm 
+
+PIN CONFIGURATION 
+Receptacle, exterior view; pin = • bushing = ° 
+CAN_H 
+1 
+54 
+8NCE 
+NCG 3 6 Do not use 
+
+NCR 9 10 CAN_L 
+Gnd 2 7 RS232 RXD 
+Positive supply RS232 TXD 
+
+
+Cable from sensor to: Cable 
+PC with waterproof SP (Sealing Plug), RS-232 4865 
+Seaguard as sixth sensor on top-end plate 4999 
+Seaguard with waterproof top end plate connection 4793 
+SmartGuard single sensor with SP 5236 
+User furnished datalogger, SP to free end 4762 
+PC, setup and Config Cable. Laboratory use only 3855 
+
+Sensing Foil Considerations 
+
+The Pst3 and FDO701 sensing foils are protected by an 
+optical isolation layer which makes the foil extra rugged 
+and insensitive to direct sunlight. The fast response sens-
+
+Oxygen: 
+
+Measurement Range: 
+Calibration method: 
+
+Sensing Foils: 
+
+Calibration Range: 
+Resolution: 
+Accuracy: 
+Response Time (63%): 
+
+4330F 
+4330 
+4330W 
+
+Typical field drift: 
+Pst3 foil 
+FDO701 foil 
+Pressure effects: 
+Pst3 & Pst3Fast foils 
+FDO701 foil 
+Foil Lifetime: 
+
+Temperature:
+
+Range: 
+Resolution: 
+Accuracy: 
+Typical field drift:
+Response Time (63%): 
+
+Output format: 
+
+Output Parameters: 
+
+Sampling interval: 
+
+Supply voltage: 
+
+Current drain: 
+
+Average: 
+Maximum: 
+Quiescent: 
+
+Operating depth:
+
+Intermediate Water (IW): 
+Deep Water (DW): 
+Hadal7): 
+
+Electrical connection: 
+
+Dimension (WxDxH): 
+
+Weight: 
+
+Materials: 
+
+O²- Concentration 
+
+0 – 1000 μM1) 
+40-point automatic calibration, 
+20-point verification, 3 fully Winkler 
+calibrated optodes for referencing 
+Pre-burned PreSens Pst3 foils 
+Pre-burned Xylem FDO701 foils 
+
+0 – 500 μM 2) 
+< 0.1 μM3) 
+< 2 μM or 1.5%4) 
+
+(with fast response foil) 
+(with standard foil) 
+(with FDO701 foil) 
+
+<0.5 % per year 
+<0.2 % per year, no dry out effects 
+3 % lower per 1000 m 
+
+1.5 % lower per 1000 m 
++10 years, do not change foil unless 
+mechanically damaged. 
+-5 to +40°C (23-104˚F)
+0.01°C (0.018°F)
+±0.03°C (0.054°F)6) 
+
+<0.03 degC per year<2 sec 
+Air Saturation 
+0 - 300% 
+0 - 150% 
+0.05 % 
+<1.5 %5) 
+<8 sec 
+<25 sec 
+<30 sec 
+SPECIFICATIONS XAD403-1122-NOR 
+AiCaP CANbus, RS-232 
+
+O2 concentration in μM,Air Saturation in %,
+temperature in °C, Oxygen raw data and temperature raw data 
+
+2 sec – 255 min 
+
+5 to 14Vdc 
+
+0.16 +48mA/S where S is sampling interval in seconds100 mA 
+0.16 mA 
+0–3000m (0–9845ft) 
+0–6000m (0–19690ft)
+0-12000m (0-39,380ft) 
+
+10-pin receptacle mating plug SP 
+
+Ø36 x 86mm (Ø1.4”x 3.4”) 
+
+175g (6.17oz) 
+
+Epoxy coated titanium, PA 
+
+ing foil is not equipped with this layer; ambient light intensi-Accessories, Foil Service Kit 4733 
+not included: (Pst3 standard)/4794 (Pst3 fast)/5551(FDO701) 
+
+ty higher than 15000 lux may cause erroneous readings. 
+
+(1) (5)
+
+To avoid potential bleaching the fast response foil should O2 concentration in μM = μmol/l. Within calibrated range 0 - 120% / 0 - 30°C 
+To obtain mg/l, divide by 31.25 (6) Within calibrated range 0 - 30°C, enhanced 
+
+be protected from ambient light when storing the sensor. 
+
+(2) Other ranges available on request. calibration 0.003°C accuracy available for 
+We recommend the more rugged and stable FDO701 foil in 
+(3) FDO701 foils have 0.02 μM resolution at low additional costs. 
+applications where fast response is not needed. concentrations. (7) Product number 5420 
+(4) Requires salinity compensation for salinity 
+variations > 1mS/cm, and pressure Specifications subject to change 
+compensation for pressure > 100meter. without prior notice. 
+The above specifications are for the stand-alone sensor only, not the installation it is utilized with. 
+
+Misleading specifications 
+
+When Aanderaa states an absolute accuracy of e.g (±1.5% or ±2 μM) we mean the accuracy of 
+the sensor in the field over the entire range of oxygen concentrations and temperatures, others 
+might refer to accuracy in the laboratory just after the sensor was calibrated. When Aanderaa give 
+response time in water others might refer to response time in air which is much faster. For more 
+information read our Best Practice document on Oxygen Optodes. 
+
+Typical validation in 20 points after calibration 
+
+Aanderaa Data Instruments AS 
+
+Sanddalsringen 5b +47 55 60 48 00 
+
+P.O. Box 103 Midtun aanderaa.info@xyleminc.com 
+5843 Bergen, Norway Aanderaa.com 
+Aanderaa.com/URL 
+
+Conductivity Sensor is a trademark of Xylem or one of its subsidiaries. 
+© 2022 Xylem, Inc. XAD403 1122 
+
+
+
