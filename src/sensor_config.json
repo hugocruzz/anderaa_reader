@@ -5,21 +5,21 @@
       "com_port": "COM3",
       "baudrate": 9600,
       "sensor_type": "pressure",
-      "timeout": 2
+      "timeout": 5
     },
     {
       "name": "Oxygen Optode 4330IW SN 4445",
       "com_port": "COM4",
       "baudrate": 9600,
       "sensor_type": "oxygen",
-      "timeout": 2
+      "timeout": 5
     },
     {
       "name": "Conductivity Sensor 5819C IW SN 385",
       "com_port": "COM5",
       "baudrate": 9600,
       "sensor_type": "conductivity",
-      "timeout": 2
+      "timeout": 5
     }
   ]
 }

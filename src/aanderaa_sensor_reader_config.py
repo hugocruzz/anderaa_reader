@@ -66,20 +66,25 @@ class AanderaaSensor:
         # 2. Send '%' character to wake from communication sleep
         # 3. Wait for '!' ready indicator
         
+        # Clear buffers first
+        self.serial_port.reset_input_buffer()
+        self.serial_port.reset_output_buffer()
+        time.sleep(0.1)
+        
+        # Send carriage returns to wake up
         for _ in range(5):
             self.serial_port.write(b'\r\n')
-            time.sleep(0.15)
+            time.sleep(0.2)
         
         # Send '%' to wake from communication sleep mode
         self.serial_port.write(b'%')
-        time.sleep(0.3)
+        time.sleep(0.5)
         
-        # Clear any buffered data
-        self.serial_port.flushInput()
-        self.serial_port.flushOutput()
+        # Clear any wake-up responses
+        self.serial_port.reset_input_buffer()
         
-        # Wait for communication ready indicator '!'
-        time.sleep(0.7)
+        # Wait for sensor to be ready
+        time.sleep(1.0)
     
     def send_command(self, command: str) -> str:
         """Send command to sensor and receive response"""
@@ -88,23 +93,32 @@ class AanderaaSensor:
             return ""
         
         try:
-            # Clear buffers
-            self.serial_port.flushInput()
-            self.serial_port.flushOutput()
+            # Clear buffers before sending
+            self.serial_port.reset_input_buffer()
+            self.serial_port.reset_output_buffer()
+            time.sleep(0.1)
             
             # Send command
             cmd = command + '\r\n'
             self.serial_port.write(cmd.encode('ascii'))
             logger.debug(f"Sent to {self.config.name}: {command}")
             
-            # Wait for response
-            time.sleep(0.3)
+            # Wait longer for sensor to process command
+            time.sleep(1.0)
             
-            # Read response
+            # Read response with multiple attempts
             response = ""
-            while self.serial_port.in_waiting > 0:
-                response += self.serial_port.read(self.serial_port.in_waiting).decode('ascii', errors='ignore')
-                time.sleep(0.1)
+            attempts = 0
+            while attempts < 5:
+                if self.serial_port.in_waiting > 0:
+                    chunk = self.serial_port.read(self.serial_port.in_waiting).decode('ascii', errors='ignore')
+                    response += chunk
+                    time.sleep(0.2)  # Wait for more data
+                else:
+                    if response:  # If we got something, stop trying
+                        break
+                    time.sleep(0.2)
+                attempts += 1
             
             logger.debug(f"Received from {self.config.name}: {response}")
             return response.strip()
