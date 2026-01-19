@@ -51,9 +51,7 @@ Edit the `sensor_config.json` file to specify your COM ports:
 }
 ```
 
-### Method 2: Edit the Python script directly
-
-Open `aanderaa_sensor_reader.py` and modify the `sensor_configs` list in the `main()` function.
+The reader will also print a suggested `sensor_config.json` based on live detection.
 
 ## Finding COM Ports
 
@@ -72,23 +70,37 @@ for port in ports:
 
 ## Usage
 
-### Using the config file version (recommended):
+### Read sensors (continuous / streaming)
 ```bash
-python aanderaa_sensor_reader_config.py
+python aanderaa_sensor_reader_custom.py
 ```
 
-### Using the standalone version:
+### Configure faster automatic streaming (sensor-side)
+
+If you are only getting a new data point every ~30 seconds, that is typically controlled by the sensor's `Interval` setting.
+You can configure the sensors for automatic streaming (polled mode off) and set a faster interval using:
+
 ```bash
-python aanderaa_sensor_reader.py
+python configure_streaming_mode.py --from-config --interval 5
 ```
+
+Or specify ports directly:
+
+```bash
+python configure_streaming_mode.py --ports COM12 COM13 COM14 --interval 2
+```
+
+Notes:
+- This changes settings on the sensor (it sends `Set Interval(...)`, `Set Enable Polled Mode(no)`, `Save`, and optionally `Reset`).
+- You need a bidirectional cable/adapter; some RS-422/field cables are RX-only and cannot accept configuration commands.
 
 ## Script Features
 
 - **Automatic sensor wake-up** from communication sleep mode
 - **Sensor identification** - reads product name, serial number, and software version
-- **Continuous measurement reading** - polls sensors every 10 seconds
-- **Individual sensor classes** for each sensor type with specific parameter queries
-- **Comprehensive logging** for debugging
+- **Continuous measurement reading** - prints when new frames arrive
+- **Auto-detect protocol** - supports tab-delimited streaming mode (NI/VISA-like)
+- **Auto-identification** - detects ProductNumber + SerialNumber from frames
 - **Graceful shutdown** with Ctrl+C
 
 ## Output
@@ -164,20 +176,8 @@ python test_sensor_connection.py
 This will:
 - Scan for all COM ports
 - Test each port for Aanderaa sensors
-- Identify sensor types and serial numbers
+- Identify sensor types and serial numbers (tab-delimited streaming mode, with Terminal fallback)
 - Generate a sensor_config.json automatically
-
-### 2. Quick Baudrate Test
-```bash
-python quick_baudrate_test.py
-```
-Test a specific COM port with different baudrates to find the correct one.
-
-### 3. COM Port Diagnostics
-```bash
-python test_com_ports.py
-```
-Interactive tool to test specific COM ports with detailed output.
 
 ## Troubleshooting
 
@@ -197,14 +197,13 @@ This is the most common issue. Causes:
    - Must use proper RS-232 cable (not just any serial cable)
    - Aanderaa cables: 3855 (lab), 4865 (field), or 4762 (free end)
    
-4. **Sensor in wrong mode**: 
-   - Sensor must be in "Smart Sensor Terminal" mode, not "AiCaP" mode
-   - Use Aanderaa Real-Time Collector to check/change mode
+4. **Sensor in wrong mode**:
+  - Some devices may be configured for a different protocol/mode
+  - Start with `python test_sensor_connection.py` to see what the device is emitting
 
-5. **Baudrate mismatch**: 
-   - Default is 9600 (most common)
-   - Try: 9600, 19200, 57600, 115200
-   - Run `quick_baudrate_test.py` to auto-detect
+5. **Baudrate mismatch**:
+  - Default is 9600 (most common)
+  - If needed, try: 9600, 19200, 57600, 115200
 
 ### Connection Issues
 

@@ -1,24 +1,24 @@
 {
   "sensors": [
     {
-      "name": "Pressure Sensor 4117B SN 2378",
-      "com_port": "COM3",
-      "baudrate": 9600,
-      "sensor_type": "pressure",
-      "timeout": 5
-    },
-    {
       "name": "Oxygen Optode 4330IW SN 4445",
-      "com_port": "COM4",
+      "com_port": "COM12",
       "baudrate": 9600,
       "sensor_type": "oxygen",
       "timeout": 5
     },
     {
       "name": "Conductivity Sensor 5819C IW SN 385",
-      "com_port": "COM5",
+      "com_port": "COM13",
       "baudrate": 9600,
       "sensor_type": "conductivity",
+      "timeout": 5
+    },
+    {
+      "name": "Pressure Sensor 4117B SN 2378",
+      "com_port": "COM14",
+      "baudrate": 9600,
+      "sensor_type": "pressure",
       "timeout": 5
     }
   ]

@@ -182,7 +182,7 @@ def main():
     print("\nTesting with NI-VISA compatible commands")
     print("Settings: 9600 baud, 8 data bits, no parity, 1 stop bit\n")
     
-    ports = ['COM3', 'COM4', 'COM5']
+    ports = ['COM12', 'COM13', 'COM14']
     
     results = []
     for port in ports:

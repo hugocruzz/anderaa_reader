@@ -7,6 +7,58 @@ import serial
 import serial.tools.list_ports
 import time
 import sys
+import re
+
+
+_CONTROL_CHARS_RE = re.compile(r"[\x00-\x08\x0b\x0c\x0e-\x1f]")
+
+
+def _strip_control_chars(s: str) -> str:
+    # Keep tab/newline/carriage return; drop other ASCII control chars.
+    return _CONTROL_CHARS_RE.sub("", s)
+
+
+def _extract_tab_frames(raw: str):
+    if not raw:
+        return []
+    text = _strip_control_chars(raw).replace("!", "")
+    frames = []
+    for line in text.replace("\r", "\n").split("\n"):
+        if "\t" not in line:
+            continue
+        fields = [f.strip() for f in line.split("\t") if f.strip()]
+        if fields:
+            frames.append(fields)
+    return frames
+
+
+def _pick_best_data_frame(frames):
+    best = None
+    for fields in frames:
+        if len(fields) < 2:
+            continue
+        # Typical error: '*\tERROR\tSYNTAX ERROR'
+        if fields[0] == "*" and fields[1].upper() == "ERROR":
+            continue
+        product = fields[0]
+        serial_no = fields[1]
+        if not re.match(r"^\d{4}.*", product):
+            continue
+        if not re.match(r"^\d+", serial_no) and len(fields) < 3:
+            continue
+        best = fields
+    return best
+
+
+def _infer_sensor_type(product: str) -> str:
+    p = (product or "").upper()
+    if p.startswith("4117") or p.startswith("5217") or p.startswith("5218"):
+        return "pressure"
+    if p.startswith("4330") or p.startswith("4835") or p.startswith("4831"):
+        return "oxygen"
+    if p.startswith("5819") or p.startswith("5990"):
+        return "conductivity"
+    return "unknown"
 
 
 def print_header(text):
@@ -65,6 +117,9 @@ def test_single_port(port_name, verbose=True):
             timeout=2,
             write_timeout=2
         )
+
+        # Enable XON/XOFF (sensor sometimes emits \x11/\x13)
+        ser.xonxoff = True
         
         if verbose:
             print("   ✓ Port opened successfully")
@@ -98,113 +153,105 @@ def test_single_port(port_name, verbose=True):
             if verbose:
                 print("   ℹ No immediate wake-up response (normal)")
         
-        # Step 2: Try to get product name
+        # Step 2: Prefer tab-delimited streaming mode (what your NI setup is using)
         if verbose:
-            print("\n3. Requesting sensor information ($GET ProductName)...")
-        
-        ser.reset_input_buffer()
-        ser.write(b'$GET ProductName\r\n')
-        time.sleep(0.8)
-        
+            print("\n3. Listening for tab-delimited frame (streaming mode)...")
+
         product_name = ""
-        if ser.in_waiting > 0:
-            response = ser.read(ser.in_waiting).decode('ascii', errors='ignore')
-            if verbose:
-                print(f"   ✓ Response: {repr(response)}")
-            
-            # Parse product name
-            for line in response.split('\n'):
-                if '=' in line:
-                    product_name = line.split('=')[1].strip()
-                    break
-        else:
-            if verbose:
-                print("   ✗ No response to $GET ProductName")
-        
-        # Step 3: Try to get serial number
         serial_number = ""
-        if verbose:
-            print("\n4. Requesting serial number ($GET SerialNumber)...")
-        
-        ser.reset_input_buffer()
-        ser.write(b'$GET SerialNumber\r\n')
-        time.sleep(0.8)
-        
+        mode = "unknown"
+
+        # Passively listen
+        time.sleep(1.2)
+        raw = ""
         if ser.in_waiting > 0:
-            response = ser.read(ser.in_waiting).decode('ascii', errors='ignore')
+            raw = ser.read(ser.in_waiting).decode("ascii", errors="ignore")
+
+        frames = _extract_tab_frames(raw)
+        data_frame = _pick_best_data_frame(frames)
+
+        # If nothing yet, nudge once
+        if not data_frame:
+            ser.write(b"\r\n")
+            time.sleep(1.2)
+            raw2 = ""
+            if ser.in_waiting > 0:
+                raw2 = ser.read(ser.in_waiting).decode("ascii", errors="ignore")
+            frames2 = _extract_tab_frames(raw2)
+            data_frame = _pick_best_data_frame(frames2)
+            raw = raw + raw2
+
+        if data_frame:
+            mode = "tab"
+            product_name = data_frame[0]
+            serial_number = data_frame[1]
             if verbose:
-                print(f"   ✓ Response: {repr(response)}")
-            
-            # Parse serial number
-            for line in response.split('\n'):
-                if '=' in line:
-                    serial_number = line.split('=')[1].strip()
-                    break
+                print(f"   ✓ Frame: {product_name} {serial_number} ...")
         else:
-            if verbose:
-                print("   ✗ No response to $GET SerialNumber")
+            if verbose and raw:
+                print(f"   ℹ Raw: {repr(raw[:200])}")
         
-        # Step 4: Try HELP command
-        if verbose:
-            print("\n5. Testing HELP command...")
-        
-        ser.reset_input_buffer()
-        ser.write(b'HELP\r\n')
-        time.sleep(0.8)
-        
+        # Step 3 (fallback): try Terminal-mode queries
         help_response = ""
-        if ser.in_waiting > 0:
-            help_response = ser.read(ser.in_waiting).decode('ascii', errors='ignore')
-            if verbose:
-                print(f"   ✓ Received HELP response ({len(help_response)} chars)")
-                if len(help_response) > 100:
-                    print(f"   First 100 chars: {repr(help_response[:100])}")
-        else:
-            if verbose:
-                print("   ✗ No response to HELP command")
-        
-        # Step 5: Check sensor mode (AiCaP vs Terminal)
-        if verbose:
-            print("\n6. Checking sensor mode...")
-        
-        ser.reset_input_buffer()
-        ser.write(b'$GET Mode\r\n')
-        time.sleep(0.8)
-        
         sensor_mode = ""
-        if ser.in_waiting > 0:
-            mode_response = ser.read(ser.in_waiting).decode('ascii', errors='ignore')
+
+        if not product_name:
             if verbose:
-                print(f"   Response: {repr(mode_response)}")
-            
-            # Parse mode
-            for line in mode_response.split('\n'):
-                if '=' in line:
-                    sensor_mode = line.split('=')[1].strip()
-                    if verbose:
-                        if 'AiCaP' in sensor_mode or 'AICAP' in sensor_mode.upper():
-                            print(f"   ⚠ WARNING: Sensor is in AiCaP mode!")
-                            print(f"   This mode is for SeaGuard, not standalone RS-232")
-                            print(f"   Use AADI Real-Time Collector to change to Terminal mode")
-                        else:
-                            print(f"   ✓ Mode: {sensor_mode}")
-                    break
-        else:
-            if verbose:
-                print("   ℹ Could not determine mode (sensor may not support this command)")
+                print("\n4. Fallback: trying Terminal-mode commands ($GET / HELP)...")
+
+            ser.reset_input_buffer()
+            ser.write(b'$GET ProductName\r\n')
+            time.sleep(0.8)
+            if ser.in_waiting > 0:
+                response = ser.read(ser.in_waiting).decode('ascii', errors='ignore')
+                if verbose:
+                    print(f"   ProductName response: {repr(response)}")
+                for line in response.split('\n'):
+                    if '=' in line:
+                        product_name = line.split('=')[1].strip()
+                        break
+
+            ser.reset_input_buffer()
+            ser.write(b'$GET SerialNumber\r\n')
+            time.sleep(0.8)
+            if ser.in_waiting > 0:
+                response = ser.read(ser.in_waiting).decode('ascii', errors='ignore')
+                if verbose:
+                    print(f"   SerialNumber response: {repr(response)}")
+                for line in response.split('\n'):
+                    if '=' in line:
+                        serial_number = line.split('=')[1].strip()
+                        break
+
+            ser.reset_input_buffer()
+            ser.write(b'HELP\r\n')
+            time.sleep(0.8)
+            if ser.in_waiting > 0:
+                help_response = ser.read(ser.in_waiting).decode('ascii', errors='ignore')
+                if verbose:
+                    print(f"   HELP response ({len(help_response)} chars)")
+
+            ser.reset_input_buffer()
+            ser.write(b'$GET Mode\r\n')
+            time.sleep(0.8)
+            if ser.in_waiting > 0:
+                mode_response = ser.read(ser.in_waiting).decode('ascii', errors='ignore')
+                for line in mode_response.split('\n'):
+                    if '=' in line:
+                        sensor_mode = line.split('=')[1].strip()
+                        break
+
+            mode = "terminal" if (product_name or help_response) else mode
+        
+        # Report mode hints
+        if verbose and mode == "terminal" and sensor_mode:
+            if 'AICAP' in sensor_mode.upper():
+                print(f"   ⚠ WARNING: Sensor is in AiCaP mode (not standalone RS-232)")
         
         ser.close()
         
         # Determine sensor type
-        sensor_type = "Unknown"
-        if product_name:
-            product_name_upper = product_name.upper()
-            if '4117' in product_name_upper:
-                sensor_type = "Pressure Sensor 4117"
-            elif '4330' in product_name_upper:
-                sensor_type = "Oxygen Optode 4330"
-            elif '5819' in product_name_upper or '5990' in product_name_upper:
-                sensor_type = "Conductivity Sensor"
+        sensor_type = _infer_sensor_type(product_name) if product_name else "unknown"
         
         # Summary
         if verbose:
@@ -233,7 +280,7 @@ def test_single_port(port_name, verbose=True):
                 'product_name': product_name,
                 'serial_number': serial_number,
                 'sensor_type': sensor_type,
-                'mode': sensor_mode
+                'mode': mode
             }
         else:
             if verbose:
