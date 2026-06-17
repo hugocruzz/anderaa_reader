@@ -1,0 +1,13 @@
+{
+  "input": "c:/Users/cruz/Documents/SENSE/anderaa_reader/Log/aanderaa_log_20260126_142957.jsonl",
+  "output": "C:/Users/cruz/Documents/SENSE/anderaa_reader/Log_corrected/aanderaa_log_20260126_142957_corrected.jsonl",
+  "records_total": 16833,
+  "records_oxygen": 5827,
+  "records_conductivity": 5180,
+  "records_pressure": 5826,
+  "oxygen_records_with_measured_salinity": 5813,
+  "oxygen_records_with_assumed_salinity": 14,
+  "baro_kpa_used": null,
+  "air_pressure_kpa_used": null,
+  "o2sol_model_requested": "auto"
+}

@@ -78,6 +78,36 @@ python aanderaa_sensor_reader_custom.py
 ### Configure faster automatic streaming (sensor-side)
 
 If you are only getting a new data point every ~30 seconds, that is typically controlled by the sensor's `Interval` setting.
+
+## Post-processing logs
+
+The GUI records data as JSON Lines files in `Log/*.jsonl`. You can enrich an existing log with reprocessed/derived values
+(salinity from conductivity, O2 solubility, O2 concentration from saturation, pressure conversions, etc)
+using:
+
+```bash
+python src/analysis/reprocess_log.py --log Log/aanderaa_log_20260126_142957.jsonl
+```
+
+By default this writes the enriched log into `Log_corrected/` as `<input_stem>_corrected.jsonl`.
+
+Optional parameters:
+
+- Provide barometric pressure to scale O2 solubility:
+  ```bash
+  python src/analysis/reprocess_log.py --log Log/aanderaa_log_20260126_142957.jsonl --baro-kpa 95.5
+  ```
+- Provide an in-air absolute pressure baseline for sea pressure/depth:
+  ```bash
+  python src/analysis/reprocess_log.py --log Log/aanderaa_log_20260126_142957.jsonl --air-pressure-kpa 95.466
+  ```
+- Choose the oxygen solubility model:
+  - `auto` (default): uses TEOS-10/GSW (Garcia & Gordon 1992/1993) if the `gsw` package is installed, otherwise Weiss (1970)
+  - `weiss1970`: force Weiss (1970)
+  - `gsw`: force TEOS-10/GSW (fails back to Weiss only if you choose `auto`)
+  ```bash
+  python src/analysis/reprocess_log.py --log Log/aanderaa_log_20260126_142957.jsonl --o2sol-model auto
+  ```
 You can configure the sensors for automatic streaming (polled mode off) and set a faster interval using:
 
 ```bash

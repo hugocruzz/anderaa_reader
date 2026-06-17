@@ -1,0 +1,21 @@
+Experiment notes
+
+Test: 2
+Title: Degazing tank (with mixer)
+Date: 2026-01-26
+Related log file: Log/aanderaa_log_20260126_142957.jsonl
+
+Summary
+We replicate the same degazing tank, this time with a mixer.
+
+Timeline (local time)
+
+14:30 — Oxygen probe calibration started. Everything stable, mixer running, etc. Value ~78.1%.
+14:34 — Helium set to 0.2 L/min. Tank closed again. Mixer set to middle speed.
+14:44 — Helium set to 0.5 L/min.
+14:54 — Helium set to 0.1 L/min.
+15:06 — Mixer set to 3/4 speed.
+15:12 — Mixer set to mid speed. Helium set to 1.0 L/min.
+15:25 — Stopped helium flow (reached ~20%).
+
+More notes: (pending — to be added later)

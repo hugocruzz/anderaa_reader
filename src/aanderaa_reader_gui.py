@@ -241,6 +241,7 @@ class AanderaaGUI(tk.Tk):
         self._interval_var = tk.DoubleVar(value=5.0)
         self._auto_apply_interval_var = tk.BooleanVar(value=False)
         self._oxygen_plot_var = tk.StringVar(value="O2 (derived mg/L)")
+        self._pressure_plot_var = tk.StringVar(value="Pressure (absolute dbar)")
         self._time_window_var = tk.StringVar(value="Last 10 min")
         self._use_baro_var = tk.BooleanVar(value=False)
         # User entry in hPa (common weather units). Empty/disabled means "assume 1 atm".
@@ -275,6 +276,30 @@ class AanderaaGUI(tk.Tk):
         self._record_fp: Optional[object] = None
         self._record_path: Optional[Path] = None
         self._record_lines = 0
+        self._record_data_var = tk.BooleanVar(value=True)
+        self._record_btn: Optional[ttk.Button] = None
+
+        # Notes/events logging (metadata) companion to the main JSONL log.
+        self._event_log_fp: Optional[object] = None
+        self._event_log_path: Optional[Path] = None
+        self._event_log_lines = 0
+
+        # Latest snapshot per sensor for event annotations.
+        # Keyed by COM port (uppercased).
+        self._latest_snapshot_by_port: Dict[str, Dict[str, object]] = {}
+
+        self._latest_text: Optional[tk.Text] = None
+        self._notes_text: Optional[tk.Text] = None
+
+        self._connection_win: Optional[tk.Toplevel] = None
+        self._settings_win: Optional[tk.Toplevel] = None
+
+        self._events_win: Optional[tk.Toplevel] = None
+        self._events_text: Optional[tk.Text] = None
+        self._event_history: List[Dict[str, object]] = []
+        self._event_history_max = 200
+
+        self.protocol("WM_DELETE_WINDOW", self._on_close)
 
         self._build_ui()
         self._load_config_to_table()
@@ -287,101 +312,29 @@ class AanderaaGUI(tk.Tk):
 
         top = ttk.Frame(self, padding=10)
         top.grid(row=0, column=0, sticky="nsew")
-        top.columnconfigure(2, weight=1)
-
-        ttk.Label(top, text="Sensors").grid(row=0, column=0, sticky="w")
+        top.columnconfigure(1, weight=1)
 
         btns = ttk.Frame(top)
-        btns.grid(row=0, column=1, sticky="w", padx=(10, 0))
+        btns.grid(row=0, column=0, sticky="w")
 
-        ttk.Button(btns, text="Scan + Identify", command=self._scan_and_identify).grid(row=0, column=0, padx=(0, 8))
-        ttk.Button(btns, text="Connect", command=self._connect_sensors).grid(row=0, column=1, padx=(0, 8))
+        ttk.Button(btns, text="Connection...", command=self._show_connection_window).grid(row=0, column=0, padx=(0, 8))
+        ttk.Button(btns, text="Settings...", command=self._show_settings_window).grid(row=0, column=1, padx=(0, 12))
+
         ttk.Button(btns, text="Start Streaming", command=self._start_streaming).grid(row=0, column=2, padx=(0, 8))
         ttk.Button(btns, text="Stop", command=self._stop_streaming).grid(row=0, column=3, padx=(0, 8))
-        ttk.Button(btns, text="Disconnect", command=self._disconnect_sensors).grid(row=0, column=4, padx=(0, 8))
-        ttk.Button(btns, text="Save Config", command=self._save_config).grid(row=0, column=5)
+        ttk.Button(btns, text="Disconnect", command=self._disconnect_sensors).grid(row=0, column=4, padx=(0, 12))
 
-        self._record_btn = ttk.Button(btns, text="Start Recording", command=self._toggle_recording)
-        self._record_btn.grid(row=0, column=6, padx=(10, 0))
-
-        # Interval configuration controls
-        interval_frame = ttk.LabelFrame(top, text="Sampling Interval", padding=5)
-        interval_frame.grid(row=1, column=0, columnspan=3, sticky="w", pady=(10, 0))
-
-        ttk.Label(interval_frame, text="Interval (seconds):").grid(row=0, column=0, padx=(0, 5))
-        interval_spin = ttk.Spinbox(
-            interval_frame,
-            from_=1,
-            to=300,
-            increment=1,
-            textvariable=self._interval_var,
-            width=10
-        )
-        interval_spin.grid(row=0, column=1, padx=(0, 10))
-        ttk.Button(
-            interval_frame,
-            text="Apply to All Sensors",
-            command=self._configure_interval
-        ).grid(row=0, column=2, padx=(0, 5))
+        ttk.Button(btns, text="Events...", command=self._show_events_window).grid(row=0, column=5, padx=(0, 8))
 
         ttk.Checkbutton(
-            interval_frame,
-            text="Auto-apply on Connect",
-            variable=self._auto_apply_interval_var,
-        ).grid(row=0, column=3, padx=(10, 0))
-
-        ttk.Label(
-            interval_frame,
-            text="(Changes sensor sampling rate. Requires bidirectional cable.)",
-            font=("TkDefaultFont", 8)
-        ).grid(row=0, column=4, padx=(10, 0))
-
-        # Barometric pressure (optional) for oxygen calculations.
-        baro_frame = ttk.LabelFrame(top, text="Oxygen calculation", padding=5)
-        baro_frame.grid(row=2, column=0, columnspan=3, sticky="w", pady=(10, 0))
-
-        ttk.Checkbutton(
-            baro_frame,
-            text="Use barometric pressure",
-            variable=self._use_baro_var,
-            command=self._mark_plot_dirty,
-        ).grid(row=0, column=0, padx=(0, 10))
-
-        ttk.Label(baro_frame, text="Baro (hPa):").grid(row=0, column=1, padx=(0, 5))
-        baro_entry = ttk.Entry(baro_frame, textvariable=self._baro_hpa_var, width=10)
-        baro_entry.grid(row=0, column=2, padx=(0, 10))
-        baro_entry.bind("<KeyRelease>", lambda _e: self._mark_plot_dirty())
-
-        ttk.Label(
-            baro_frame,
-            text="(Optional. If enabled, scales O₂ solubility by P/1013.25.)",
-            font=("TkDefaultFont", 8),
-        ).grid(row=0, column=3, padx=(0, 5))
-
-        # Pressure baseline (optional) for gauge/sea-pressure display.
-        pressure_frame = ttk.LabelFrame(top, text="Pressure", padding=5)
-        pressure_frame.grid(row=3, column=0, columnspan=3, sticky="w", pady=(10, 0))
-
-        ttk.Button(
-            pressure_frame,
-            text="Tutorial + Set Air Baseline",
-            command=self._tutorial_and_set_pressure_baseline,
-        ).grid(row=0, column=0, padx=(0, 10))
-
-        ttk.Button(
-            pressure_frame,
-            text="Clear Baseline",
-            command=self._clear_pressure_baseline,
-        ).grid(row=0, column=1, padx=(0, 10))
-
-        ttk.Label(
-            pressure_frame,
-            text="(Stores atmospheric pressure so you can view water pressure relative to air.)",
-            font=("TkDefaultFont", 8),
-        ).grid(row=0, column=2, padx=(0, 5))
+            btns,
+            text="Record data",
+            variable=self._record_data_var,
+            command=self._on_record_data_toggle,
+        ).grid(row=0, column=6, padx=(0, 8))
 
         self._status_var = tk.StringVar(value="Ready")
-        ttk.Label(top, textvariable=self._status_var).grid(row=0, column=2, sticky="e")
+        ttk.Label(top, textvariable=self._status_var).grid(row=0, column=1, sticky="e")
 
         main = ttk.Panedwindow(self, orient=tk.HORIZONTAL)
         main.grid(row=1, column=0, sticky="nsew", padx=10, pady=(0, 10))
@@ -389,13 +342,160 @@ class AanderaaGUI(tk.Tk):
         left = ttk.Frame(main)
         right = ttk.Frame(main)
         main.add(left, weight=1)
-        main.add(right, weight=4)  # Give plots 4x more space
+        main.add(right, weight=4)
 
-        left.rowconfigure(1, weight=1)
+        left.rowconfigure(0, weight=1)
         left.columnconfigure(0, weight=1)
+        right.rowconfigure(0, weight=1)
+        right.columnconfigure(0, weight=1)
+
+        notes = ttk.LabelFrame(left, text="Notes / Events", padding=8)
+        notes.grid(row=0, column=0, sticky="nsew")
+        notes.columnconfigure(0, weight=1)
+        notes.rowconfigure(0, weight=1)
+
+        self._notes_text = tk.Text(notes, height=10, wrap="word")
+        self._notes_text.grid(row=0, column=0, sticky="nsew")
+        # Enter = add event; Shift+Enter = newline.
+        self._notes_text.bind("<Return>", self._on_notes_return)
+        self._notes_text.bind("<Control-Return>", lambda _e: (self._add_note_event(), "break")[1])
+
+        notes_controls = ttk.Frame(notes)
+        notes_controls.grid(row=1, column=0, sticky="ew", pady=(6, 0))
+        ttk.Button(notes_controls, text="Add Event", command=self._add_note_event).pack(side=tk.LEFT)
+        ttk.Button(notes_controls, text="Clear", command=self._clear_notes).pack(side=tk.LEFT, padx=(8, 0))
+        ttk.Label(
+            notes_controls,
+            text="Enter=add  •  Shift+Enter=new line",
+            font=("TkDefaultFont", 8),
+        ).pack(side=tk.LEFT, padx=(12, 0))
+
+        plot = ttk.LabelFrame(right, text="Time series", padding=8)
+        plot.grid(row=0, column=0, sticky="nsew")
+        plot.rowconfigure(0, weight=1)
+        plot.columnconfigure(0, weight=1)
+
+        self._fig = Figure(figsize=(7, 5), dpi=100)
+        # Share a common time axis so all panels are visually synchronized.
+        self._axes = []
+        for i in range(4):
+            if i == 0:
+                ax = self._fig.add_subplot(4, 1, 1)
+            else:
+                ax = self._fig.add_subplot(4, 1, i + 1, sharex=self._axes[0])
+            self._axes.append(ax)
+        self._lines = []
+        self._value_texts = []
+        for ax in self._axes:
+            ax.grid(True, alpha=0.3)
+            (line,) = ax.plot([], [], linewidth=1.5)
+            self._lines.append(line)
+            self._value_texts.append(
+                ax.text(
+                    0.99,
+                    0.95,
+                    "",
+                    transform=ax.transAxes,
+                    ha="right",
+                    va="top",
+                    fontsize=9,
+                )
+            )
+
+        self._fig.tight_layout()
+        self._canvas = FigureCanvasTkAgg(self._fig, master=plot)
+        self._canvas.get_tk_widget().grid(row=0, column=0, sticky="nsew")
+        
+        # Plot controls
+        plot_controls = ttk.Frame(plot)
+        plot_controls.grid(row=1, column=0, sticky="ew", pady=(5, 0))
+
+        ttk.Label(plot_controls, text="Oxygen plot:").pack(side=tk.LEFT, padx=(5, 3))
+        oxygen_box = ttk.Combobox(
+            plot_controls,
+            textvariable=self._oxygen_plot_var,
+            values=[
+                "O2 (derived mg/L)",
+                "O2Concentration (raw µmol/L)",
+                "O2Saturation (%)",
+            ],
+            state="readonly",
+            width=24,
+        )
+        oxygen_box.pack(side=tk.LEFT, padx=(0, 10))
+        oxygen_box.bind("<<ComboboxSelected>>", lambda _e: self._mark_plot_dirty())
+
+        ttk.Label(plot_controls, text="Pressure plot:").pack(side=tk.LEFT, padx=(10, 3))
+        pressure_box = ttk.Combobox(
+            plot_controls,
+            textvariable=self._pressure_plot_var,
+            values=[
+                "Pressure (absolute dbar)",
+                "Pressure (relative to air dbar)",
+            ],
+            state="readonly",
+            width=26,
+        )
+        pressure_box.pack(side=tk.LEFT, padx=(0, 10))
+        pressure_box.bind("<<ComboboxSelected>>", lambda _e: self._mark_plot_dirty())
+
+        ttk.Label(plot_controls, text="Time window:").pack(side=tk.LEFT, padx=(10, 3))
+        time_box = ttk.Combobox(
+            plot_controls,
+            textvariable=self._time_window_var,
+            values=[
+                "Last 1 min",
+                "Last 10 min",
+                "Last 1 h",
+            ],
+            state="readonly",
+            width=12,
+        )
+        time_box.pack(side=tk.LEFT, padx=(0, 10))
+        time_box.bind("<<ComboboxSelected>>", lambda _e: self._mark_plot_dirty())
+
+        ttk.Button(plot_controls, text="Reset Axes", command=self._reset_axes).pack(side=tk.LEFT, padx=5)
+        ttk.Button(plot_controls, text="Clear Data", command=self._clear_data).pack(side=tk.LEFT, padx=5)
+
+        # Hidden/optional windows for advanced configuration.
+        self._build_connection_window()
+        self._build_settings_window()
+        self._build_events_window()
+
+    def _build_connection_window(self) -> None:
+        win = tk.Toplevel(self)
+        win.title("Configure connection")
+        win.geometry("720x520")
+        win.withdraw()
+        win.protocol("WM_DELETE_WINDOW", win.withdraw)
+        self._connection_win = win
+
+        root = ttk.Frame(win, padding=10)
+        root.grid(row=0, column=0, sticky="nsew")
+        win.columnconfigure(0, weight=1)
+        win.rowconfigure(0, weight=1)
+        root.columnconfigure(0, weight=1)
+        root.rowconfigure(1, weight=1)
+
+        header = ttk.Frame(root)
+        header.grid(row=0, column=0, sticky="ew")
+        header.columnconfigure(1, weight=1)
+
+        ttk.Label(header, text="Sensors").grid(row=0, column=0, sticky="w")
+        btns = ttk.Frame(header)
+        btns.grid(row=0, column=1, sticky="e")
+        ttk.Button(btns, text="Scan + Identify", command=self._scan_and_identify).grid(row=0, column=0, padx=(0, 8))
+        ttk.Button(btns, text="Connect", command=self._connect_sensors).grid(row=0, column=1, padx=(0, 8))
+        ttk.Button(btns, text="Disconnect", command=self._disconnect_sensors).grid(row=0, column=2, padx=(0, 8))
+        ttk.Button(btns, text="Save Config", command=self._save_config).grid(row=0, column=3)
+
+        body = ttk.Frame(root)
+        body.grid(row=1, column=0, sticky="nsew", pady=(10, 0))
+        body.columnconfigure(0, weight=1)
+        body.rowconfigure(1, weight=1)
 
         cols = ("name", "com_port", "sensor_type", "product", "serial")
-        self._tree = ttk.Treeview(left, columns=cols, show="headings", height=6)
+        self._tree = ttk.Treeview(body, columns=cols, show="headings", height=10)
         self._tree.grid(row=0, column=0, sticky="nsew")
 
         headings = {
@@ -416,8 +516,8 @@ class AanderaaGUI(tk.Tk):
             self._tree.heading(c, text=headings[c])
             self._tree.column(c, width=widths[c], anchor="w")
 
-        edit = ttk.LabelFrame(left, text="Edit selected", padding=10)
-        edit.grid(row=1, column=0, sticky="nsew", pady=(10, 0))
+        edit = ttk.LabelFrame(body, text="Edit selected", padding=10)
+        edit.grid(row=1, column=0, sticky="ew", pady=(10, 0))
         edit.columnconfigure(1, weight=1)
 
         ttk.Label(edit, text="COM port").grid(row=0, column=0, sticky="w")
@@ -427,7 +527,12 @@ class AanderaaGUI(tk.Tk):
 
         ttk.Label(edit, text="Type").grid(row=1, column=0, sticky="w", pady=(8, 0))
         self._type_var = tk.StringVar()
-        self._type_box = ttk.Combobox(edit, textvariable=self._type_var, values=["oxygen", "conductivity", "pressure", "unknown"], state="readonly")
+        self._type_box = ttk.Combobox(
+            edit,
+            textvariable=self._type_var,
+            values=["oxygen", "conductivity", "pressure", "unknown"],
+            state="readonly",
+        )
         self._type_box.grid(row=1, column=1, sticky="ew", pady=(8, 0))
 
         ttk.Label(edit, text="Name").grid(row=2, column=0, sticky="w", pady=(8, 0))
@@ -438,77 +543,198 @@ class AanderaaGUI(tk.Tk):
 
         self._tree.bind("<<TreeviewSelect>>", self._on_select)
 
-        right.rowconfigure(1, weight=1)
-        right.columnconfigure(0, weight=1)
+    def _build_settings_window(self) -> None:
+        win = tk.Toplevel(self)
+        win.title("Settings")
+        win.geometry("760x260")
+        win.withdraw()
+        win.protocol("WM_DELETE_WINDOW", win.withdraw)
+        self._settings_win = win
 
-        latest = ttk.LabelFrame(right, text="Latest values", padding=8)
-        latest.grid(row=0, column=0, sticky="ew")
-        latest.columnconfigure(0, weight=1)
+        root = ttk.Frame(win, padding=10)
+        root.grid(row=0, column=0, sticky="nsew")
+        win.columnconfigure(0, weight=1)
+        win.rowconfigure(0, weight=1)
+        root.columnconfigure(0, weight=1)
 
-        self._latest_text = tk.Text(latest, height=4, wrap="none", font=("TkDefaultFont", 8))
-        self._latest_text.grid(row=0, column=0, sticky="ew")
-        self._latest_text.configure(state="disabled")
-
-        plot = ttk.LabelFrame(right, text="Time series", padding=8)
-        plot.grid(row=1, column=0, sticky="nsew", pady=(10, 0))
-        plot.rowconfigure(0, weight=1)
-        plot.columnconfigure(0, weight=1)
-
-        self._fig = Figure(figsize=(7, 5), dpi=100)
-        # Share a common time axis so all panels are visually synchronized.
-        self._axes = []
-        for i in range(4):
-            if i == 0:
-                ax = self._fig.add_subplot(4, 1, 1)
-            else:
-                ax = self._fig.add_subplot(4, 1, i + 1, sharex=self._axes[0])
-            self._axes.append(ax)
-        self._lines = []
-        for ax in self._axes:
-            ax.grid(True, alpha=0.3)
-            (line,) = ax.plot([], [], linewidth=1.5)
-            self._lines.append(line)
-
-        self._fig.tight_layout()
-        self._canvas = FigureCanvasTkAgg(self._fig, master=plot)
-        self._canvas.get_tk_widget().grid(row=0, column=0, sticky="nsew")
-        
-        # Plot controls
-        plot_controls = ttk.Frame(plot)
-        plot_controls.grid(row=1, column=0, sticky="ew", pady=(5, 0))
-
-        ttk.Label(plot_controls, text="Oxygen plot:").pack(side=tk.LEFT, padx=(5, 3))
-        oxygen_box = ttk.Combobox(
-            plot_controls,
-            textvariable=self._oxygen_plot_var,
-            values=[
-                "O2 (derived mg/L)",
-                "O2Concentration (raw mg/L)",
-                "O2Saturation (%)",
-            ],
-            state="readonly",
-            width=24,
+        interval_frame = ttk.LabelFrame(root, text="Sampling Interval", padding=8)
+        interval_frame.grid(row=0, column=0, sticky="ew")
+        ttk.Label(interval_frame, text="Interval (seconds):").grid(row=0, column=0, padx=(0, 5))
+        interval_spin = ttk.Spinbox(
+            interval_frame,
+            from_=1,
+            to=300,
+            increment=1,
+            textvariable=self._interval_var,
+            width=10,
         )
-        oxygen_box.pack(side=tk.LEFT, padx=(0, 10))
-        oxygen_box.bind("<<ComboboxSelected>>", lambda _e: self._mark_plot_dirty())
-
-        ttk.Label(plot_controls, text="Time window:").pack(side=tk.LEFT, padx=(10, 3))
-        time_box = ttk.Combobox(
-            plot_controls,
-            textvariable=self._time_window_var,
-            values=[
-                "Last 1 min",
-                "Last 10 min",
-                "Last 1 h",
-            ],
-            state="readonly",
-            width=12,
+        interval_spin.grid(row=0, column=1, padx=(0, 10))
+        ttk.Button(interval_frame, text="Apply to All Sensors", command=self._configure_interval).grid(
+            row=0, column=2, padx=(0, 10)
         )
-        time_box.pack(side=tk.LEFT, padx=(0, 10))
-        time_box.bind("<<ComboboxSelected>>", lambda _e: self._mark_plot_dirty())
+        ttk.Checkbutton(
+            interval_frame,
+            text="Auto-apply on Connect",
+            variable=self._auto_apply_interval_var,
+        ).grid(row=0, column=3)
+        ttk.Label(
+            interval_frame,
+            text="(Requires bidirectional cable.)",
+            font=("TkDefaultFont", 8),
+        ).grid(row=0, column=4, padx=(10, 0))
 
-        ttk.Button(plot_controls, text="Reset Axes", command=self._reset_axes).pack(side=tk.LEFT, padx=5)
-        ttk.Button(plot_controls, text="Clear Data", command=self._clear_data).pack(side=tk.LEFT, padx=5)
+        baro_frame = ttk.LabelFrame(root, text="Oxygen calculation", padding=8)
+        baro_frame.grid(row=1, column=0, sticky="ew", pady=(10, 0))
+        ttk.Checkbutton(
+            baro_frame,
+            text="Use barometric pressure",
+            variable=self._use_baro_var,
+            command=self._mark_plot_dirty,
+        ).grid(row=0, column=0, padx=(0, 10))
+        ttk.Label(baro_frame, text="Baro (hPa):").grid(row=0, column=1, padx=(0, 5))
+        baro_entry = ttk.Entry(baro_frame, textvariable=self._baro_hpa_var, width=10)
+        baro_entry.grid(row=0, column=2, padx=(0, 10))
+        baro_entry.bind("<KeyRelease>", lambda _e: self._mark_plot_dirty())
+        ttk.Label(
+            baro_frame,
+            text="(Scales O₂ solubility by P/1013.25.)",
+            font=("TkDefaultFont", 8),
+        ).grid(row=0, column=3, padx=(0, 5))
+
+        pressure_frame = ttk.LabelFrame(root, text="Pressure", padding=8)
+        pressure_frame.grid(row=2, column=0, sticky="ew", pady=(10, 0))
+        ttk.Button(
+            pressure_frame,
+            text="Tutorial + Set Air Baseline",
+            command=self._tutorial_and_set_pressure_baseline,
+        ).grid(row=0, column=0, padx=(0, 10))
+        ttk.Button(
+            pressure_frame,
+            text="Clear Baseline",
+            command=self._clear_pressure_baseline,
+        ).grid(row=0, column=1, padx=(0, 10))
+        ttk.Label(
+            pressure_frame,
+            text="(Store atmospheric pressure for relative water pressure.)",
+            font=("TkDefaultFont", 8),
+        ).grid(row=0, column=2, padx=(0, 5))
+
+    def _build_events_window(self) -> None:
+        win = tk.Toplevel(self)
+        win.title("Recent notes / events")
+        win.geometry("760x520")
+        win.withdraw()
+        win.protocol("WM_DELETE_WINDOW", win.withdraw)
+        self._events_win = win
+
+        root = ttk.Frame(win, padding=10)
+        root.grid(row=0, column=0, sticky="nsew")
+        win.columnconfigure(0, weight=1)
+        win.rowconfigure(0, weight=1)
+        root.columnconfigure(0, weight=1)
+        root.rowconfigure(1, weight=1)
+
+        header = ttk.Frame(root)
+        header.grid(row=0, column=0, sticky="ew")
+        ttk.Button(header, text="Refresh", command=self._refresh_events_window).pack(side=tk.LEFT)
+        ttk.Button(header, text="Clear view", command=self._clear_events_view).pack(side=tk.LEFT, padx=(8, 0))
+
+        self._events_text = tk.Text(root, wrap="word")
+        self._events_text.grid(row=1, column=0, sticky="nsew", pady=(10, 0))
+        self._events_text.configure(state="disabled")
+
+        self._refresh_events_window()
+
+    def _show_connection_window(self) -> None:
+        if self._connection_win is None:
+            return
+        self._connection_win.deiconify()
+        self._connection_win.lift()
+        try:
+            self._connection_win.focus_force()
+        except Exception:
+            pass
+
+    def _show_settings_window(self) -> None:
+        if self._settings_win is None:
+            return
+        self._settings_win.deiconify()
+        self._settings_win.lift()
+        try:
+            self._settings_win.focus_force()
+        except Exception:
+            pass
+
+    def _show_events_window(self) -> None:
+        if self._events_win is None:
+            return
+        self._events_win.deiconify()
+        self._events_win.lift()
+        try:
+            self._events_win.focus_force()
+        except Exception:
+            pass
+        self._refresh_events_window()
+
+    def _clear_events_view(self) -> None:
+        if self._events_text is None:
+            return
+        self._events_text.configure(state="normal")
+        self._events_text.delete("1.0", "end")
+        self._events_text.configure(state="disabled")
+
+    def _format_event_for_display(self, payload: Dict[str, object]) -> str:
+        ts = str(payload.get("timestamp", ""))
+        text = str(payload.get("text", "")).strip()
+        rec = payload.get("recording_log")
+        header = f"[{ts}] {text}"
+        if rec:
+            header += f"\n  recording_log: {rec}"
+
+        sensors = payload.get("sensors")
+        lines: List[str] = [header]
+        if isinstance(sensors, dict) and sensors:
+            for port, snap in sensors.items():
+                if not isinstance(snap, dict):
+                    continue
+                name = snap.get("name")
+                st = snap.get("sensor_type")
+                stamp = snap.get("timestamp")
+                lines.append(f"  - {port} ({name}, {st}) @ {stamp}")
+                meas = snap.get("measurements")
+                if isinstance(meas, dict):
+                    for k, v in list(meas.items())[:40]:
+                        lines.append(f"      {k}: {v}")
+        lines.append("")
+        return "\n".join(lines)
+
+    def _refresh_events_window(self) -> None:
+        if self._events_text is None:
+            return
+
+        # Best-effort: if we have no in-memory history yet, load a tail from disk.
+        if not self._event_history and self._event_log_path and self._event_log_path.exists():
+            try:
+                lines = self._event_log_path.read_text(encoding="utf-8").splitlines()
+                for line in lines[-self._event_history_max :]:
+                    try:
+                        obj = json.loads(line)
+                        if isinstance(obj, dict):
+                            self._event_history.append(obj)
+                    except Exception:
+                        continue
+            except Exception:
+                pass
+
+        text = []
+        for ev in self._event_history[-self._event_history_max :]:
+            if isinstance(ev, dict):
+                text.append(self._format_event_for_display(ev))
+
+        self._events_text.configure(state="normal")
+        self._events_text.delete("1.0", "end")
+        self._events_text.insert("end", "\n".join(text))
+        self._events_text.configure(state="disabled")
 
     def _barometric_pressure_kpa(self) -> Optional[float]:
         if not bool(self._use_baro_var.get()):
@@ -614,13 +840,24 @@ class AanderaaGUI(tk.Tk):
         sel = (self._oxygen_plot_var.get() or "").strip()
         if sel == "O2Saturation (%)":
             return ("O2Saturation", "O2 saturation", "%")
-        if sel == "O2Concentration (raw mg/L)":
-            return ("O2Concentration", "O2 concentration (raw)", "mg/L")
+        if sel == "O2Concentration (raw µmol/L)":
+            return ("O2Concentration", "O2 concentration (raw)", "µmol/L")
         return (
             "Derived_O2_umolL_from_sat",
             "O2 concentration (from sat; uses salinity if available)",
             "mg/L",
         )
+
+    def _pressure_plot_key(self, com_port: str) -> Tuple[str, str, str]:
+        """Return (series_key, title, ylabel) for pressure plot."""
+        sel = (self._pressure_plot_var.get() or "").strip()
+        if sel == "Pressure (relative to air dbar)":
+            # Only meaningful if baseline exists.
+            sid = self._pressure_sensor_id_by_port.get(str(com_port).upper(), str(com_port).upper())
+            if sid in self._pressure_air_kpa_by_sensor:
+                return ("Derived_SeaPressure_dbar", "Pressure (relative to air)", "dbar")
+            # Fall back to absolute if no baseline is available.
+        return ("Derived_Pressure_dbar", "Pressure (absolute)", "dbar")
 
     def _set_status(self, text: str) -> None:
         self._status_var.set(text)
@@ -633,6 +870,42 @@ class AanderaaGUI(tk.Tk):
         log_dir.mkdir(parents=True, exist_ok=True)
         stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         return log_dir / f"aanderaa_log_{stamp}.jsonl"
+
+    def _default_event_log_path(self) -> Path:
+        # Prefer tying the events file to the active recording log.
+        if self._record_path is not None:
+            return self._record_path.with_name(self._record_path.stem + "_events.jsonl")
+
+        root = Path(__file__).resolve().parent.parent
+        log_dir = root / "Log"
+        log_dir.mkdir(parents=True, exist_ok=True)
+        stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        return log_dir / f"aanderaa_events_{stamp}.jsonl"
+
+    def _ensure_event_log_open(self) -> None:
+        if self._event_log_fp is not None and self._event_log_path is not None:
+            return
+        path = self._default_event_log_path()
+        self._event_log_fp = path.open("a", encoding="utf-8", buffering=1)
+        self._event_log_path = path
+        self._event_log_lines = 0
+        print(f"Events/metadata recording to: {path}")
+
+    def _close_event_log(self) -> None:
+        try:
+            if self._event_log_fp is not None:
+                try:
+                    self._event_log_fp.flush()
+                except Exception:
+                    pass
+                try:
+                    self._event_log_fp.close()
+                except Exception:
+                    pass
+        finally:
+            self._event_log_fp = None
+            self._event_log_path = None
+            self._event_log_lines = 0
 
     def _toggle_recording(self) -> None:
         if self._is_recording:
@@ -648,7 +921,9 @@ class AanderaaGUI(tk.Tk):
             self._record_path = path
             self._record_lines = 0
             self._is_recording = True
-            self._record_btn.configure(text="Stop Recording")
+            if self._record_btn is not None:
+                self._record_btn.configure(text="Stop Recording")
+            self._record_data_var.set(True)
             print(f"Recording to: {path}")
             self._set_status(f"Recording: {path.name}")
         except Exception as e:
@@ -659,7 +934,8 @@ class AanderaaGUI(tk.Tk):
 
     def _stop_recording(self) -> None:
         self._is_recording = False
-        self._record_btn.configure(text="Start Recording")
+        if self._record_btn is not None:
+            self._record_btn.configure(text="Start Recording")
         try:
             if self._record_fp:
                 try:
@@ -677,6 +953,108 @@ class AanderaaGUI(tk.Tk):
             self._record_path = None
             self._record_lines = 0
             self._set_status("Ready")
+
+    def _on_record_data_toggle(self) -> None:
+        want_record = bool(self._record_data_var.get())
+        if want_record:
+            # If streaming, start recording immediately; otherwise it will auto-start on streaming.
+            if self._threads and not self._is_recording:
+                self._start_recording()
+        else:
+            if self._is_recording:
+                self._stop_recording()
+
+    def _clear_notes(self) -> None:
+        if self._notes_text is None:
+            return
+        self._notes_text.delete("1.0", "end")
+
+    def _on_notes_return(self, event: object) -> str:
+        # Enter adds an event; Shift+Enter inserts a newline.
+        try:
+            state = int(getattr(event, "state", 0))
+        except Exception:
+            state = 0
+        shift_pressed = bool(state & 0x0001)
+        if shift_pressed:
+            return ""
+        self._add_note_event()
+        return "break"
+
+    def _add_note_event(self) -> None:
+        if self._notes_text is None:
+            return
+
+        text = self._notes_text.get("1.0", "end").strip()
+        if not text:
+            return
+
+        try:
+            self._ensure_event_log_open()
+        except Exception as e:
+            messagebox.showerror("Event log failed", f"Could not open events log file:\n{e}")
+            return
+
+        now = datetime.now()
+
+        sensors: Dict[str, object] = {}
+        for port, snap in self._latest_snapshot_by_port.items():
+            try:
+                sensors[str(port)] = {
+                    "timestamp": snap.get("timestamp"),
+                    "com_port": snap.get("com_port"),
+                    "name": snap.get("name"),
+                    "sensor_type": snap.get("sensor_type"),
+                    "measurements": dict(snap.get("measurements", {})),
+                }
+            except Exception:
+                continue
+
+        payload = {
+            "timestamp": now.isoformat(),
+            "kind": "note",
+            "text": text,
+            "recording_log": (self._record_path.name if self._record_path else None),
+            "sensors": sensors,
+        }
+
+        try:
+            if self._event_log_fp is None:
+                raise RuntimeError("Event log file is not open")
+            self._event_log_fp.write(json.dumps(payload, ensure_ascii=False) + "\n")
+            self._event_log_lines += 1
+            if self._event_log_lines % 5 == 0:
+                self._event_log_fp.flush()
+        except Exception as e:
+            messagebox.showerror("Event save failed", f"Could not write event:\n{e}")
+            return
+
+        # Keep a short in-memory history for the Events window.
+        self._event_history.append(payload)
+        if len(self._event_history) > self._event_history_max:
+            self._event_history = self._event_history[-self._event_history_max :]
+        self._refresh_events_window()
+
+        self._clear_notes()
+        if self._event_log_path is not None:
+            self._set_status(f"Event saved: {self._event_log_path.name}")
+        else:
+            self._set_status("Event saved")
+
+    def _on_close(self) -> None:
+        # Avoid popups on exit; best-effort cleanup.
+        try:
+            self._stop_and_disconnect()
+        except Exception:
+            pass
+        try:
+            self._close_event_log()
+        except Exception:
+            pass
+        try:
+            self.destroy()
+        except Exception:
+            pass
 
     def _load_config_to_table(self) -> None:
         script_dir = Path(__file__).parent
@@ -945,6 +1323,10 @@ class AanderaaGUI(tk.Tk):
         
         print(f"\n✓ Streaming started from {len(self._sensors)} sensor(s)")
         self._set_status(f"Streaming from {len(self._sensors)} sensor(s)")
+
+        # Auto-start recording when streaming starts.
+        if bool(self._record_data_var.get()) and not self._is_recording:
+            self._start_recording()
     
     def _stop_streaming(self) -> None:
         """Stop streaming but keep sensors connected."""
@@ -967,6 +1349,10 @@ class AanderaaGUI(tk.Tk):
         self._set_status("Stopped (connected)")
         self._stream_started_at = None
         self._last_event_at = None
+
+        # If this was a recording session, stop recording as well.
+        if self._is_recording:
+            self._stop_recording()
     
     def _disconnect_sensors(self) -> None:
         """Disconnect all sensors."""
@@ -1209,6 +1595,7 @@ class AanderaaGUI(tk.Tk):
 
     def _drain_events(self) -> None:
         updated = False
+        show_latest = self._latest_text is not None
         latest_lines: List[str] = []
 
         # Drain queue quickly
@@ -1371,14 +1758,28 @@ class AanderaaGUI(tk.Tk):
                     print(f"Recording error: {e}")
                     self._stop_recording()
 
+            # Update latest snapshot per sensor (for Notes/Events metadata logging).
+            try:
+                port = str(ev.com_port).upper()
+                self._latest_snapshot_by_port[port] = {
+                    "timestamp": ev.timestamp.isoformat(),
+                    "com_port": port,
+                    "name": ev.name,
+                    "sensor_type": st,
+                    "measurements": dict(ev.measurements),
+                }
+            except Exception:
+                pass
+
             # Note: per-sensor plot series are appended above.
 
             # Latest display
-            latest_lines.append(f"[{ev.timestamp.strftime('%H:%M:%S')}] {ev.name} ({ev.com_port})")
-            for k, val in ev.measurements.items():
-                latest_lines.append(f"  {k}: {val}")
+            if show_latest:
+                latest_lines.append(f"[{ev.timestamp.strftime('%H:%M:%S')}] {ev.name} ({ev.com_port})")
+                for k, val in ev.measurements.items():
+                    latest_lines.append(f"  {k}: {val}")
 
-        if drained > 0:
+        if show_latest and drained > 0:
             self._render_latest(latest_lines[-60:])
 
         if updated:
@@ -1432,6 +1833,8 @@ class AanderaaGUI(tk.Tk):
             return
 
     def _render_latest(self, lines: List[str]) -> None:
+        if self._latest_text is None:
+            return
         self._latest_text.configure(state="normal")
         self._latest_text.delete("1.0", "end")
         self._latest_text.insert("end", "\n".join(lines))
@@ -1454,6 +1857,15 @@ class AanderaaGUI(tk.Tk):
             # Recreate line artists after cla(); previous Line2D objects are removed.
             (line,) = ax.plot([], [], linewidth=1.5)
             self._lines[idx] = line
+            self._value_texts[idx] = ax.text(
+                0.99,
+                0.95,
+                "",
+                transform=ax.transAxes,
+                ha="right",
+                va="top",
+                fontsize=9,
+            )
         self._canvas.draw_idle()
         print("Plot data cleared")
         self._set_status("Data cleared")
@@ -1475,12 +1887,7 @@ class AanderaaGUI(tk.Tk):
             if st == "oxygen":
                 key, _, _ = self._oxygen_plot_key()
             elif st == "pressure":
-                # Prefer gauge pressure if baseline exists; otherwise fall back to absolute.
-                sid = self._pressure_sensor_id_by_port.get(str(com_port).upper(), str(com_port).upper())
-                if sid in self._pressure_air_kpa_by_sensor:
-                    key = "Derived_SeaPressure_dbar"
-                else:
-                    key = "Derived_Pressure_dbar"
+                key, _, _ = self._pressure_plot_key(com_port)
             elif st == "conductivity":
                 key = "Conductivity"
             else:
@@ -1513,6 +1920,7 @@ class AanderaaGUI(tk.Tk):
 
         for idx, ax in enumerate(self._axes):
             line = self._lines[idx]
+            value_text = self._value_texts[idx]
             ax.grid(True, alpha=0.3)
 
             # Temperature panel (4th subplot)
@@ -1539,20 +1947,44 @@ class AanderaaGUI(tk.Tk):
 
                 if not temp_series or not temp_series.t:
                     line.set_data([], [])
+                    value_text.set_text("")
                     continue
 
                 line.set_data(temp_series.t, temp_series.y)
                 line.set_marker(".")
                 line.set_markersize(4)
-                ax.relim()
-                ax.autoscale_view()
                 if x_min is not None and x_max is not None:
                     ax.set_xlim(x_min, x_max)
+
+                # Y-limits: autoscale to visible data only.
+                visible = [
+                    float(v)
+                    for t, v in zip(temp_series.t, temp_series.y)
+                    if (x_min is None or t >= x_min)
+                    and (x_max is None or t <= x_max)
+                    and np.isfinite(v)
+                ]
+                if not visible:
+                    visible = [float(v) for v in temp_series.y if np.isfinite(v)]
+                if visible:
+                    y0 = min(visible)
+                    y1 = max(visible)
+                    pad = 0.05 * (y1 - y0) if y1 > y0 else 0.2
+                    ax.set_ylim(y0 - pad, y1 + pad)
+
+                    last_val = float(temp_series.y[-1])
+                    if np.isfinite(last_val):
+                        value_text.set_text(f"Last: {last_val:.2f} °C")
+                    else:
+                        value_text.set_text("")
+                else:
+                    value_text.set_text("")
                 continue
 
             if idx >= len(rows):
                 ax.set_title("(no sensor)")
                 line.set_data([], [])
+                value_text.set_text("")
                 continue
 
             name, com_port, sensor_type = rows[idx]
@@ -1569,15 +2001,7 @@ class AanderaaGUI(tk.Tk):
                 title = "Conductivity"
                 ylabel = "µS/cm"
             elif st == "pressure":
-                sid = self._pressure_sensor_id_by_port.get(str(com_port).upper(), str(com_port).upper())
-                if sid in self._pressure_air_kpa_by_sensor:
-                    plot_key = "Derived_SeaPressure_dbar"
-                    title = "Pressure (relative to air)"
-                    ylabel = "dbar"
-                else:
-                    plot_key = "Derived_Pressure_dbar"
-                    title = "Pressure (absolute)"
-                    ylabel = "dbar"
+                plot_key, title, ylabel = self._pressure_plot_key(com_port)
 
             ax.set_title(f"{name} - {title}")
             ax.set_xlabel("Time")
@@ -1588,13 +2012,14 @@ class AanderaaGUI(tk.Tk):
             series = self._series.get((str(com_port).upper(), plot_key))
             if not series or not series.t:
                 line.set_data([], [])
+                value_text.set_text("")
                 continue
 
             xs = series.t
             ys = series.y
 
             # Unit conversions for plotting.
-            if st == "oxygen" and plot_key != "O2Saturation":
+            if st == "oxygen" and ylabel == "mg/L":
                 ys = [_o2_umol_l_to_mg_l(v) for v in ys]
             elif st == "conductivity":
                 ys = [_conductivity_ms_cm_to_uS_cm(v) for v in ys]
@@ -1603,11 +2028,40 @@ class AanderaaGUI(tk.Tk):
             # Show markers so a single sample is visible.
             line.set_marker(".")
             line.set_markersize(4)
-            ax.relim()
-            ax.autoscale_view()
-
             if x_min is not None and x_max is not None:
                 ax.set_xlim(x_min, x_max)
+
+            # Y-limits: autoscale to visible time window only.
+            visible = [
+                float(v)
+                for t, v in zip(xs, ys)
+                if (x_min is None or t >= x_min) and (x_max is None or t <= x_max) and np.isfinite(v)
+            ]
+            if not visible:
+                visible = [float(v) for v in ys if np.isfinite(v)]
+            if visible:
+                y0 = min(visible)
+                y1 = max(visible)
+                pad = 0.05 * (y1 - y0) if y1 > y0 else (0.05 * abs(y1) if y1 != 0 else 0.5)
+                ax.set_ylim(y0 - pad, y1 + pad)
+
+                # Last value display (latest sample).
+                last_val = float(ys[-1])
+                if np.isfinite(last_val):
+                    if ylabel == "%":
+                        value_text.set_text(f"Last: {last_val:.1f} %")
+                    elif ylabel == "mg/L":
+                        value_text.set_text(f"Last: {last_val:.2f} mg/L")
+                    elif ylabel == "µS/cm":
+                        value_text.set_text(f"Last: {last_val:.1f} µS/cm")
+                    elif ylabel == "dbar":
+                        value_text.set_text(f"Last: {last_val:.3f} dbar")
+                    else:
+                        value_text.set_text(f"Last: {last_val:.3f} {ylabel}")
+                else:
+                    value_text.set_text("")
+            else:
+                value_text.set_text("")
 
         self._fig.tight_layout()
         try:

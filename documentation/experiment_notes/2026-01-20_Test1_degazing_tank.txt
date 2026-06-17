@@ -1,0 +1,28 @@
+Experiment notes
+
+Test: 1
+Title: Degazing tank
+Date: 2026-01-20
+Related log file: Log/aanderaa_log_20260120_144905.jsonl
+Goal: To test the degazing of water inside the tank by bubbling helium.
+Methodology: Fill the tank with water, start bubbling helium at different flow rates, and monitor the oxygen decrease.
+Then pump back the water to the pumping tank.
+Redo by adding water to the tank? 
+Ideas: Put the pumping tank to vertical to decrease volume and increase degazing efficiency..
+Timeline (local time)
+
+14:50:00 — Experiment launched and recording started. Water tank is full. O2 seems to be ~89.3% (check data).
+14:55 — Started to put helium.
+14:58 — Tried to move the helium inlet; broke the blue balloon gas diffuser; replaced it.
+15:03 — Back to normal. Set helium to 1 L/min. ~89% oxygen. Manual mixing doesn’t seem to change anything.
+15:09 — Set helium to 0.5 L/min (slower). TODO: calculate the change of slope with recording data.
+15:11 — Set helium to 2 L/min. Doesn’t seem so much better than 2 L/min. TODO: calculate the slope of O2.
+15:13 — Set helium back to 1 L/min.
+15:17 — Closed the tank by putting the tap; this seems to increase the speed.
+15:48 — Opened the tank (oxygen at ~6%).
+15:49 — Sensors out of water.
+15:53 — Pumped to the other tank and switched sensors (around 26%).
+
+Water height: 290 mm
+
+More notes: (pending — to be added later)
