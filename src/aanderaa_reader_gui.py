@@ -6,7 +6,7 @@ import re
 import threading
 import time
 from dataclasses import dataclass
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 
@@ -868,7 +868,8 @@ class AanderaaGUI(tk.Tk):
         root = Path(__file__).resolve().parent.parent
         log_dir = root / "Log"
         log_dir.mkdir(parents=True, exist_ok=True)
-        stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        # The filename and every record timestamp use UTC.
+        stamp = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
         return log_dir / f"aanderaa_log_{stamp}.jsonl"
 
     def _default_event_log_path(self) -> Path:
@@ -879,7 +880,7 @@ class AanderaaGUI(tk.Tk):
         root = Path(__file__).resolve().parent.parent
         log_dir = root / "Log"
         log_dir.mkdir(parents=True, exist_ok=True)
-        stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        stamp = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
         return log_dir / f"aanderaa_events_{stamp}.jsonl"
 
     def _ensure_event_log_open(self) -> None:
@@ -995,7 +996,7 @@ class AanderaaGUI(tk.Tk):
             messagebox.showerror("Event log failed", f"Could not open events log file:\n{e}")
             return
 
-        now = datetime.now()
+        now = datetime.now(timezone.utc)
 
         sensors: Dict[str, object] = {}
         for port, snap in self._latest_snapshot_by_port.items():

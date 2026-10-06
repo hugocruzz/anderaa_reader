@@ -5,7 +5,7 @@ Works with sensors in NI-VISA mode
 import serial
 import time
 import json
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 import re
 from typing import Optional, List, Dict
@@ -94,7 +94,9 @@ class AanderaaSensorCustom:
             measurements["Temperature"] = measurements["Value2"]
 
         self.last_measurement = measurements
-        self.last_measurement_time = datetime.now()
+        # Keep every acquisition timestamp timezone-aware and in UTC.  This is
+        # propagated unchanged into the GUI recorder's JSONL output.
+        self.last_measurement_time = datetime.now(timezone.utc)
         return measurements
 
     def _read_for(self, duration_s: float) -> str:
@@ -340,7 +342,7 @@ def _reader_loop(sensor: AanderaaSensorCustom, out_queue: "queue.Queue[SensorEve
                     if data_frame:
                         measurements = sensor.parse_tab_frame(data_frame)
                         if measurements:
-                            ts = sensor.last_measurement_time or datetime.now()
+                            ts = sensor.last_measurement_time or datetime.now(timezone.utc)
                             out_queue.put(
                                 SensorEvent(
                                     timestamp=ts,
@@ -371,7 +373,7 @@ def _reader_loop(sensor: AanderaaSensorCustom, out_queue: "queue.Queue[SensorEve
 
                 last_frame = time.time()
 
-                ts = sensor.last_measurement_time or datetime.now()
+                ts = sensor.last_measurement_time or datetime.now(timezone.utc)
                 out_queue.put(
                     SensorEvent(
                         timestamp=ts,
