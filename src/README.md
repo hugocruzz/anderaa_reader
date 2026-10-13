@@ -82,9 +82,10 @@ saved with sensor-specific `Temperature_Oxygen_C` and `Temperature_Conductivity_
 fields; choose the source in the Temperature plot controls. Use the `>> Notes` button
 to open the separate notes and recent-events window.
 
-Right-drag on a plot to zoom to a time/value region. A selection ending near the right
-edge keeps following new readings; select **Reset Axes** to return to the selected time
-window.
+Right-drag on a plot to zoom to a time/value region; double-left-click to reset the axes.
+A selection ending near the right edge keeps following new readings. The time-window
+selector adjusts the visible x-axis range without discarding collected points. Data stays
+in memory until **Clear Data** or the application is closed.
 
 In **Settings → Pressure calibration**, calibrated pressure is calculated as
 `offset_kPa + coefficient × raw_kPa`. Set the offset while the pressure probe is in air

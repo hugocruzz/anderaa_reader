@@ -245,7 +245,6 @@ class AanderaaGUI(tk.Tk):
         # Store multiple series per sensor (COM port + key) so plots can switch
         # between raw and derived variables without losing history.
         self._series: Dict[Tuple[str, str], Series] = {}
-        self._max_points = 600
         self._interval_var = tk.DoubleVar(value=5.0)
         self._auto_apply_interval_var = tk.BooleanVar(value=False)
         self._oxygen_plot_var = tk.StringVar(value="O2 (derived mg/L)")
@@ -380,6 +379,7 @@ class AanderaaGUI(tk.Tk):
         self._fig.tight_layout()
         self._canvas = FigureCanvasTkAgg(self._fig, master=plot)
         self._canvas.get_tk_widget().grid(row=1, column=0, sticky="nsew")
+        self._canvas.mpl_connect("button_press_event", self._on_plot_mouse_press)
         self._rectangle_selectors = [
             RectangleSelector(
                 ax,
@@ -458,7 +458,7 @@ class AanderaaGUI(tk.Tk):
             width=12,
         )
         time_box.pack(side=tk.LEFT, padx=(0, 10))
-        time_box.bind("<<ComboboxSelected>>", lambda _e: self._mark_plot_dirty())
+        time_box.bind("<<ComboboxSelected>>", lambda _e: self._on_time_window_changed())
 
         ttk.Button(plot_controls, text="Reset Axes", command=self._reset_axes).pack(side=tk.LEFT, padx=5)
         ttk.Button(plot_controls, text="Clear Data", command=self._clear_data).pack(side=tk.LEFT, padx=5)
@@ -798,9 +798,6 @@ class AanderaaGUI(tk.Tk):
         series = self._series.setdefault((str(com_port).upper(), key), Series(t=[], y=[]))
         series.t.append(timestamp)
         series.y.append(float(value))
-        if len(series.t) > self._max_points:
-            series.t = series.t[-self._max_points :]
-            series.y = series.y[-self._max_points :]
 
     def _oxygen_plot_key(self) -> Tuple[str, str, str]:
         """Return (series_key, title, ylabel) for oxygen plot."""
@@ -1806,6 +1803,15 @@ class AanderaaGUI(tk.Tk):
         self._manual_xlim = None
         self._live_zoom_window = None
         self._manual_ylim.clear()
+        self._mark_plot_dirty()
+
+    def _on_plot_mouse_press(self, event: MouseEvent) -> None:
+        if event.button == 1 and event.dblclick:
+            self._reset_axes()
+
+    def _on_time_window_changed(self) -> None:
+        self._manual_xlim = None
+        self._live_zoom_window = None
         self._mark_plot_dirty()
 
     def _select_plot_region(self, ax: Axes, press: MouseEvent, release: MouseEvent) -> None:
