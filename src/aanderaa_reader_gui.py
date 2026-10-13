@@ -19,8 +19,11 @@ import serial.tools.list_ports
 import numpy as np
 
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from matplotlib.axes import Axes
+from matplotlib.backend_bases import MouseEvent
 from matplotlib.figure import Figure
 import matplotlib.dates as mdates
+from matplotlib.widgets import RectangleSelector
 
 from aanderaa_sensor_reader_custom import AanderaaSensorCustom, SensorEvent, _reader_loop
 from config_manager import load_sensors, save_sensors_to_user_config, load_state, save_state
@@ -83,6 +86,11 @@ def _pressure_to_dbar(pressure_kpa: float) -> float:
     1 dbar = 10 kPa.
     """
     return float(pressure_kpa) / 10.0
+
+
+def _pressure_kpa_to_depth_m(pressure_kpa: float) -> float:
+    """Approximate water depth from gauge pressure using seawater density."""
+    return float(pressure_kpa) * 1000.0 / (1025.0 * 9.80665)
 
 
 def _scale_o2_solubility_for_pressure(o2sol_umol_l_at_1atm: float, baro_kpa: Optional[float]) -> float:
@@ -227,7 +235,7 @@ class AanderaaGUI(tk.Tk):
     def __init__(self) -> None:
         super().__init__()
         self.title("Aanderaa Reader")
-        self.geometry("1100x720")
+        self.geometry("1200x820")
 
         self._stop_event = threading.Event()
         self._event_queue: "queue.Queue[SensorEvent]" = queue.Queue()
@@ -241,12 +249,29 @@ class AanderaaGUI(tk.Tk):
         self._interval_var = tk.DoubleVar(value=5.0)
         self._auto_apply_interval_var = tk.BooleanVar(value=False)
         self._oxygen_plot_var = tk.StringVar(value="O2 (derived mg/L)")
-        self._pressure_plot_var = tk.StringVar(value="Pressure (absolute dbar)")
+        self._pressure_plot_var = tk.StringVar(value="Depth (m)")
+        self._temperature_source_var = tk.StringVar(value="Oxygen sensor")
         self._time_window_var = tk.StringVar(value="Last 10 min")
         self._use_baro_var = tk.BooleanVar(value=False)
         # User entry in hPa (common weather units). Empty/disabled means "assume 1 atm".
         self._baro_hpa_var = tk.StringVar(value="")
+        state = load_state()
+        try:
+            self._pressure_offset_kpa = float(state.get("pressure_offset_kpa", -101.325))
+            self._pressure_gain = float(state.get("pressure_gain", 1.0))
+        except (TypeError, ValueError):
+            self._pressure_offset_kpa = -101.325
+            self._pressure_gain = 1.0
+        if not np.isfinite(self._pressure_offset_kpa):
+            self._pressure_offset_kpa = -101.325
+        if not np.isfinite(self._pressure_gain):
+            self._pressure_gain = 1.0
+        self._pressure_offset_var = tk.StringVar(value=str(self._pressure_offset_kpa))
+        self._pressure_gain_var = tk.StringVar(value=str(self._pressure_gain))
         self._plot_dirty = False
+        self._manual_xlim: Optional[Tuple[datetime, datetime]] = None
+        self._live_zoom_window: Optional[timedelta] = None
+        self._manual_ylim: Dict[int, Tuple[float, float]] = {}
         self._stream_started_at: Optional[float] = None
         self._last_event_at: Optional[float] = None
 
@@ -255,22 +280,6 @@ class AanderaaGUI(tk.Tk):
         self._latest_salinity_at: Optional[datetime] = None
         self._latest_pressure: Optional[float] = None
         self._latest_pressure_at: Optional[datetime] = None
-        self._latest_pressure_kpa_by_port: Dict[str, float] = {}
-        self._pressure_sensor_id_by_port: Dict[str, str] = {}
-
-        # Persisted: baseline absolute pressure (kPa) measured with sensor in air.
-        # Keyed by sensor id (e.g. '4117B_SN_2378').
-        state = load_state()
-        baselines = state.get("pressure_air_kpa_by_sensor", {}) if isinstance(state, dict) else {}
-        self._pressure_air_kpa_by_sensor: Dict[str, float] = {}
-        if isinstance(baselines, dict):
-            for k, v in baselines.items():
-                try:
-                    fv = float(v)
-                except Exception:
-                    continue
-                if np.isfinite(fv) and fv > 0:
-                    self._pressure_air_kpa_by_sensor[str(k)] = fv
 
         self._is_recording = False
         self._record_fp: Optional[object] = None
@@ -324,7 +333,7 @@ class AanderaaGUI(tk.Tk):
         ttk.Button(btns, text="Stop", command=self._stop_streaming).grid(row=0, column=3, padx=(0, 8))
         ttk.Button(btns, text="Disconnect", command=self._disconnect_sensors).grid(row=0, column=4, padx=(0, 12))
 
-        ttk.Button(btns, text="Events...", command=self._show_events_window).grid(row=0, column=5, padx=(0, 8))
+        ttk.Button(btns, text=">> Notes", command=self._show_events_window).grid(row=0, column=5, padx=(0, 8))
 
         ttk.Checkbutton(
             btns,
@@ -336,46 +345,12 @@ class AanderaaGUI(tk.Tk):
         self._status_var = tk.StringVar(value="Ready")
         ttk.Label(top, textvariable=self._status_var).grid(row=0, column=1, sticky="e")
 
-        main = ttk.Panedwindow(self, orient=tk.HORIZONTAL)
-        main.grid(row=1, column=0, sticky="nsew", padx=10, pady=(0, 10))
-
-        left = ttk.Frame(main)
-        right = ttk.Frame(main)
-        main.add(left, weight=1)
-        main.add(right, weight=4)
-
-        left.rowconfigure(0, weight=1)
-        left.columnconfigure(0, weight=1)
-        right.rowconfigure(0, weight=1)
-        right.columnconfigure(0, weight=1)
-
-        notes = ttk.LabelFrame(left, text="Notes / Events", padding=8)
-        notes.grid(row=0, column=0, sticky="nsew")
-        notes.columnconfigure(0, weight=1)
-        notes.rowconfigure(0, weight=1)
-
-        self._notes_text = tk.Text(notes, height=10, wrap="word")
-        self._notes_text.grid(row=0, column=0, sticky="nsew")
-        # Enter = add event; Shift+Enter = newline.
-        self._notes_text.bind("<Return>", self._on_notes_return)
-        self._notes_text.bind("<Control-Return>", lambda _e: (self._add_note_event(), "break")[1])
-
-        notes_controls = ttk.Frame(notes)
-        notes_controls.grid(row=1, column=0, sticky="ew", pady=(6, 0))
-        ttk.Button(notes_controls, text="Add Event", command=self._add_note_event).pack(side=tk.LEFT)
-        ttk.Button(notes_controls, text="Clear", command=self._clear_notes).pack(side=tk.LEFT, padx=(8, 0))
-        ttk.Label(
-            notes_controls,
-            text="Enter=add  •  Shift+Enter=new line",
-            font=("TkDefaultFont", 8),
-        ).pack(side=tk.LEFT, padx=(12, 0))
-
-        plot = ttk.LabelFrame(right, text="Time series", padding=8)
-        plot.grid(row=0, column=0, sticky="nsew")
-        plot.rowconfigure(0, weight=1)
+        plot = ttk.LabelFrame(self, text="Time series  (right-drag to zoom; Reset Axes to restore)", padding=8)
+        plot.grid(row=1, column=0, sticky="nsew", padx=10, pady=(0, 10))
+        plot.rowconfigure(1, weight=1)
         plot.columnconfigure(0, weight=1)
 
-        self._fig = Figure(figsize=(7, 5), dpi=100)
+        self._fig = Figure(figsize=(9, 7), dpi=100)
         # Share a common time axis so all panels are visually synchronized.
         self._axes = []
         for i in range(4):
@@ -404,15 +379,31 @@ class AanderaaGUI(tk.Tk):
 
         self._fig.tight_layout()
         self._canvas = FigureCanvasTkAgg(self._fig, master=plot)
-        self._canvas.get_tk_widget().grid(row=0, column=0, sticky="nsew")
+        self._canvas.get_tk_widget().grid(row=1, column=0, sticky="nsew")
+        self._rectangle_selectors = [
+            RectangleSelector(
+                ax,
+                lambda press, release, selected_ax=ax: self._select_plot_region(
+                    selected_ax, press, release
+                ),
+                button=[3],
+                minspanx=5,
+                minspany=5,
+                spancoords="pixels",
+                interactive=False,
+                useblit=False,
+            )
+            for ax in self._axes
+        ]
         
         # Plot controls
         plot_controls = ttk.Frame(plot)
-        plot_controls.grid(row=1, column=0, sticky="ew", pady=(5, 0))
+        plot_controls.grid(row=0, column=0, sticky="ew", pady=(0, 5))
 
-        ttk.Label(plot_controls, text="Oxygen plot:").pack(side=tk.LEFT, padx=(5, 3))
+        oxygen_controls = ttk.LabelFrame(plot_controls, text="Oxygen plot")
+        oxygen_controls.pack(side=tk.LEFT, padx=(0, 8))
         oxygen_box = ttk.Combobox(
-            plot_controls,
+            oxygen_controls,
             textvariable=self._oxygen_plot_var,
             values=[
                 "O2 (derived mg/L)",
@@ -422,24 +413,39 @@ class AanderaaGUI(tk.Tk):
             state="readonly",
             width=24,
         )
-        oxygen_box.pack(side=tk.LEFT, padx=(0, 10))
+        oxygen_box.pack(side=tk.LEFT, padx=5, pady=3)
         oxygen_box.bind("<<ComboboxSelected>>", lambda _e: self._mark_plot_dirty())
 
-        ttk.Label(plot_controls, text="Pressure plot:").pack(side=tk.LEFT, padx=(10, 3))
+        pressure_controls = ttk.LabelFrame(plot_controls, text="Pressure plot")
+        pressure_controls.pack(side=tk.LEFT, padx=(0, 8))
         pressure_box = ttk.Combobox(
-            plot_controls,
+            pressure_controls,
             textvariable=self._pressure_plot_var,
             values=[
-                "Pressure (absolute dbar)",
-                "Pressure (relative to air dbar)",
+                "Raw pressure (kPa)",
+                "Calibrated pressure (dbar)",
+                "Depth (m)",
             ],
             state="readonly",
-            width=26,
+            width=25,
         )
-        pressure_box.pack(side=tk.LEFT, padx=(0, 10))
+        pressure_box.pack(side=tk.LEFT, padx=5, pady=3)
         pressure_box.bind("<<ComboboxSelected>>", lambda _e: self._mark_plot_dirty())
 
-        ttk.Label(plot_controls, text="Time window:").pack(side=tk.LEFT, padx=(10, 3))
+        temperature_controls = ttk.LabelFrame(plot_controls, text="Temperature plot")
+        temperature_controls.pack(side=tk.LEFT, padx=(0, 8))
+        ttk.Label(temperature_controls, text="Source:").pack(side=tk.LEFT, padx=(5, 2))
+        temperature_box = ttk.Combobox(
+            temperature_controls,
+            textvariable=self._temperature_source_var,
+            values=["Oxygen sensor", "Conductivity sensor"],
+            state="readonly",
+            width=20,
+        )
+        temperature_box.pack(side=tk.LEFT, padx=(0, 5), pady=3)
+        temperature_box.bind("<<ComboboxSelected>>", lambda _e: self._mark_plot_dirty())
+
+        ttk.Label(plot_controls, text="Time window:").pack(side=tk.LEFT, padx=(3, 3))
         time_box = ttk.Combobox(
             plot_controls,
             textvariable=self._time_window_var,
@@ -546,7 +552,7 @@ class AanderaaGUI(tk.Tk):
     def _build_settings_window(self) -> None:
         win = tk.Toplevel(self)
         win.title("Settings")
-        win.geometry("760x260")
+        win.geometry("860x330")
         win.withdraw()
         win.protocol("WM_DELETE_WINDOW", win.withdraw)
         self._settings_win = win
@@ -601,28 +607,31 @@ class AanderaaGUI(tk.Tk):
             font=("TkDefaultFont", 8),
         ).grid(row=0, column=3, padx=(0, 5))
 
-        pressure_frame = ttk.LabelFrame(root, text="Pressure", padding=8)
+        pressure_frame = ttk.LabelFrame(root, text="Pressure calibration", padding=8)
         pressure_frame.grid(row=2, column=0, sticky="ew", pady=(10, 0))
+        ttk.Label(pressure_frame, text="Offset (kPa):").grid(row=0, column=0, padx=(0, 5))
+        ttk.Entry(pressure_frame, textvariable=self._pressure_offset_var, width=12).grid(
+            row=0, column=1, padx=(0, 12)
+        )
+        ttk.Label(pressure_frame, text="Linear coefficient:").grid(row=0, column=2, padx=(0, 5))
+        ttk.Entry(pressure_frame, textvariable=self._pressure_gain_var, width=10).grid(
+            row=0, column=3, padx=(0, 12)
+        )
         ttk.Button(
             pressure_frame,
-            text="Tutorial + Set Air Baseline",
-            command=self._tutorial_and_set_pressure_baseline,
-        ).grid(row=0, column=0, padx=(0, 10))
-        ttk.Button(
-            pressure_frame,
-            text="Clear Baseline",
-            command=self._clear_pressure_baseline,
-        ).grid(row=0, column=1, padx=(0, 10))
+            text="Apply",
+            command=self._apply_pressure_calibration,
+        ).grid(row=0, column=4, padx=(0, 10))
         ttk.Label(
             pressure_frame,
-            text="(Store atmospheric pressure for relative water pressure.)",
+            text="calibrated kPa = offset + coefficient × raw kPa; adjust offset in air to read 0.",
             font=("TkDefaultFont", 8),
-        ).grid(row=0, column=2, padx=(0, 5))
+        ).grid(row=1, column=0, columnspan=5, sticky="w", pady=(6, 0))
 
     def _build_events_window(self) -> None:
         win = tk.Toplevel(self)
-        win.title("Recent notes / events")
-        win.geometry("760x520")
+        win.title("Notes / Events")
+        win.geometry("1000x700")
         win.withdraw()
         win.protocol("WM_DELETE_WINDOW", win.withdraw)
         self._events_win = win
@@ -632,15 +641,32 @@ class AanderaaGUI(tk.Tk):
         win.columnconfigure(0, weight=1)
         win.rowconfigure(0, weight=1)
         root.columnconfigure(0, weight=1)
-        root.rowconfigure(1, weight=1)
+        root.rowconfigure(2, weight=1)
+
+        notes = ttk.LabelFrame(root, text="Add a note or event", padding=8)
+        notes.grid(row=0, column=0, sticky="ew")
+        notes.columnconfigure(0, weight=1)
+        self._notes_text = tk.Text(notes, height=5, wrap="word")
+        self._notes_text.grid(row=0, column=0, sticky="ew")
+        self._notes_text.bind("<Return>", self._on_notes_return)
+        self._notes_text.bind("<Control-Return>", lambda _e: (self._add_note_event(), "break")[1])
+        notes_controls = ttk.Frame(notes)
+        notes_controls.grid(row=1, column=0, sticky="ew", pady=(6, 0))
+        ttk.Button(notes_controls, text="Add Event", command=self._add_note_event).pack(side=tk.LEFT)
+        ttk.Button(notes_controls, text="Clear", command=self._clear_notes).pack(side=tk.LEFT, padx=(8, 0))
+        ttk.Label(
+            notes_controls,
+            text="Enter = add; Shift+Enter = new line",
+            font=("TkDefaultFont", 8),
+        ).pack(side=tk.LEFT, padx=(12, 0))
 
         header = ttk.Frame(root)
-        header.grid(row=0, column=0, sticky="ew")
-        ttk.Button(header, text="Refresh", command=self._refresh_events_window).pack(side=tk.LEFT)
-        ttk.Button(header, text="Clear view", command=self._clear_events_view).pack(side=tk.LEFT, padx=(8, 0))
-
+        header.grid(row=1, column=0, sticky="ew", pady=(10, 0))
+        ttk.Label(header, text="Recent events").pack(side=tk.LEFT)
+        ttk.Button(header, text="Refresh", command=self._refresh_events_window).pack(side=tk.RIGHT)
+        ttk.Button(header, text="Clear view", command=self._clear_events_view).pack(side=tk.RIGHT, padx=(0, 8))
         self._events_text = tk.Text(root, wrap="word")
-        self._events_text.grid(row=1, column=0, sticky="nsew", pady=(10, 0))
+        self._events_text.grid(row=2, column=0, sticky="nsew", pady=(6, 0))
         self._events_text.configure(state="disabled")
 
         self._refresh_events_window()
@@ -668,6 +694,7 @@ class AanderaaGUI(tk.Tk):
     def _show_events_window(self) -> None:
         if self._events_win is None:
             return
+        self._events_win.geometry("1000x700")
         self._events_win.deiconify()
         self._events_win.lift()
         try:
@@ -744,84 +771,24 @@ class AanderaaGUI(tk.Tk):
             return None
         return float(hpa) / 10.0
 
-    def _pressure_sensor_id(self, com_port: str, measurements: Dict[str, str]) -> str:
-        product = str(measurements.get("ProductNumber", "")).strip()
-        serial_no = str(measurements.get("SerialNumber", "")).strip()
-        if product and serial_no:
-            return f"{product}_SN_{serial_no}"
-        return str(com_port).upper()
-
-    def _tutorial_and_set_pressure_baseline(self) -> None:
-        tutorial = (
-            "Pressure baseline (in air)\n\n"
-            "The 4117 reports ABSOLUTE pressure (includes atmosphere).\n"
-            "To see water pressure/depth, first store the air pressure baseline:\n\n"
-            "1) Put the pressure sensor in AIR (dry, not submerged).\n"
-            "2) Start streaming and wait ~10–20 seconds for stable readings.\n"
-            "3) Click Yes to store the current pressure as the air baseline.\n\n"
-            "Tip: If you store the baseline while submerged, depth/gauge values will be wrong."
-        )
-        messagebox.showinfo("Pressure baseline tutorial", tutorial)
-
-        if not messagebox.askyesno("Set air baseline now?", "Sensor is in air and readings are stable?"):
+    def _apply_pressure_calibration(self) -> None:
+        try:
+            offset = float(self._pressure_offset_var.get().strip())
+            gain = float(self._pressure_gain_var.get().strip())
+        except ValueError:
+            messagebox.showerror("Invalid calibration", "Enter finite numbers for the pressure offset and coefficient.")
+            return
+        if not np.isfinite(offset) or not np.isfinite(gain):
+            messagebox.showerror("Invalid calibration", "Enter finite numbers for the pressure offset and coefficient.")
             return
 
-        # Find configured pressure sensors.
-        pressure_ports: List[str] = []
-        for item_id in self._tree.get_children():
-            _name, com_port, sensor_type, *_ = self._tree.item(item_id).get("values", [])
-            if not com_port:
-                continue
-            if str(sensor_type or "").lower() == "pressure":
-                pressure_ports.append(str(com_port).upper())
-
-        if not pressure_ports:
-            messagebox.showwarning("No pressure sensor", "No sensor is configured as type 'pressure'.")
-            return
-
-        assignments: List[Tuple[str, float]] = []  # (sensor_id, baseline_kpa)
-        preview_lines: List[str] = []
-        for port in pressure_ports:
-            baseline_kpa = None
-            s = self._series.get((port, "Pressure_kPa"))
-            if s and s.y:
-                baseline_kpa = float(s.y[-1])
-            if baseline_kpa is None:
-                baseline_kpa = self._latest_pressure_kpa_by_port.get(port)
-            if baseline_kpa is None or not np.isfinite(baseline_kpa):
-                continue
-
-            sensor_id = self._pressure_sensor_id_by_port.get(port, port)
-            assignments.append((sensor_id, float(baseline_kpa)))
-            preview_lines.append(f"{port}: {baseline_kpa:.3f} kPa")
-
-        if not assignments:
-            messagebox.showerror(
-                "No data",
-                "No recent pressure samples found yet. Start streaming and wait for pressure data, then try again.",
-            )
-            return
-
-        msg = "Store these air baselines?\n\n" + "\n".join(preview_lines)
-        if not messagebox.askyesno("Confirm baseline", msg):
-            return
-
-        for sensor_id, baseline_kpa in assignments:
-            self._pressure_air_kpa_by_sensor[sensor_id] = baseline_kpa
-
-        path = save_state({"pressure_air_kpa_by_sensor": self._pressure_air_kpa_by_sensor})
-        self._set_status(f"Saved pressure baseline to {path.name}")
-        self._mark_plot_dirty()
-
-    def _clear_pressure_baseline(self) -> None:
-        if not self._pressure_air_kpa_by_sensor:
-            messagebox.showinfo("No baseline", "No stored pressure baseline to clear.")
-            return
-        if not messagebox.askyesno("Clear baseline", "Clear all stored pressure air baselines?"):
-            return
-        self._pressure_air_kpa_by_sensor.clear()
-        path = save_state({"pressure_air_kpa_by_sensor": {}})
-        self._set_status(f"Cleared pressure baseline ({path.name})")
+        self._pressure_offset_kpa = offset
+        self._pressure_gain = gain
+        state = load_state()
+        state["pressure_offset_kpa"] = offset
+        state["pressure_gain"] = gain
+        path = save_state(state)
+        self._set_status(f"Pressure calibration saved ({path.name})")
         self._mark_plot_dirty()
 
     def _mark_plot_dirty(self) -> None:
@@ -848,16 +815,14 @@ class AanderaaGUI(tk.Tk):
             "mg/L",
         )
 
-    def _pressure_plot_key(self, com_port: str) -> Tuple[str, str, str]:
-        """Return (series_key, title, ylabel) for pressure plot."""
+    def _pressure_plot_key(self) -> Tuple[str, str, str]:
+        """Return the selected pressure series, title, and unit."""
         sel = (self._pressure_plot_var.get() or "").strip()
-        if sel == "Pressure (relative to air dbar)":
-            # Only meaningful if baseline exists.
-            sid = self._pressure_sensor_id_by_port.get(str(com_port).upper(), str(com_port).upper())
-            if sid in self._pressure_air_kpa_by_sensor:
-                return ("Derived_SeaPressure_dbar", "Pressure (relative to air)", "dbar")
-            # Fall back to absolute if no baseline is available.
-        return ("Derived_Pressure_dbar", "Pressure (absolute)", "dbar")
+        if sel == "Raw pressure (kPa)":
+            return ("Pressure_kPa", "Raw pressure", "kPa")
+        if sel == "Calibrated pressure (dbar)":
+            return ("Pressure_kPa", "Calibrated pressure", "dbar")
+        return ("Pressure_kPa", "Water depth", "m (approx.)")
 
     def _set_status(self, text: str) -> None:
         self._status_var.set(text)
@@ -1650,7 +1615,8 @@ class AanderaaGUI(tk.Tk):
                 # Attach units for display consistency.
                 if t_c is not None:
                     ev.measurements["Temperature"] = f"{t_c:.3f} °C"
-                    self._append_series(ev.com_port, "Temperature_C", ev.timestamp, t_c)
+                    ev.measurements["Temperature_Conductivity_C"] = f"{t_c:.3f} °C"
+                    self._append_series(ev.com_port, "Temperature_Conductivity_C", ev.timestamp, t_c)
 
                 # Store plot series.
                 if cond is not None:
@@ -1658,11 +1624,6 @@ class AanderaaGUI(tk.Tk):
             elif st == "pressure":
                 p = _to_float(ev.measurements.get("Pressure"))
                 if p is not None:
-                    port = str(ev.com_port).upper()
-                    sensor_id = self._pressure_sensor_id(port, ev.measurements)
-                    self._pressure_sensor_id_by_port[port] = sensor_id
-                    self._latest_pressure_kpa_by_port[port] = p
-
                     self._latest_pressure = p
                     self._latest_pressure_at = ev.timestamp
 
@@ -1673,20 +1634,18 @@ class AanderaaGUI(tk.Tk):
                     ev.measurements["Derived_Pressure_dbar"] = f"{p_dbar:.3f} dbar"
                     self._append_series(ev.com_port, "Pressure_kPa", ev.timestamp, p_kpa)
                     self._append_series(ev.com_port, "Derived_Pressure_dbar", ev.timestamp, p_dbar)
-
-                    # If we have a stored air baseline, also provide gauge/sea pressure + depth.
-                    base_kpa = self._pressure_air_kpa_by_sensor.get(sensor_id)
-                    if base_kpa is not None and np.isfinite(base_kpa):
-                        sea_dbar = _pressure_to_dbar(p_kpa - float(base_kpa))
-                        ev.measurements["Derived_PressureAir_kPa"] = f"{float(base_kpa):.3f} kPa"
-                        ev.measurements["Derived_SeaPressure_dbar"] = f"{sea_dbar:.3f} dbar"
-                        ev.measurements["Derived_Depth_m"] = f"{sea_dbar:.3f} m"
-                        self._append_series(ev.com_port, "Derived_SeaPressure_dbar", ev.timestamp, sea_dbar)
-                        self._append_series(ev.com_port, "Derived_Depth_m", ev.timestamp, sea_dbar)
+                    calibrated_kpa = self._pressure_offset_kpa + self._pressure_gain * p_kpa
+                    calibrated_dbar = _pressure_to_dbar(calibrated_kpa)
+                    depth_m = _pressure_kpa_to_depth_m(calibrated_kpa)
+                    ev.measurements["Pressure_calibrated_kPa"] = f"{calibrated_kpa:.3f} kPa"
+                    ev.measurements["Pressure_calibrated_dbar"] = f"{calibrated_dbar:.3f} dbar"
+                    ev.measurements["Derived_Depth_m"] = f"{depth_m:.3f} m"
+                    self._append_series(ev.com_port, "Pressure_calibrated_kPa", ev.timestamp, calibrated_kpa)
+                    self._append_series(ev.com_port, "Pressure_calibrated_dbar", ev.timestamp, calibrated_dbar)
+                    self._append_series(ev.com_port, "Depth_m", ev.timestamp, depth_m)
                 t_c = _to_float(ev.measurements.get("Temperature"))
                 if t_c is not None:
                     ev.measurements["Temperature"] = f"{t_c:.3f} °C"
-                    self._append_series(ev.com_port, "Temperature_C", ev.timestamp, t_c)
 
             # Derived oxygen values (salinity compensation via Weiss 1970).
             if st == "oxygen":
@@ -1724,7 +1683,8 @@ class AanderaaGUI(tk.Tk):
                 # Add units to the basic displayed keys.
                 if temp_c is not None:
                     ev.measurements["Temperature"] = f"{temp_c:.3f} °C"
-                    self._append_series(ev.com_port, "Temperature_C", ev.timestamp, temp_c)
+                    ev.measurements["Temperature_Oxygen_C"] = f"{temp_c:.3f} °C"
+                    self._append_series(ev.com_port, "Temperature_Oxygen_C", ev.timestamp, temp_c)
                 conc = _to_float(ev.measurements.get("O2Concentration"))
                 if conc is not None:
                     ev.measurements["O2Concentration"] = f"{conc:.2f} µmol/L"
@@ -1842,16 +1802,36 @@ class AanderaaGUI(tk.Tk):
         self._latest_text.configure(state="disabled")
     
     def _reset_axes(self) -> None:
-        """Reset plot axes to auto-scale."""
-        for ax in self._fig.axes:
-            ax.relim()
-            ax.autoscale_view()
-        self._canvas.draw()
-        print("Plot axes reset")
+        """Clear interactive limits and return to the selected time window."""
+        self._manual_xlim = None
+        self._live_zoom_window = None
+        self._manual_ylim.clear()
+        self._mark_plot_dirty()
+
+    def _select_plot_region(self, ax: Axes, press: MouseEvent, release: MouseEvent) -> None:
+        if press.xdata is None or release.xdata is None or press.ydata is None or release.ydata is None:
+            return
+
+        left, right = sorted((float(press.xdata), float(release.xdata)))
+        bottom, top = sorted((float(press.ydata), float(release.ydata)))
+        if left == right or bottom == top:
+            return
+
+        current_left, current_right = ax.get_xlim()
+        near_live_edge = right >= current_right - 0.1 * (current_right - current_left)
+        start = mdates.num2date(left).astimezone(timezone.utc)
+        end = mdates.num2date(right).astimezone(timezone.utc)
+        self._manual_xlim = (start, end)
+        self._live_zoom_window = (end - start) if near_live_edge else None
+        self._manual_ylim[self._axes.index(ax)] = (bottom, top)
+        self._mark_plot_dirty()
     
     def _clear_data(self) -> None:
         """Clear all plotted data."""
         self._series.clear()
+        self._manual_xlim = None
+        self._live_zoom_window = None
+        self._manual_ylim.clear()
         for idx, ax in enumerate(self._axes):
             ax.cla()
             ax.grid(True, alpha=0.3)
@@ -1888,7 +1868,7 @@ class AanderaaGUI(tk.Tk):
             if st == "oxygen":
                 key, _, _ = self._oxygen_plot_key()
             elif st == "pressure":
-                key, _, _ = self._pressure_plot_key(com_port)
+                key, _, _ = self._pressure_plot_key()
             elif st == "conductivity":
                 key = "Conductivity"
             else:
@@ -1896,6 +1876,16 @@ class AanderaaGUI(tk.Tk):
             s = self._series.get((str(com_port).upper(), key))
             if s and s.t:
                 all_ts.extend(s.t)
+        temperature_type = (
+            "oxygen" if self._temperature_source_var.get() == "Oxygen sensor" else "conductivity"
+        )
+        for _, com_port, sensor_type in rows[:3]:
+            if (sensor_type or "").lower() == temperature_type:
+                temp_key = f"Temperature_{temperature_type.title()}_C"
+                temp_series = self._series.get((com_port, temp_key))
+                if temp_series and temp_series.t:
+                    all_ts.extend(temp_series.t)
+                break
         x_min = min(all_ts) if all_ts else None
         x_max = max(all_ts) if all_ts else None
 
@@ -1919,6 +1909,16 @@ class AanderaaGUI(tk.Tk):
                 else:
                     x_min = max(base_min, window_min)
 
+        if self._manual_xlim is not None:
+            if self._live_zoom_window is not None and x_max is not None:
+                x_min = x_max - self._live_zoom_window
+            else:
+                x_min, x_max = self._manual_xlim
+
+        if x_min is not None and x_max is not None and x_min >= x_max:
+            x_min -= timedelta(seconds=30)
+            x_max += timedelta(seconds=30)
+
         for idx, ax in enumerate(self._axes):
             line = self._lines[idx]
             value_text = self._value_texts[idx]
@@ -1931,20 +1931,16 @@ class AanderaaGUI(tk.Tk):
                 ax.set_ylabel("°C")
                 ax.xaxis.set_major_formatter(mdates.DateFormatter("%H:%M:%S"))
 
-                # Prefer oxygen sensor temperature if present; else first available temperature series.
-                preferred_ports: List[str] = []
-                for name, com_port, sensor_type in rows[:3]:
-                    if (sensor_type or "").lower() == "oxygen":
-                        preferred_ports.append(str(com_port).upper())
-                for _name, com_port, _sensor_type in rows[:3]:
-                    preferred_ports.append(str(com_port).upper())
-
                 temp_series = None
-                for p in preferred_ports:
-                    s = self._series.get((p, "Temperature_C"))
+                for _name, com_port, sensor_type in rows[:3]:
+                    if (sensor_type or "").lower() != temperature_type:
+                        continue
+                    key = f"Temperature_{temperature_type.title()}_C"
+                    s = self._series.get((com_port, key))
                     if s and s.t:
                         temp_series = s
                         break
+                ax.set_title(f"Temperature - {self._temperature_source_var.get()}")
 
                 if not temp_series or not temp_series.t:
                     line.set_data([], [])
@@ -1980,6 +1976,8 @@ class AanderaaGUI(tk.Tk):
                         value_text.set_text("")
                 else:
                     value_text.set_text("")
+                if idx in self._manual_ylim:
+                    ax.set_ylim(*self._manual_ylim[idx])
                 continue
 
             if idx >= len(rows):
@@ -2002,7 +2000,7 @@ class AanderaaGUI(tk.Tk):
                 title = "Conductivity"
                 ylabel = "µS/cm"
             elif st == "pressure":
-                plot_key, title, ylabel = self._pressure_plot_key(com_port)
+                plot_key, title, ylabel = self._pressure_plot_key()
 
             ax.set_title(f"{name} - {title}")
             ax.set_xlabel("Time")
@@ -2024,6 +2022,16 @@ class AanderaaGUI(tk.Tk):
                 ys = [_o2_umol_l_to_mg_l(v) for v in ys]
             elif st == "conductivity":
                 ys = [_conductivity_ms_cm_to_uS_cm(v) for v in ys]
+            elif st == "pressure" and ylabel == "dbar":
+                ys = [
+                    _pressure_to_dbar(self._pressure_offset_kpa + self._pressure_gain * v)
+                    for v in ys
+                ]
+            elif st == "pressure" and ylabel == "m (approx.)":
+                ys = [
+                    _pressure_kpa_to_depth_m(self._pressure_offset_kpa + self._pressure_gain * v)
+                    for v in ys
+                ]
 
             line.set_data(xs, ys)
             # Show markers so a single sample is visible.
@@ -2045,6 +2053,8 @@ class AanderaaGUI(tk.Tk):
                 y1 = max(visible)
                 pad = 0.05 * (y1 - y0) if y1 > y0 else (0.05 * abs(y1) if y1 != 0 else 0.5)
                 ax.set_ylim(y0 - pad, y1 + pad)
+                if idx in self._manual_ylim:
+                    ax.set_ylim(*self._manual_ylim[idx])
 
                 # Last value display (latest sample).
                 last_val = float(ys[-1])

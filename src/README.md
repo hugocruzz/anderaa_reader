@@ -75,6 +75,22 @@ for port in ports:
 python aanderaa_sensor_reader_custom.py
 ```
 
+### GUI plots, notes, and pressure calibration
+
+Run `aanderaa_reader_gui.py` for the live plotting interface. Temperature records are
+saved with sensor-specific `Temperature_Oxygen_C` and `Temperature_Conductivity_C`
+fields; choose the source in the Temperature plot controls. Use the `>> Notes` button
+to open the separate notes and recent-events window.
+
+Right-drag on a plot to zoom to a time/value region. A selection ending near the right
+edge keeps following new readings; select **Reset Axes** to return to the selected time
+window.
+
+In **Settings → Pressure calibration**, calibrated pressure is calculated as
+`offset_kPa + coefficient × raw_kPa`. Set the offset while the pressure probe is in air
+to bring the reading to zero. The depth plot converts calibrated gauge pressure using
+`depth = pressure / (1025 kg/m³ × 9.80665 m/s²)`, an approximate seawater conversion.
+
 ### Configure faster automatic streaming (sensor-side)
 
 If you are only getting a new data point every ~30 seconds, that is typically controlled by the sensor's `Interval` setting.
